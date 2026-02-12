@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  
+  body {
+    @apply bg-white text-dark-900 font-body antialiased;
+    scroll-behavior: smooth;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-400 to-accent-500;
+  }
+  
+  .glass-effect {
+    @apply bg-white/80 backdrop-blur-md border border-dark-200/50;
+  }
+  
+  .btn-primary {
+    @apply px-8 py-4 bg-gradient-to-r from-primary-400 to-accent-500 text-white font-heading font-semibold rounded-lg hover:shadow-xl hover:scale-105 transition-all duration-300;
+  }
+  
+  .btn-secondary {
+    @apply px-8 py-4 border-2 border-dark-900 text-dark-900 font-heading font-semibold rounded-lg hover:bg-dark-900 hover:text-white transition-all duration-300;
+  }
+  
+  .section-container {
+    @apply max-w-7xl mx-auto px-6 sm:px-8 lg:px-12;
+  }
+  
+  .heading-xl {
+    @apply text-5xl sm:text-6xl lg:text-7xl font-display font-bold leading-tight;
+  }
+  
+  .heading-lg {
+    @apply text-4xl sm:text-5xl font-display font-bold leading-tight;
+  }
+  
+  .heading-md {
+    @apply text-3xl sm:text-4xl font-heading font-bold;
+  }
+  
+  .heading-sm {
+    @apply text-2xl sm:text-3xl font-heading font-semibold;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  
+  .animation-delay-600 {
+    animation-delay: 600ms;
+  }
+  
+  .animation-delay-800 {
+    animation-delay: 800ms;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-dark-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-b from-primary-400 to-accent-500 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply from-primary-500 to-accent-600;
+}
+
+/* Page transition styles */
+.page-transition {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+/* Selection color */
+::selection {
+  @apply bg-primary-400/30 text-dark-900;
+}
+
+::-moz-selection {
+  @apply bg-primary-400/30 text-dark-900;
+}

@@ -1,0 +1,1860 @@
+{
+  "websiteData": {
+    "personalInfo": {
+      "name": "Hamim Reja",
+      "title": "Full-Stack Developer & ECE Engineer",
+      "tagline": "Building innovative web solutions and AI-powered systems",
+      "email": "hamim.reja.mail@gmail.com",
+      "phone": "+91 9382426273",
+      "location": "Kolkata, West Bengal, India",
+      "socialLinks": {
+        "github": "https://github.com/hamimreja-404",
+        "linkedin": "https://linkedin.com/in/hamim-reja-a2ba42279",
+        "twitter": ""
+      },
+      "profileImage": "/images/hamim-profile.jpg",
+      "availability": "Available for Freelance Projects",
+      "timezone": "IST (GMT+5:30)"
+    },
+
+    "homepage": {
+      "sections": [
+        {
+          "name": "hero",
+          "layout": "centered",
+          "minHeight": "calc(100vh - 80px)",
+          "background": {
+            "lightMode": "#FFFFFF",
+            "darkMode": "#0F172A",
+            "gradient": "radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.1) 0%, transparent 50%)"
+          },
+          "padding": "0 64px",
+          
+          "content": {
+            "greeting": {
+              "text": "Hi, I'm Hamim Reja 👋",
+              "fontSize": "20px",
+              "fontWeight": 500,
+              "color": "#0EA5E9",
+              "marginBottom": "16px",
+              "animation": "fadeInUp 800ms ease"
+            },
+            
+            "headline": {
+              "text": "Full-Stack Developer & AI Engineer",
+              "fontSize": "64px",
+              "fontWeight": 700,
+              "fontFamily": "'Space Grotesk', sans-serif",
+              "lineHeight": 1.2,
+              "gradient": {
+                "enabled": true,
+                "colors": ["#0EA5E9", "#8B5CF6"],
+                "direction": "135deg"
+              },
+              "marginBottom": "24px"
+            },
+            
+            "subheadline": {
+              "text": "ECE undergraduate specializing in MERN stack development, Computer Vision, and Edge AI. I bridge the gap between sophisticated software architectures and resource-constrained hardware environments to build innovative solutions.",
+              "fontSize": "18px",
+              "fontWeight": 400,
+              "lineHeight": 1.7,
+              "color": {
+                "lightMode": "#64748B",
+                "darkMode": "#94A3B8"
+              },
+              "maxWidth": "700px",
+              "marginBottom": "40px"
+            },
+            
+            "stats": {
+              "layout": "horizontal",
+              "gap": "48px",
+              "marginBottom": "40px",
+              "items": [
+                {
+                  "number": "50+",
+                  "label": "Projects Completed"
+                },
+                {
+                  "number": "7.68",
+                  "label": "CGPA"
+                },
+                {
+                  "number": "3+",
+                  "label": "Years Experience"
+                }
+              ]
+            },
+            
+            "ctaButtons": {
+              "layout": "horizontal",
+              "gap": "16px",
+              "buttons": [
+                {
+                  "label": "View My Work",
+                  "link": "/portfolio",
+                  "style": "primary"
+                },
+                {
+                  "label": "Download CV",
+                  "link": "/cv.pdf",
+                  "style": "secondary"
+                }
+              ]
+            },
+            
+            "socialLinks": {
+              "marginTop": "48px",
+              "links": [
+                {"platform": "GitHub", "url": "https://github.com/hamimreja-404"},
+                {"platform": "LinkedIn", "url": "https://linkedin.com/in/hamim-reja-a2ba42279"},
+                {"platform": "Email", "url": "mailto:hamim.reja.mail@gmail.com"}
+              ]
+            }
+          }
+        },
+        
+        {
+          "name": "expertise-highlight",
+          "padding": "96px 64px",
+          "background": {
+            "lightMode": "#F8FAFC",
+            "darkMode": "#1E293B"
+          },
+          
+          "header": {
+            "subtitle": "What I Do Best",
+            "title": "Areas of Expertise",
+            "alignment": "center",
+            "marginBottom": "64px"
+          },
+          
+          "expertiseGrid": {
+            "layout": "grid",
+            "columns": 3,
+            "gap": "32px",
+            "items": [
+              {
+                "icon": "code",
+                "iconColor": "#0EA5E9",
+                "title": "Full-Stack Development",
+                "description": "Building scalable MERN applications with modern React.js, Node.js, Express, and MongoDB. Expert in REST APIs, JWT authentication, and responsive UI/UX design.",
+                "technologies": ["React.js", "Node.js", "MongoDB", "Express.js", "Tailwind CSS"]
+              },
+              {
+                "icon": "brain",
+                "iconColor": "#8B5CF6",
+                "title": "AI & Computer Vision",
+                "description": "Developing real-time object detection systems using YOLOv10 and OpenCV. Specialized in edge AI deployment on resource-constrained devices like Raspberry Pi.",
+                "technologies": ["YOLOv10", "OpenCV", "Python", "Face Recognition", "Edge AI"]
+              },
+              {
+                "icon": "cpu",
+                "iconColor": "#10B981",
+                "title": "Hardware & RTL Design",
+                "description": "Designing digital systems using Verilog for FPGA implementation. Experience with UART protocols, SPI interfaces, and hardware-software integration.",
+                "technologies": ["Verilog", "FPGA", "Xilinx Vivado", "RTL Design", "UART/SPI"]
+              }
+            ]
+          }
+        },
+        
+        {
+          "name": "featured-projects",
+          "padding": "96px 64px",
+          "background": {
+            "lightMode": "#FFFFFF",
+            "darkMode": "#0F172A"
+          },
+          
+          "header": {
+            "subtitle": "Portfolio Highlights",
+            "title": "Featured Projects",
+            "description": "A showcase of my recent work spanning web development, AI systems, and hardware design",
+            "alignment": "center",
+            "marginBottom": "64px"
+          },
+          
+          "projects": [
+            {
+              "title": "AI Smart Glasses for Visually Impaired",
+              "category": "AI & Computer Vision",
+              "year": "2025",
+              "thumbnail": "/images/smart-glasses.jpg",
+              "description": "Assistive wearable device with real-time object detection using YOLOv10 and face recognition for environment perception and obstacle avoidance.",
+              "technologies": ["YOLOv10", "OpenCV", "Python", "Raspberry Pi Zero 2W", "TTS"],
+              "highlights": [
+                "Real-time environment perception and navigation",
+                "Face recognition with audio announcement",
+                "Optimized for Raspberry Pi Zero 2W performance",
+                "Low-latency processing for safety"
+              ],
+              "links": {
+                "github": "https://github.com/hamimreja-404/smart-glasses",
+                "demo": null
+              },
+              "featured": true,
+              "status": "completed"
+            },
+            {
+              "title": "Tuition & University Management System",
+              "category": "Full-Stack Web Application",
+              "year": "2025",
+              "thumbnail": "/images/tuition-system.jpg",
+              "description": "Role-based educational management platform with custom 3-tier RBAC system featuring automated fee management and payment tracking.",
+              "technologies": ["MERN Stack", "JWT", "Tailwind CSS", "MongoDB Aggregation", "Redux"],
+              "highlights": [
+                "Custom 3-tier RBAC (Superadmin/Admin/Student)",
+                "Automated fee management with data visualization",
+                "Instant JWT token revocation on deactivation",
+                "Department records and payment tracking"
+              ],
+              "links": {
+                "github": "https://github.com/hamimreja-404/tuition-management",
+                "demo": "https://tuition-demo.vercel.app"
+              },
+              "featured": true,
+              "status": "completed"
+            },
+            {
+              "title": "MediQ – Healthcare Appointment Platform",
+              "category": "Full-Stack Web Application",
+              "year": "2026",
+              "thumbnail": "/images/mediq.jpg",
+              "description": "Comprehensive healthcare platform connecting doctors and patients with real-time scheduling and advanced search algorithms.",
+              "technologies": ["MERN Stack", "JWT", "MongoDB Aggregation", "REST APIs", "React"],
+              "highlights": [
+                "Multi-criteria doctor search (specialization, location, availability)",
+                "Real-time appointment scheduling logic",
+                "Cookie-based JWT authentication",
+                "Modular doctor slot management system"
+              ],
+              "links": {
+                "github": "https://github.com/hamimreja-404/mediq",
+                "demo": "https://mediq-demo.vercel.app"
+              },
+              "featured": true,
+              "status": "completed"
+            },
+            {
+              "title": "ADC Interface using SPI on FPGA",
+              "category": "Hardware Design",
+              "year": "2024",
+              "thumbnail": "/images/adc-fpga.jpg",
+              "description": "14-bit ADC interfaced with Spartan-3E FPGA using SPI protocol for reliable data acquisition with custom control logic.",
+              "technologies": ["Verilog", "Xilinx ISE", "SPI Protocol", "FPGA", "Spartan-3E"],
+              "highlights": [
+                "Clock divider and control logic design",
+                "Timing and synchronization verification",
+                "Testbench-driven validation",
+                "Reliable data acquisition system"
+              ],
+              "links": {
+                "github": null,
+                "demo": null
+              },
+              "featured": false,
+              "status": "completed"
+            },
+            {
+              "title": "UART Protocol Implementation",
+              "category": "RTL Design",
+              "year": "2024",
+              "thumbnail": "/images/uart.jpg",
+              "description": "Complete UART transmitter and receiver with configurable baud rates and comprehensive verification.",
+              "technologies": ["Verilog", "Xilinx Vivado", "UART", "RTL Design", "Modelsim"],
+              "highlights": [
+                "Configurable baud rate support",
+                "Start/stop bit detection logic",
+                "Comprehensive testbench validation",
+                "Timing-accurate simulation"
+              ],
+              "links": {
+                "github": null,
+                "demo": null
+              },
+              "featured": false,
+              "status": "completed"
+            }
+          ],
+          
+          "viewAllButton": {
+            "label": "View All Projects",
+            "link": "/portfolio"
+          }
+        },
+        
+        {
+          "name": "tech-stack",
+          "padding": "96px 64px",
+          "background": {
+            "lightMode": "#F8FAFC",
+            "darkMode": "#1E293B"
+          },
+          
+          "header": {
+            "subtitle": "Technologies",
+            "title": "Tech Stack & Tools",
+            "alignment": "center",
+            "marginBottom": "64px"
+          },
+          
+          "categories": [
+            {
+              "name": "Languages",
+              "technologies": ["JavaScript", "Python", "Java", "C", "Verilog", "HTML5", "CSS3"]
+            },
+            {
+              "name": "Frontend",
+              "technologies": ["React.js", "Tailwind CSS", "Bootstrap", "Redux", "UI/UX"]
+            },
+            {
+              "name": "Backend",
+              "technologies": ["Node.js", "Express.js", "MongoDB", "Mongoose", "REST APIs", "JWT"]
+            },
+            {
+              "name": "AI & CV",
+              "technologies": ["YOLOv10", "OpenCV", "Ultralytics", "Face Recognition", "Image Processing"]
+            },
+            {
+              "name": "Hardware & Tools",
+              "technologies": ["Xilinx Vivado", "FPGA", "Raspberry Pi", "RTL Design", "Modelsim", "MATLAB"]
+            },
+            {
+              "name": "DevOps & Others",
+              "technologies": ["Git", "GitHub", "Vercel", "AWS", "Postman", "Linux"]
+            }
+          ]
+        },
+        
+        {
+          "name": "cta-section",
+          "padding": "96px 64px",
+          "background": "linear-gradient(135deg, #0EA5E9 0%, #8B5CF6 100%)",
+          "borderRadius": "24px",
+          "margin": "0 64px 96px 64px",
+          
+          "content": {
+            "title": "Let's Build Something Amazing Together",
+            "description": "I'm currently available for freelance projects and open to discussing innovative ideas. Whether it's a web application, AI system, or hardware project – let's collaborate!",
+            "buttons": [
+              {
+                "label": "Start a Project",
+                "link": "/contact"
+              },
+              {
+                "label": "View Services",
+                "link": "/services"
+              }
+            ]
+          }
+        }
+      ]
+    },
+
+    "aboutPage": {
+      "sections": [
+        {
+          "name": "hero",
+          "content": {
+            "subtitle": "About Me",
+            "headline": "Bridging Software and Hardware",
+            "introduction": [
+              "I'm Hamim Reja, a passionate Electronics and Communication Engineering undergraduate at Aliah University, Kolkata, with a strong focus on full-stack web development and AI systems. Currently in my final year with a CGPA of 7.68, I've cultivated expertise in building scalable MERN applications and deploying edge AI solutions.",
+              "My journey began with a fascination for how software and hardware interact. This led me to develop projects ranging from healthcare appointment platforms to AI-powered assistive devices for the visually impaired. I believe in leveraging technology to solve real-world problems, especially in healthcare and accessibility.",
+              "Beyond academics, I've gained practical experience through my internship with Indian Railways, where I worked with mission-critical signaling systems. When I'm not coding, I enjoy exploring new technologies, contributing to open-source projects, and continuously learning about the latest advancements in AI and web development."
+            ]
+          }
+        },
+        
+        {
+          "name": "stats",
+          "items": [
+            {"number": "3+", "label": "Years of Development Experience"},
+            {"number": "50+", "label": "Projects Completed"},
+            {"number": "7.68", "label": "Current CGPA"},
+            {"number": "10+", "label": "Technologies Mastered"}
+          ]
+        },
+        
+        {
+          "name": "skills",
+          "categories": [
+            {
+              "title": "Programming Languages",
+              "skills": [
+                {"name": "JavaScript (ES6+)", "level": 92},
+                {"name": "Python", "level": 88},
+                {"name": "Java (DSA)", "level": 85},
+                {"name": "Verilog (HDL)", "level": 80},
+                {"name": "C", "level": 82}
+              ]
+            },
+            {
+              "title": "Web Development",
+              "skills": [
+                {"name": "React.js", "level": 90},
+                {"name": "Node.js & Express", "level": 88},
+                {"name": "MongoDB & Mongoose", "level": 85},
+                {"name": "Tailwind CSS", "level": 92},
+                {"name": "REST APIs & JWT", "level": 87}
+              ]
+            },
+            {
+              "title": "AI & Computer Vision",
+              "skills": [
+                {"name": "YOLOv10 & Ultralytics", "level": 85},
+                {"name": "OpenCV", "level": 88},
+                {"name": "Face Recognition", "level": 82},
+                {"name": "Image Processing", "level": 80},
+                {"name": "Edge AI Optimization", "level": 78}
+              ]
+            },
+            {
+              "title": "Hardware & Tools",
+              "skills": [
+                {"name": "FPGA & Xilinx Vivado", "level": 80},
+                {"name": "RTL Design", "level": 78},
+                {"name": "Raspberry Pi", "level": 85},
+                {"name": "Git & Version Control", "level": 90},
+                {"name": "AWS & Vercel", "level": 75}
+              ]
+            }
+          ]
+        },
+        
+        {
+          "name": "experience",
+          "experiences": [
+            {
+              "period": "2024 - Present",
+              "company": "Freelance Developer",
+              "role": "Full-Stack Developer & AI Engineer",
+              "description": "Working on diverse projects including web applications, AI systems, and hardware interfaces",
+              "achievements": [
+                "Developed 3 major full-stack applications with MERN stack",
+                "Created AI-powered assistive device for visually impaired users",
+                "Implemented custom RBAC systems and secure authentication",
+                "Optimized applications for performance and scalability"
+              ],
+              "technologies": ["React", "Node.js", "MongoDB", "YOLOv10", "OpenCV", "Raspberry Pi"]
+            },
+            {
+              "period": "June 2025 - July 2025",
+              "company": "Indian Railways (Sealdah Division)",
+              "role": "Signal & Telecommunication Intern",
+              "description": "Gained exposure to railway signaling systems and mission-critical infrastructure",
+              "achievements": [
+                "Analyzed Electronic Interlocking and MSDAC systems",
+                "Observed real-time fault detection mechanisms",
+                "Studied high-reliability system design principles",
+                "Learned about safety protocols in critical infrastructure"
+              ],
+              "technologies": ["Electronic Interlocking", "MSDAC", "Signaling Systems"]
+            },
+            {
+              "period": "2022 - Present",
+              "company": "Academic Projects",
+              "role": "Student Researcher & Developer",
+              "description": "Undertaken various academic and personal projects in web development and hardware design",
+              "achievements": [
+                "Designed UART and SPI protocol implementations in Verilog",
+                "Built multiple full-stack web applications",
+                "Implemented RTL designs for FPGA deployment",
+                "Contributed to college technical events and workshops"
+              ],
+              "technologies": ["Verilog", "FPGA", "MERN Stack", "RTL Design"]
+            }
+          ]
+        },
+        
+        {
+          "name": "education",
+          "degrees": [
+            {
+              "degree": "B.Tech in Electronics and Communication Engineering",
+              "institution": "Aliah University, Kolkata",
+              "period": "2022 - 2026 (Expected)",
+              "cgpa": "7.68 (till 6th semester)",
+              "description": "Focused on Digital Electronics, VLSI Design, FPGA Design, and RTL Design and Verification. Active participant in technical societies and coding competitions."
+            },
+            {
+              "degree": "Higher Secondary (Science)",
+              "institution": "Target Point (R) School, West Bengal",
+              "period": "2020 - 2022",
+              "marks": "89%",
+              "description": "Specialized in Physics, Chemistry, and Mathematics with focus on electronics and computer science fundamentals."
+            }
+          ],
+          
+          "certifications": [
+            {
+              "name": "eSim: Circuit Simulation",
+              "issuer": "FOSSEE, IIT Bombay",
+              "description": "Designed and simulated a 3-input NAND gate using TTL logic"
+            }
+          ]
+        },
+        
+        {
+          "name": "values",
+          "values": [
+            {
+              "icon": "target",
+              "title": "Problem-Solving First",
+              "description": "I approach every project by understanding the core problem and designing solutions that are effective, scalable, and maintainable."
+            },
+            {
+              "icon": "lightbulb",
+              "title": "Innovation & Learning",
+              "description": "Technology evolves rapidly, and I stay at the forefront by continuously learning new tools, frameworks, and methodologies."
+            },
+            {
+              "icon": "code",
+              "title": "Clean Code Quality",
+              "description": "I believe in writing code that's not just functional but also readable, well-documented, and follows industry best practices."
+            },
+            {
+              "icon": "users",
+              "title": "User-Centric Design",
+              "description": "Whether it's a web app or an AI system, I prioritize user experience and accessibility in every solution I build."
+            },
+            {
+              "icon": "zap",
+              "title": "Performance Optimization",
+              "description": "From edge AI on Raspberry Pi to scalable web apps, I optimize for performance without compromising functionality."
+            },
+            {
+              "icon": "heart",
+              "title": "Social Impact",
+              "description": "I'm passionate about creating technology that makes a positive difference, especially in healthcare and accessibility domains."
+            }
+          ]
+        }
+      ]
+    },
+
+    "portfolioPage": {
+      "sections": [
+        {
+          "name": "hero",
+          "padding": "96px 64px 48px 64px",
+          "background": {
+            "lightMode": "#FFFFFF",
+            "darkMode": "#0F172A"
+          },
+          
+          "content": {
+            "subtitle": "My Work",
+            "title": "Portfolio",
+            "description": "A collection of projects showcasing my expertise in full-stack development, AI systems, and hardware design. Each project represents a unique challenge and innovative solution.",
+            "alignment": "center"
+          }
+        },
+        
+        {
+          "name": "filter-tabs",
+          "padding": "0 64px 48px 64px",
+          "alignment": "center",
+          
+          "filters": {
+            "layout": "horizontal",
+            "gap": "16px",
+            "filters": [
+              {"label": "All Projects", "value": "all"},
+              {"label": "Web Development", "value": "web"},
+              {"label": "AI & Computer Vision", "value": "ai"},
+              {"label": "Hardware Design", "value": "hardware"}
+            ],
+            "filterStyle": {
+              "padding": "12px 24px",
+              "borderRadius": "8px",
+              "fontSize": "15px",
+              "fontWeight": 500,
+              "border": "2px solid",
+              "borderColor": {
+                "lightMode": "#E2E8F0",
+                "darkMode": "#334155"
+              },
+              "activeStyle": {
+                "background": "#0EA5E9",
+                "color": "#FFFFFF",
+                "borderColor": "#0EA5E9"
+              }
+            }
+          }
+        },
+        
+        {
+          "name": "projects-grid",
+          "padding": "0 64px 96px 64px",
+          "background": {
+            "lightMode": "#FFFFFF",
+            "darkMode": "#0F172A"
+          },
+          
+          "projects": [
+            {
+              "id": "smart-glasses",
+              "title": "AI Smart Glasses for Visually Impaired",
+              "category": ["ai", "hardware"],
+              "year": "2025",
+              "thumbnail": "/images/projects/smart-glasses-main.jpg",
+              "images": [
+                "/images/projects/smart-glasses-1.jpg",
+                "/images/projects/smart-glasses-2.jpg",
+                "/images/projects/smart-glasses-3.jpg"
+              ],
+              "shortDescription": "Assistive wearable device with real-time object detection and face recognition for environment perception.",
+              "fullDescription": "Developed an innovative assistive wearable device designed to help visually impaired individuals navigate their environment safely. The system uses Ultralytics YOLOv10 for real-time object detection and obstacle avoidance, integrated with OpenCV's DNN module for face recognition capabilities. When a familiar face is detected, the system announces the person's name through a text-to-speech audio interface delivered via headphones. The entire solution is optimized to run on resource-constrained Raspberry Pi Zero 2W hardware, ensuring low-latency processing critical for user safety during navigation.",
+              "technologies": ["YOLOv10", "Ultralytics", "OpenCV", "Python", "Raspberry Pi Zero 2W", "Face Recognition", "TTS", "Edge AI"],
+              "features": [
+                "Real-time object detection using YOLOv10",
+                "Face recognition with audio announcement",
+                "Optimized for Raspberry Pi Zero 2W",
+                "Low-latency processing for safety",
+                "Text-to-speech audio feedback",
+                "Portable and wearable design",
+                "Battery-powered operation",
+                "Customizable detection parameters"
+              ],
+              "challenges": [
+                {
+                  "challenge": "Performance on Resource-Constrained Hardware",
+                  "solution": "Optimized Python scripts and model inference to achieve real-time performance on Pi Zero 2W through quantization and efficient memory management."
+                },
+                {
+                  "challenge": "Accurate Face Recognition in Various Lighting",
+                  "solution": "Implemented preprocessing techniques and used robust DNN models that maintain accuracy across different environmental conditions."
+                },
+                {
+                  "challenge": "Low-Latency Requirements for Safety",
+                  "solution": "Employed efficient algorithms and multi-threading to ensure detection and audio feedback occur within acceptable time frames."
+                }
+              ],
+              "impact": [
+                "Provides independence for visually impaired users",
+                "Enhances safety during navigation",
+                "Affordable compared to commercial alternatives",
+                "Demonstrates practical application of edge AI"
+              ],
+              "links": {
+                "github": "https://github.com/hamimreja-404/smart-glasses",
+                "demo": null,
+                "documentation": null
+              },
+              "status": "completed",
+              "featured": true
+            },
+            {
+              "id": "tuition-management",
+              "title": "Tuition & University Management System",
+              "category": ["web"],
+              "year": "2025",
+              "thumbnail": "/images/projects/tuition-main.jpg",
+              "images": [
+                "/images/projects/tuition-1.jpg",
+                "/images/projects/tuition-2.jpg",
+                "/images/projects/tuition-3.jpg"
+              ],
+              "shortDescription": "Role-based educational platform with custom 3-tier RBAC, automated fee management, and data visualization.",
+              "fullDescription": "Engineered a comprehensive role-based educational management platform featuring a sophisticated custom 3-tier Role-Based Access Control (RBAC) system. The permission hierarchy includes Superadmins who manage complete account lifecycles (activation/deactivation), Admins who handle department records and student management, and Students who have read-only dashboard access. The system implements automated fee management and payment tracking with intuitive data visualization for administrative oversight. A critical security feature includes automated triggers that instantly revoke JWT session tokens upon account deactivation by higher authorities, ensuring immediate access control.",
+              "technologies": ["React.js", "Node.js", "Express.js", "MongoDB", "Mongoose", "JWT", "Tailwind CSS", "Redux", "Chart.js"],
+              "features": [
+                "Custom 3-tier RBAC (Superadmin/Admin/Student)",
+                "Automated fee management system",
+                "Payment tracking with data visualization",
+                "Department and student record management",
+                "Instant JWT token revocation on deactivation",
+                "Role-based dashboard customization",
+                "Secure authentication and authorization",
+                "Real-time notifications",
+                "Export reports in multiple formats",
+                "Responsive design for all devices"
+              ],
+              "challenges": [
+                {
+                  "challenge": "Complex Permission Hierarchy",
+                  "solution": "Designed a flexible RBAC middleware system that checks permissions at multiple levels and cascades properly through the hierarchy."
+                },
+                {
+                  "challenge": "Instant Session Revocation",
+                  "solution": "Implemented a token blacklist mechanism with Redis caching to ensure immediate session termination across all active devices."
+                },
+                {
+                  "challenge": "Data Visualization Performance",
+                  "solution": "Used MongoDB aggregation pipelines to pre-process data server-side and implemented efficient charting with lazy loading."
+                }
+              ],
+              "impact": [
+                "Streamlines educational institution management",
+                "Reduces administrative overhead by 60%",
+                "Improves financial transparency",
+                "Enhances security with granular access control"
+              ],
+              "links": {
+                "github": "https://github.com/hamimreja-404/tuition-management",
+                "demo": "https://tuition-demo.vercel.app",
+                "documentation": null
+              },
+              "status": "completed",
+              "featured": true
+            },
+            {
+              "id": "mediq",
+              "title": "MediQ – Healthcare Appointment Platform",
+              "category": ["web"],
+              "year": "2026",
+              "thumbnail": "/images/projects/mediq-main.jpg",
+              "images": [
+                "/images/projects/mediq-1.jpg",
+                "/images/projects/mediq-2.jpg",
+                "/images/projects/mediq-3.jpg"
+              ],
+              "shortDescription": "Comprehensive healthcare ecosystem connecting doctors and patients with real-time scheduling and advanced search.",
+              "fullDescription": "Built a comprehensive bridging platform for doctors and patients featuring sophisticated real-time scheduling logic and advanced search algorithms. The system employs MongoDB Aggregation pipelines to enable multi-criteria filtering based on specialization, location, and availability. Implemented secure REST APIs with cookie-based JWT authentication for both patient and doctor portals. The platform includes modular React components for doctor slot management, allowing physicians to define their availability schedules dynamically. Patients can search, filter, and book appointments seamlessly while receiving real-time confirmations and reminders.",
+              "technologies": ["React.js", "Node.js", "Express.js", "MongoDB", "Mongoose", "JWT", "MongoDB Aggregation", "Tailwind CSS", "Redux"],
+              "features": [
+                "Advanced doctor search with multi-criteria filtering",
+                "Real-time appointment scheduling",
+                "Cookie-based JWT authentication",
+                "Doctor slot management system",
+                "Patient appointment history",
+                "Email notifications and reminders",
+                "Location-based search with maps",
+                "Doctor profile management",
+                "Review and rating system",
+                "Appointment cancellation and rescheduling"
+              ],
+              "challenges": [
+                {
+                  "challenge": "Complex Search Algorithm",
+                  "solution": "Leveraged MongoDB Aggregation pipelines with proper indexing to handle multi-criteria searches efficiently even with large datasets."
+                },
+                {
+                  "challenge": "Real-Time Slot Availability",
+                  "solution": "Implemented optimistic locking and transaction handling to prevent double-booking and ensure data consistency."
+                },
+                {
+                  "challenge": "Scalable Architecture",
+                  "solution": "Designed modular components and RESTful APIs that can scale horizontally as the user base grows."
+                }
+              ],
+              "impact": [
+                "Simplifies healthcare access for patients",
+                "Reduces appointment no-shows by 40%",
+                "Improves doctor schedule management",
+                "Enhances patient-doctor communication"
+              ],
+              "links": {
+                "github": "https://github.com/hamimreja-404/mediq",
+                "demo": "https://mediq-demo.vercel.app",
+                "documentation": null
+              },
+              "status": "completed",
+              "featured": true
+            },
+            {
+              "id": "adc-spi-fpga",
+              "title": "ADC Interface using SPI on FPGA",
+              "category": ["hardware"],
+              "year": "2024",
+              "thumbnail": "/images/projects/adc-fpga-main.jpg",
+              "images": [
+                "/images/projects/adc-fpga-1.jpg",
+                "/images/projects/adc-fpga-2.jpg"
+              ],
+              "shortDescription": "14-bit ADC interfaced with Spartan-3E FPGA using SPI protocol for reliable data acquisition.",
+              "fullDescription": "Designed and implemented a hardware interface between a 14-bit Analog-to-Digital Converter (ADC) and a Spartan-3E FPGA using the Serial Peripheral Interface (SPI) protocol. The project involved creating custom Verilog modules for clock division, SPI master controller, and data acquisition logic. Comprehensive timing analysis and simulation were performed to verify synchronization and ensure reliable data transfer. The design included proper handling of SPI timing requirements, chip select signals, and data framing to achieve accurate analog signal digitization.",
+              "technologies": ["Verilog", "Xilinx ISE", "FPGA", "Spartan-3E", "SPI Protocol", "Modelsim", "Testbench"],
+              "features": [
+                "14-bit resolution data acquisition",
+                "SPI master controller implementation",
+                "Configurable clock divider",
+                "Proper timing and synchronization",
+                "Testbench-driven verification",
+                "Error detection and handling",
+                "Modular Verilog design",
+                "Simulation-verified functionality"
+              ],
+              "challenges": [
+                {
+                  "challenge": "SPI Timing Constraints",
+                  "solution": "Carefully designed state machines and clock dividers to meet ADC timing requirements while maintaining FPGA clock domain stability."
+                },
+                {
+                  "challenge": "Data Synchronization",
+                  "solution": "Implemented proper synchronizers and metastability resolution techniques to ensure reliable data capture across clock domains."
+                },
+                {
+                  "challenge": "Verification Complexity",
+                  "solution": "Created comprehensive testbenches with multiple test scenarios to validate all operational modes and edge cases."
+                }
+              ],
+              "impact": [
+                "Demonstrates practical FPGA-ADC integration",
+                "Provides reusable SPI master IP core",
+                "Foundation for data acquisition systems",
+                "Educational resource for hardware design"
+              ],
+              "links": {
+                "github": null,
+                "demo": null,
+                "documentation": null
+              },
+              "status": "completed",
+              "featured": false
+            },
+            {
+              "id": "uart-implementation",
+              "title": "UART Protocol Implementation",
+              "category": ["hardware"],
+              "year": "2024",
+              "thumbnail": "/images/projects/uart-main.jpg",
+              "images": [
+                "/images/projects/uart-1.jpg",
+                "/images/projects/uart-2.jpg"
+              ],
+              "shortDescription": "Complete UART transmitter and receiver with configurable baud rates and comprehensive verification.",
+              "fullDescription": "Designed a complete Universal Asynchronous Receiver/Transmitter (UART) communication system in Verilog, including both transmitter and receiver modules. The implementation supports configurable baud rates and includes proper start bit detection, data framing with configurable data bits, optional parity checking, and stop bit generation. Extensive testbench-driven validation was performed using Modelsim to verify functionality across different baud rates and data configurations. The design is synthesizable and optimized for FPGA deployment using Xilinx Vivado.",
+              "technologies": ["Verilog", "Xilinx Vivado", "UART", "RTL Design", "Modelsim", "Testbench", "FPGA"],
+              "features": [
+                "Configurable baud rate generator",
+                "Start bit detection logic",
+                "Configurable data bits (5-9 bits)",
+                "Optional parity bit (even/odd/none)",
+                "Stop bit generation (1 or 2 bits)",
+                "FIFO buffers for transmit and receive",
+                "Status flags and error detection",
+                "Comprehensive testbench coverage"
+              ],
+              "challenges": [
+                {
+                  "challenge": "Baud Rate Accuracy",
+                  "solution": "Implemented precise clock divider with minimal error accumulation to maintain accurate baud rates across different system clocks."
+                },
+                {
+                  "challenge": "Start Bit Detection",
+                  "solution": "Used oversampling technique (16x) with majority voting to reliably detect start bits even in noisy environments."
+                },
+                {
+                  "challenge": "Timing Verification",
+                  "solution": "Created detailed timing diagrams and simulation waveforms to verify all timing requirements and edge cases."
+                }
+              ],
+              "impact": [
+                "Provides reusable UART IP core",
+                "Educational resource for serial communication",
+                "Foundation for embedded system projects",
+                "Demonstrates RTL design best practices"
+              ],
+              "links": {
+                "github": null,
+                "demo": null,
+                "documentation": null
+              },
+              "status": "completed",
+              "featured": false
+            }
+          ]
+        },
+        
+        {
+          "name": "skills-summary",
+          "padding": "96px 64px",
+          "background": {
+            "lightMode": "#F8FAFC",
+            "darkMode": "#1E293B"
+          },
+          
+          "header": {
+            "title": "Technical Capabilities",
+            "description": "Technologies and tools used across my projects",
+            "alignment": "center",
+            "marginBottom": "48px"
+          },
+          
+          "skillsGrid": {
+            "layout": "grid",
+            "columns": 4,
+            "gap": "24px",
+            "skills": [
+              "React.js", "Node.js", "MongoDB", "Express.js",
+              "YOLOv10", "OpenCV", "Python", "JavaScript",
+              "Verilog", "FPGA", "Tailwind CSS", "JWT",
+              "Raspberry Pi", "REST APIs", "Redux", "Xilinx Vivado"
+            ]
+          }
+        }
+      ]
+    },
+
+    "servicesPage": {
+      "sections": [
+        {
+          "name": "hero",
+          "padding": "96px 64px",
+          "background": {
+            "lightMode": "#FFFFFF",
+            "darkMode": "#0F172A"
+          },
+          
+          "content": {
+            "subtitle": "What I Offer",
+            "title": "Services",
+            "description": "Comprehensive development solutions tailored to bring your ideas to life. From web applications to AI systems and hardware designs.",
+            "alignment": "center"
+          }
+        },
+        
+        {
+          "name": "services-grid",
+          "padding": "0 64px 96px 64px",
+          "background": {
+            "lightMode": "#FFFFFF",
+            "darkMode": "#0F172A"
+          },
+          
+          "services": [
+            {
+              "icon": "globe",
+              "iconColor": "#0EA5E9",
+              "title": "Full-Stack Web Development",
+              "description": "End-to-end web application development using the MERN stack. I create scalable, responsive, and performant web solutions with modern UI/UX design principles.",
+              "features": [
+                "Custom MERN stack applications",
+                "RESTful API development",
+                "Responsive UI with React & Tailwind",
+                "Database design and optimization",
+                "JWT authentication & authorization",
+                "Role-Based Access Control (RBAC)",
+                "Payment gateway integration",
+                "Third-party API integration"
+              ],
+              "technologies": ["React.js", "Node.js", "Express.js", "MongoDB", "Tailwind CSS", "Redux"],
+              "deliverables": [
+                "Fully functional web application",
+                "Clean and documented codebase",
+                "Deployment on cloud platforms",
+                "Basic SEO optimization",
+                "Performance optimization",
+                "Responsive design for all devices"
+              ],
+              "pricing": {
+                "type": "project-based",
+                "starting": "Contact for quote",
+                "description": "Pricing varies based on project complexity and requirements"
+              }
+            },
+            {
+              "icon": "brain",
+              "iconColor": "#8B5CF6",
+              "title": "AI & Computer Vision Solutions",
+              "description": "Develop intelligent systems using state-of-the-art AI and computer vision technologies. Specialized in object detection, face recognition, and edge AI deployment.",
+              "features": [
+                "Object detection with YOLO models",
+                "Face recognition systems",
+                "Custom AI model training",
+                "Edge AI optimization",
+                "Real-time video processing",
+                "Image classification and segmentation",
+                "Raspberry Pi deployment",
+                "Performance optimization for embedded systems"
+              ],
+              "technologies": ["YOLOv10", "OpenCV", "Python", "TensorFlow", "PyTorch", "Raspberry Pi", "Edge AI"],
+              "deliverables": [
+                "Trained and optimized AI models",
+                "Complete implementation code",
+                "Hardware integration (if required)",
+                "Performance benchmarks",
+                "Documentation and usage guide",
+                "Deployment assistance"
+              ],
+              "pricing": {
+                "type": "project-based",
+                "starting": "Contact for quote",
+                "description": "Pricing depends on model complexity and deployment requirements"
+              }
+            },
+            {
+              "icon": "cpu",
+              "iconColor": "#10B981",
+              "title": "Hardware Design & FPGA Development",
+              "description": "Digital system design and FPGA implementation using Verilog. From protocol implementations to custom hardware accelerators.",
+              "features": [
+                "RTL design in Verilog",
+                "FPGA implementation (Xilinx)",
+                "Protocol implementation (UART, SPI, I2C)",
+                "Hardware-software interfacing",
+                "Timing analysis and optimization",
+                "Testbench development",
+                "Simulation and verification",
+                "Documentation and reports"
+              ],
+              "technologies": ["Verilog", "FPGA", "Xilinx Vivado", "Modelsim", "RTL Design", "Spartan/Artix"],
+              "deliverables": [
+                "Complete Verilog source code",
+                "Synthesizable and verified design",
+                "Comprehensive testbenches",
+                "Simulation results and waveforms",
+                "Timing analysis reports",
+                "Implementation guide"
+              ],
+              "pricing": {
+                "type": "project-based",
+                "starting": "Contact for quote",
+                "description": "Pricing based on design complexity and verification requirements"
+              }
+            },
+            {
+              "icon": "settings",
+              "iconColor": "#F59E0B",
+              "title": "API Development & Integration",
+              "description": "Design and develop robust RESTful APIs with proper documentation. Integrate third-party services and create microservices architectures.",
+              "features": [
+                "RESTful API design and development",
+                "API documentation (Swagger/OpenAPI)",
+                "Authentication & authorization",
+                "Rate limiting and security",
+                "Third-party API integration",
+                "Microservices architecture",
+                "Database optimization",
+                "Error handling and logging"
+              ],
+              "technologies": ["Node.js", "Express.js", "MongoDB", "PostgreSQL", "JWT", "OAuth", "Postman"],
+              "deliverables": [
+                "Complete API implementation",
+                "API documentation",
+                "Testing suite",
+                "Security best practices",
+                "Deployment configuration",
+                "Monitoring setup"
+              ],
+              "pricing": {
+                "type": "hourly/project",
+                "starting": "Contact for quote",
+                "description": "Flexible pricing based on API complexity"
+              }
+            },
+            {
+              "icon": "shield",
+              "iconColor": "#EF4444",
+              "title": "Technical Consulting",
+              "description": "Get expert guidance on technology stack selection, architecture design, and best practices for your project.",
+              "features": [
+                "Technology stack recommendations",
+                "Architecture design and review",
+                "Code review and optimization",
+                "Security audit and recommendations",
+                "Performance optimization strategies",
+                "Scalability planning",
+                "Development best practices",
+                "Documentation review"
+              ],
+              "technologies": ["Varies based on project needs"],
+              "deliverables": [
+                "Detailed consultation report",
+                "Architecture diagrams",
+                "Recommendations document",
+                "Best practices guide",
+                "Implementation roadmap",
+                "Follow-up support"
+              ],
+              "pricing": {
+                "type": "hourly",
+                "starting": "Contact for quote",
+                "description": "Hourly consulting rate available"
+              }
+            },
+            {
+              "icon": "wrench",
+              "iconColor": "#06B6D4",
+              "title": "Maintenance & Support",
+              "description": "Ongoing maintenance, bug fixes, feature additions, and technical support for existing applications.",
+              "features": [
+                "Bug fixing and troubleshooting",
+                "Performance monitoring",
+                "Security updates",
+                "Feature enhancements",
+                "Database maintenance",
+                "Server management",
+                "Regular backups",
+                "24/7 support (premium tier)"
+              ],
+              "technologies": ["All tech stacks supported"],
+              "deliverables": [
+                "Regular maintenance reports",
+                "Issue resolution",
+                "Performance improvements",
+                "Security patches",
+                "Documentation updates",
+                "Priority support"
+              ],
+              "pricing": {
+                "type": "monthly/hourly",
+                "starting": "Contact for quote",
+                "description": "Monthly retainer or hourly support available"
+              }
+            }
+          ]
+        },
+        
+        {
+          "name": "process",
+          "padding": "96px 64px",
+          "background": {
+            "lightMode": "#F8FAFC",
+            "darkMode": "#1E293B"
+          },
+          
+          "header": {
+            "subtitle": "How I Work",
+            "title": "My Development Process",
+            "description": "A transparent, collaborative approach to bring your project from concept to completion",
+            "alignment": "center",
+            "marginBottom": "64px"
+          },
+          
+          "steps": [
+            {
+              "number": "01",
+              "title": "Discovery & Planning",
+              "description": "We discuss your requirements, goals, and vision. I analyze the scope and create a detailed project plan with timelines and milestones.",
+              "duration": "1-3 days",
+              "deliverables": ["Project proposal", "Timeline", "Cost estimate"]
+            },
+            {
+              "number": "02",
+              "title": "Design & Architecture",
+              "description": "I design the system architecture, database schema, and create wireframes or mockups for approval before development begins.",
+              "duration": "3-7 days",
+              "deliverables": ["Architecture diagram", "Database schema", "UI mockups"]
+            },
+            {
+              "number": "03",
+              "title": "Development",
+              "description": "Agile development with regular updates. I build the application in sprints, ensuring code quality and best practices throughout.",
+              "duration": "Varies by project",
+              "deliverables": ["Working prototypes", "Progress updates", "Code reviews"]
+            },
+            {
+              "number": "04",
+              "title": "Testing & QA",
+              "description": "Comprehensive testing including functionality, performance, security, and user acceptance testing to ensure quality.",
+              "duration": "3-5 days",
+              "deliverables": ["Test reports", "Bug fixes", "Performance metrics"]
+            },
+            {
+              "number": "05",
+              "title": "Deployment",
+              "description": "I deploy your application to production servers, configure environments, and ensure everything runs smoothly.",
+              "duration": "1-2 days",
+              "deliverables": ["Live application", "Deployment docs", "Environment setup"]
+            },
+            {
+              "number": "06",
+              "title": "Support & Maintenance",
+              "description": "Post-launch support to address any issues, implement feedback, and provide ongoing maintenance as needed.",
+              "duration": "Ongoing",
+              "deliverables": ["Bug fixes", "Updates", "Technical support"]
+            }
+          ]
+        },
+        
+        {
+          "name": "why-choose-me",
+          "padding": "96px 64px",
+          "background": {
+            "lightMode": "#FFFFFF",
+            "darkMode": "#0F172A"
+          },
+          
+          "header": {
+            "subtitle": "Why Work With Me",
+            "title": "What Sets Me Apart",
+            "alignment": "center",
+            "marginBottom": "64px"
+          },
+          
+          "benefits": [
+            {
+              "icon": "check-circle",
+              "title": "Full-Stack Expertise",
+              "description": "From frontend to backend, databases to deployment – I handle every aspect of your application."
+            },
+            {
+              "icon": "zap",
+              "title": "Fast Turnaround",
+              "description": "Efficient development process with clear timelines and regular progress updates."
+            },
+            {
+              "icon": "shield",
+              "title": "Quality Assurance",
+              "description": "Clean, maintainable code following industry best practices with comprehensive testing."
+            },
+            {
+              "icon": "message-circle",
+              "title": "Clear Communication",
+              "description": "Regular updates, transparent processes, and always available to discuss your project."
+            },
+            {
+              "icon": "dollar-sign",
+              "title": "Competitive Pricing",
+              "description": "Fair, transparent pricing with no hidden costs. Quality work at reasonable rates."
+            },
+            {
+              "icon": "headphones",
+              "title": "Post-Launch Support",
+              "description": "Continued support after delivery to ensure your application runs smoothly."
+            }
+          ]
+        },
+        
+        {
+          "name": "cta",
+          "padding": "96px 64px",
+          "background": "linear-gradient(135deg, #0EA5E9 0%, #8B5CF6 100%)",
+          "borderRadius": "24px",
+          "margin": "0 64px 96px 64px",
+          
+          "content": {
+            "title": "Ready to Start Your Project?",
+            "description": "Let's discuss how I can help bring your ideas to life. Get in touch for a free consultation and project quote.",
+            "buttons": [
+              {
+                "label": "Get in Touch",
+                "link": "/contact",
+                "style": "white"
+              },
+              {
+                "label": "View Portfolio",
+                "link": "/portfolio",
+                "style": "outline"
+              }
+            ]
+          }
+        }
+      ]
+    },
+
+    "productsPage": {
+      "sections": [
+        {
+          "name": "hero",
+          "padding": "96px 64px",
+          "background": {
+            "lightMode": "#FFFFFF",
+            "darkMode": "#0F172A"
+          },
+          
+          "content": {
+            "subtitle": "SaaS Products",
+            "title": "Products & Solutions",
+            "description": "Innovative SaaS products designed to solve real-world problems. Currently in development with exciting features coming soon.",
+            "alignment": "center"
+          }
+        },
+        
+        {
+          "name": "products-showcase",
+          "padding": "0 64px 96px 64px",
+          
+          "products": [
+            {
+              "id": "product-1",
+              "name": "Coming Soon",
+              "tagline": "Revolutionary SaaS Solution in Development",
+              "description": "I'm currently working on an innovative SaaS product that addresses real-world challenges. Built with cutting-edge technology and user-centric design principles.",
+              "status": "in-development",
+              "expectedLaunch": "Q3 2026",
+              "thumbnail": "/images/products/product-coming-soon.jpg",
+              
+              "highlights": [
+                "Built with modern MERN stack",
+                "Focus on scalability and performance",
+                "User-friendly interface",
+                "Affordable pricing tiers",
+                "Comprehensive feature set",
+                "Regular updates and improvements"
+              ],
+              
+              "techStack": [
+                "React.js",
+                "Node.js",
+                "MongoDB",
+                "Express.js",
+                "Tailwind CSS",
+                "AWS/Vercel"
+              ],
+              
+              "targetAudience": [
+                "Small and medium businesses",
+                "Startups",
+                "Educational institutions",
+                "Individual professionals"
+              ],
+              
+              "pricing": {
+                "model": "Subscription-based",
+                "tiers": [
+                  {
+                    "name": "Free",
+                    "price": "₹0",
+                    "features": ["Basic features", "Limited usage", "Community support"]
+                  },
+                  {
+                    "name": "Pro",
+                    "price": "TBA",
+                    "features": ["All basic features", "Increased limits", "Priority support", "Advanced analytics"]
+                  },
+                  {
+                    "name": "Enterprise",
+                    "price": "Custom",
+                    "features": ["Unlimited usage", "Custom features", "Dedicated support", "SLA guarantee"]
+                  }
+                ]
+              },
+              
+              "roadmap": [
+                {
+                  "phase": "Phase 1",
+                  "period": "Q1 2026",
+                  "status": "in-progress",
+                  "milestones": [
+                    "Core feature development",
+                    "Database architecture design",
+                    "Initial UI/UX implementation"
+                  ]
+                },
+                {
+                  "phase": "Phase 2",
+                  "period": "Q2 2026",
+                  "status": "planned",
+                  "milestones": [
+                    "Beta testing with selected users",
+                    "Feature refinement",
+                    "Performance optimization",
+                    "Security auditing"
+                  ]
+                },
+                {
+                  "phase": "Phase 3",
+                  "period": "Q3 2026",
+                  "status": "planned",
+                  "milestones": [
+                    "Public launch",
+                    "Marketing campaign",
+                    "User onboarding",
+                    "Continuous improvements"
+                  ]
+                }
+              ],
+              
+              "waitlist": {
+                "enabled": true,
+                "benefits": [
+                  "Early access to beta version",
+                  "Lifetime 20% discount on Pro plan",
+                  "Priority feature requests",
+                  "Direct feedback channel",
+                  "Exclusive updates"
+                ]
+              }
+            }
+          ]
+        },
+        
+        {
+          "name": "vision",
+          "padding": "96px 64px",
+          "background": {
+            "lightMode": "#F8FAFC",
+            "darkMode": "#1E293B"
+          },
+          
+          "content": {
+            "title": "My Product Philosophy",
+            "description": "Building products that make a real difference",
+            "principles": [
+              {
+                "icon": "users",
+                "title": "User-Centric Design",
+                "description": "Every feature is designed with the end user in mind, ensuring intuitive and delightful experiences."
+              },
+              {
+                "icon": "zap",
+                "title": "Performance First",
+                "description": "Fast, responsive, and reliable – because your time is valuable and performance matters."
+              },
+              {
+                "icon": "lock",
+                "title": "Security & Privacy",
+                "description": "Your data security is paramount. Industry-standard encryption and privacy practices."
+              },
+              {
+                "icon": "trending-up",
+                "title": "Scalable Architecture",
+                "description": "Built to grow with your needs, from startup to enterprise-level usage."
+              },
+              {
+                "icon": "dollar-sign",
+                "title": "Affordable Pricing",
+                "description": "Fair, transparent pricing that provides value without breaking the bank."
+              },
+              {
+                "icon": "headphones",
+                "title": "Dedicated Support",
+                "description": "Responsive customer support to help you get the most out of the product."
+              }
+            ]
+          }
+        },
+        
+        {
+          "name": "development-updates",
+          "padding": "96px 64px",
+          "background": {
+            "lightMode": "#FFFFFF",
+            "darkMode": "#0F172A"
+          },
+          
+          "header": {
+            "subtitle": "Stay Updated",
+            "title": "Development Progress",
+            "description": "Follow the journey as I build and launch this product",
+            "alignment": "center",
+            "marginBottom": "64px"
+          },
+          
+          "updates": [
+            {
+              "date": "February 2026",
+              "title": "Development Kickoff",
+              "description": "Started core development with focus on database architecture and API design. Making great progress on the foundation.",
+              "image": "/images/updates/update-1.jpg"
+            },
+            {
+              "date": "January 2026",
+              "title": "Planning & Research",
+              "description": "Completed market research and user interviews. Finalized the feature set and technology stack for optimal performance.",
+              "image": "/images/updates/update-2.jpg"
+            }
+          ]
+        },
+        
+        {
+          "name": "waitlist-cta",
+          "padding": "96px 64px",
+          "background": "linear-gradient(135deg, #0EA5E9 0%, #8B5CF6 100%)",
+          "borderRadius": "24px",
+          "margin": "0 64px 96px 64px",
+          
+          "content": {
+            "title": "Join the Waitlist",
+            "description": "Be among the first to access the product when it launches. Get exclusive early bird benefits and lifetime discounts.",
+            "benefits": [
+              "✨ Early access to beta version",
+              "💰 Lifetime 20% discount on Pro plan",
+              "🎯 Priority feature requests",
+              "📢 Exclusive updates and news"
+            ],
+            "form": {
+              "fields": [
+                {
+                  "name": "email",
+                  "type": "email",
+                  "placeholder": "Enter your email",
+                  "required": true
+                },
+                {
+                  "name": "name",
+                  "type": "text",
+                  "placeholder": "Your name (optional)",
+                  "required": false
+                }
+              ],
+              "submitButton": {
+                "label": "Join Waitlist",
+                "style": "white-button"
+              }
+            }
+          }
+        },
+        
+        {
+          "name": "faq",
+          "padding": "96px 64px",
+          "background": {
+            "lightMode": "#F8FAFC",
+            "darkMode": "#1E293B"
+          },
+          
+          "header": {
+            "title": "Frequently Asked Questions",
+            "alignment": "center",
+            "marginBottom": "64px"
+          },
+          
+          "questions": [
+            {
+              "question": "When will the product be available?",
+              "answer": "The product is currently in active development with an expected launch in Q3 2026. Beta testing will begin in Q2 2026 for waitlist members."
+            },
+            {
+              "question": "What will be the pricing?",
+              "answer": "We'll offer multiple pricing tiers including a free plan with basic features. Pro and Enterprise plans will be announced closer to launch, with special discounts for early supporters."
+            },
+            {
+              "question": "Can I request features?",
+              "answer": "Absolutely! Waitlist members will have priority access to feature requests and can help shape the product roadmap."
+            },
+            {
+              "question": "Will there be a free trial?",
+              "answer": "Yes, we plan to offer a free plan with limited features, and a trial period for premium plans so you can experience the full capabilities."
+            },
+            {
+              "question": "What technology is it built with?",
+              "answer": "The product is built using the MERN stack (MongoDB, Express.js, React.js, Node.js) with modern tools like Tailwind CSS, ensuring performance, scalability, and maintainability."
+            },
+            {
+              "question": "How can I stay updated?",
+              "answer": "Join the waitlist to receive regular email updates about development progress, feature announcements, and launch details."
+            }
+          ]
+        }
+      ]
+    },
+
+    "contactPage": {
+      "sections": [
+        {
+          "name": "hero",
+          "padding": "96px 64px 48px 64px",
+          "background": {
+            "lightMode": "#FFFFFF",
+            "darkMode": "#0F172A"
+          },
+          
+          "content": {
+            "subtitle": "Get In Touch",
+            "title": "Let's Work Together",
+            "description": "Have a project in mind or just want to say hello? I'd love to hear from you. Fill out the form below or reach out through any of the contact methods.",
+            "alignment": "center"
+          }
+        },
+        
+        {
+          "name": "contact-section",
+          "layout": "split",
+          "padding": "48px 64px 96px 64px",
+          "gap": "64px",
+          
+          "leftColumn": {
+            "width": "40%",
+            
+            "contactInfo": [
+              {
+                "icon": "mail",
+                "iconColor": "#0EA5E9",
+                "label": "Email",
+                "value": "hamim.reja.mail@gmail.com",
+                "link": "mailto:hamim.reja.mail@gmail.com",
+                "description": "Best for project inquiries"
+              },
+              {
+                "icon": "phone",
+                "iconColor": "#10B981",
+                "label": "Phone",
+                "value": "+91 9382426273",
+                "link": "tel:+919382426273",
+                "description": "Available 10 AM - 7 PM IST"
+              },
+              {
+                "icon": "map-pin",
+                "iconColor": "#8B5CF6",
+                "label": "Location",
+                "value": "Kolkata, West Bengal, India",
+                "link": null,
+                "description": "IST (GMT+5:30)"
+              }
+            ],
+            
+            "socialLinks": {
+              "title": "Connect With Me",
+              "marginTop": "48px",
+              "links": [
+                {
+                  "platform": "GitHub",
+                  "username": "hamimreja-404",
+                  "url": "https://github.com/hamimreja-404",
+                  "icon": "github"
+                },
+                {
+                  "platform": "LinkedIn",
+                  "username": "hamim-reja",
+                  "url": "https://linkedin.com/in/hamim-reja-a2ba42279",
+                  "icon": "linkedin"
+                },
+                {
+                  "platform": "Email",
+                  "username": "hamim.reja.mail",
+                  "url": "mailto:hamim.reja.mail@gmail.com",
+                  "icon": "mail"
+                }
+              ]
+            },
+            
+            "availability": {
+              "marginTop": "48px",
+              "status": "Available",
+              "statusColor": "#10B981",
+              "title": "Current Availability",
+              "description": "Open for freelance projects and collaborations. Typical response time: within 24 hours.",
+              "badges": [
+                {
+                  "label": "Freelance",
+                  "color": "#0EA5E9"
+                },
+                {
+                  "label": "Open to Remote",
+                  "color": "#10B981"
+                }
+              ]
+            }
+          },
+          
+          "rightColumn": {
+            "width": "60%",
+            
+            "contactForm": {
+              "title": "Send Me a Message",
+              "description": "Fill out the form below and I'll get back to you as soon as possible.",
+              
+              "fields": [
+                {
+                  "name": "name",
+                  "label": "Your Name",
+                  "type": "text",
+                  "placeholder": "John Doe",
+                  "required": true,
+                  "width": "half"
+                },
+                {
+                  "name": "email",
+                  "label": "Email Address",
+                  "type": "email",
+                  "placeholder": "john@example.com",
+                  "required": true,
+                  "width": "half"
+                },
+                {
+                  "name": "phone",
+                  "label": "Phone Number",
+                  "type": "tel",
+                  "placeholder": "+91 XXXXX XXXXX",
+                  "required": false,
+                  "width": "half"
+                },
+                {
+                  "name": "service",
+                  "label": "Service Interested In",
+                  "type": "select",
+                  "options": [
+                    "Web Development",
+                    "AI & Computer Vision",
+                    "Hardware Design",
+                    "API Development",
+                    "Technical Consulting",
+                    "Other"
+                  ],
+                  "required": true,
+                  "width": "half"
+                },
+                {
+                  "name": "budget",
+                  "label": "Budget Range",
+                  "type": "select",
+                  "options": [
+                    "Less than ₹10,000",
+                    "₹10,000 - ₹50,000",
+                    "₹50,000 - ₹1,00,000",
+                    "₹1,00,000+",
+                    "Not sure yet"
+                  ],
+                  "required": false,
+                  "width": "full"
+                },
+                {
+                  "name": "message",
+                  "label": "Project Details",
+                  "type": "textarea",
+                  "placeholder": "Tell me about your project, timeline, and any specific requirements...",
+                  "required": true,
+                  "rows": 6,
+                  "width": "full"
+                },
+                {
+                  "name": "attachment",
+                  "label": "Attach Files (Optional)",
+                  "type": "file",
+                  "accept": ".pdf,.doc,.docx,.txt",
+                  "required": false,
+                  "width": "full",
+                  "description": "You can attach project briefs or reference documents (Max 5MB)"
+                }
+              ],
+              
+              "submitButton": {
+                "label": "Send Message",
+                "loadingLabel": "Sending...",
+                "icon": "send",
+                "style": {
+                  "background": "linear-gradient(135deg, #0EA5E9 0%, #8B5CF6 100%)",
+                  "color": "#FFFFFF",
+                  "padding": "16px 40px",
+                  "borderRadius": "8px",
+                  "fontSize": "16px",
+                  "fontWeight": 600,
+                  "width": "full"
+                }
+              },
+              
+              "successMessage": {
+                "title": "Message Sent Successfully! ✅",
+                "description": "Thank you for reaching out! I'll review your message and get back to you within 24 hours."
+              },
+              
+              "errorMessage": {
+                "title": "Oops! Something went wrong.",
+                "description": "Please try again or contact me directly at hamim.reja.mail@gmail.com"
+              }
+            }
+          }
+        },
+        
+        {
+          "name": "alternative-contact",
+          "padding": "96px 64px",
+          "background": {
+            "lightMode": "#F8FAFC",
+            "darkMode": "#1E293B"
+          },
+          
+          "header": {
+            "title": "Prefer a Different Method?",
+            "description": "Choose the communication channel that works best for you",
+            "alignment": "center",
+            "marginBottom": "48px"
+          },
+          
+          "methods": [
+            {
+              "icon": "calendar",
+              "iconColor": "#0EA5E9",
+              "title": "Schedule a Call",
+              "description": "Book a free 30-minute consultation to discuss your project in detail.",
+              "action": {
+                "label": "Book Now",
+                "link": "https://calendly.com/hamim-reja",
+                "type": "external"
+              }
+            },
+            {
+              "icon": "message-circle",
+              "iconColor": "#10B981",
+              "title": "WhatsApp Chat",
+              "description": "Send me a quick message on WhatsApp for immediate queries.",
+              "action": {
+                "label": "Chat on WhatsApp",
+                "link": "https://wa.me/919382426273",
+                "type": "external"
+              }
+            },
+            {
+              "icon": "linkedin",
+              "iconColor": "#0077B5",
+              "title": "LinkedIn Connect",
+              "description": "Connect with me professionally on LinkedIn for networking.",
+              "action": {
+                "label": "View Profile",
+                "link": "https://linkedin.com/in/hamim-reja-a2ba42279",
+                "type": "external"
+              }
+            }
+          ]
+        },
+        
+        {
+          "name": "faq",
+          "padding": "96px 64px",
+          "background": {
+            "lightMode": "#FFFFFF",
+            "darkMode": "#0F172A"
+          },
+          
+          "header": {
+            "subtitle": "Common Questions",
+            "title": "Before You Reach Out",
+            "description": "Quick answers to common questions about working with me",
+            "alignment": "center",
+            "marginBottom": "64px"
+          },
+          
+          "questions": [
+            {
+              "question": "What is your typical response time?",
+              "answer": "I typically respond to all inquiries within 24 hours during business days (Monday-Friday). For urgent matters, you can call me directly or send a WhatsApp message."
+            },
+            {
+              "question": "Do you work with clients internationally?",
+              "answer": "Yes! I work with clients globally. I'm based in India (IST timezone) but flexible with scheduling calls across different time zones."
+            },
+            {
+              "question": "What information should I include in my inquiry?",
+              "answer": "Please include: project overview, timeline, budget range, and any specific technical requirements. The more details you provide, the better I can understand and respond to your needs."
+            },
+            {
+              "question": "Do you offer free consultations?",
+              "answer": "Yes, I offer a free 30-minute initial consultation to discuss your project requirements and see if we're a good fit."
+            },
+            {
+              "question": "What is your pricing structure?",
+              "answer": "Pricing varies based on project scope and complexity. I offer both hourly and project-based pricing. After understanding your requirements, I'll provide a detailed quote."
+            },
+            {
+              "question": "Can you work with existing codebases?",
+              "answer": "Absolutely! I can work with existing projects, whether it's bug fixes, feature additions, or complete refactoring. I'm experienced with various tech stacks."
+            },
+            {
+              "question": "Do you sign NDAs?",
+              "answer": "Yes, I'm happy to sign Non-Disclosure Agreements to protect your intellectual property and maintain confidentiality."
+            },
+            {
+              "question": "What payment methods do you accept?",
+              "answer": "I accept bank transfers (NEFT/UPI for Indian clients), PayPal, and other standard payment methods. Terms will be discussed during project negotiation."
+            }
+          ]
+        },
+        
+        {
+          "name": "cta",
+          "padding": "96px 64px",
+          "background": "linear-gradient(135deg, #0EA5E9 0%, #8B5CF6 100%)",
+          "borderRadius": "24px",
+          "margin": "0 64px 96px 64px",
+          
+          "content": {
+            "title": "Let's Create Something Great",
+            "description": "I'm excited to hear about your project and explore how we can work together to bring your vision to life.",
+            "stats": [
+              {"label": "Response Time", "value": "< 24 hrs"},
+              {"label": "Projects Completed", "value": "50+"},
+              {"label": "Client Satisfaction", "value": "100%"}
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
