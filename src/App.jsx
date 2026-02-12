@@ -16,7 +16,7 @@ import { ThemeContext } from "./components/ThemeContext";
 import Dashboard from "./pages/Dashboard";
 function App() {
   const API_URL = import.meta.env.VITE_API_URL;
-  const pin = import.meta.env.REACT_APP_ADMIN_PASSWORD;
+  const pin = import.meta.env.VITE_ADMIN_PASSWORD;
   console.log("API URL:", API_URL); // Debugging line to check the API URL
   console.log("Admin Password:", pin); // Debugging line to check the admin password
   useEffect(() => {
