@@ -3,9 +3,6 @@ import { Moon, Sun, Menu, X } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { websiteConfig } from "../data/ConfigData";
 
-import Logo from "../../public/Logo.png";
-import Logo_Dark from "../../public/Logo_Dark.png";
-
 export default function Navbar({ isDark, themeColors, toggleTheme }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -94,7 +91,7 @@ export default function Navbar({ isDark, themeColors, toggleTheme }) {
           onClick={() => handleNavigation("")}
         >
           <img
-            src={isDark ? Logo_Dark : Logo}
+            src={isDark ?  "../../public/Logo_Dark.png" :  "../../public/Logo.png"}
             alt="Logo"
             className="w-10 h-10 shadow-lg object-cover"
           />

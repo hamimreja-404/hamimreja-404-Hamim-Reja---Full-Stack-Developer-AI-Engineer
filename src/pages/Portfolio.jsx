@@ -82,7 +82,7 @@ const projectsData = [
       "Small offices and clinics often rely on manual registers or expensive biometric hardware, leading to time theft and high setup costs.",
     solution:
       "Created a mobile-first attendance system using on-device face recognition. It offers geo-fencing for verified check-ins and generates automated monthly PDF reports for HR, eliminating hardware costs.",
-    links: { demo: false, code: "https://github.com/hamimreja-404/Attendify", download: "/downloads/attendify.apk" },
+    links: { demo: false, code: "https://github.com/hamimreja-404/Attendify", download: "https://github.com/hamimreja-404/Attendify/releases/download/v1.0.0/Attendify.apk" },
   },
   {
     id: 6,
@@ -97,7 +97,7 @@ const projectsData = [
     links: {
       demo: false,
       code: "https://github.com/hamimreja-404/Random-Generator",
-      download: "/downloads/random-gen-setup.exe",
+      download: "https://github.com/hamimreja-404/Random-Generator/releases/download/v1.0.0/Num.exe",
     },
   },
 ];

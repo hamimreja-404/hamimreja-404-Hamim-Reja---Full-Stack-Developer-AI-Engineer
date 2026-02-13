@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Github, Linkedin, Twitter, Mail, Globe, Smartphone, Users } from "lucide-react";
+import { Github, Linkedin, Twitter, Mail, Globe, Smartphone, Users ,Instagram} from "lucide-react";
 
 // Mocking the config data since the external file is not available in this context
 // You can replace these with your actual imports later if needed
@@ -8,11 +8,11 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const websiteConfig = {
   profile: {
-    email: "contact@hamimreja.com",
+    email: "hamim.reja.mail@gmail.com",
     socials: {
       github: "https://github.com/",
       linkedin: "https://linkedin.com/",
-      twitter: "https://twitter.com/"
+      instagram: "https://www.instagram.com/hamim__reja/"
     }
   }
 };
@@ -80,10 +80,10 @@ export default function Footer({ isDark, themeColors }) {
                 <Linkedin size={20} />
               </a>
               <a
-                href={websiteConfig.profile.socials.twitter}
+                href={websiteConfig.profile.socials.instagram}
                 className="text-slate-400 hover:text-white transition-colors bg-white/5 p-2 rounded-full hover:bg-white/10"
               >
-                <Twitter size={20} />
+                <Instagram size={20} />
               </a>
             </div>
           </div>

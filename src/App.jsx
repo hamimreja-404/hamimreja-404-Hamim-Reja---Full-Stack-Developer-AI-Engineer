@@ -14,11 +14,9 @@ import ServicesPage from "./pages/Service";
 import ProductsPage from "./pages/SaaS";
 import { ThemeContext } from "./components/ThemeContext";
 import Dashboard from "./pages/Dashboard";
+import BuyPlans from "./pages/buyPlan";
 function App() {
   const API_URL = import.meta.env.VITE_API_URL;
-  const pin = import.meta.env.VITE_ADMIN_PASSWORD;
-  console.log("API URL:", API_URL); // Debugging line to check the API URL
-  console.log("Admin Password:", pin); // Debugging line to check the admin password
   useEffect(() => {
     const trackVisitor = async () => {
       try {
@@ -83,6 +81,7 @@ return (
                 <Route path="/services" element={<ServicesPage />} />
                 <Route path="/products" element={<ProductsPage />} />
                 <Route path="/contact" element={<ContactPage />} />
+                <Route path="/buyplan" element={<BuyPlans />} />
                 <Route path="/ZGFzaGJvYXJk" element={<Dashboard />} />
               </Routes>
           </AnimatePresence>

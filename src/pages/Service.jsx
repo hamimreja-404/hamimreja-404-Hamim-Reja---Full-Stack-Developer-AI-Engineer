@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "../components/ThemeContext";
 import SEO from "../components/SEO";
+import { useNavigate } from "react-router-dom";
 // --- ICONS WRAPPER ---
 // Defined before usage or hoisted, but safe to keep here or bottom.
 function EyeIcon(props) {
@@ -201,7 +202,7 @@ const testimonials = [
 export default function ServicesPage() {
   const { isDark, themeColors: colors, toggleTheme } = useTheme();
   const [activeAccordion, setActiveAccordion] = useState(null);
-  
+  const navigate = useNavigate();
   // FIXED: Added budgetRange to initial state
   const [formData, setFormData] = useState({ 
     name: "", 
@@ -229,6 +230,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
     // Map the local state "subject" to the backend field "serviceType"
     const payload = {
@@ -448,6 +450,7 @@ const API_URL = import.meta.env.VITE_API_URL;
                 </p>
 
                 <button
+                onClick={()=> navigate(`/buyplan?plan=${plan.title}&price=${plan.price}`)}
                   className={`w-full py-3 rounded-lg font-bold mb-8 transition-transform hover:-translate-y-1 ${plan.recommended ? "text-white" : "border-2"}`}
                   style={
                     plan.recommended

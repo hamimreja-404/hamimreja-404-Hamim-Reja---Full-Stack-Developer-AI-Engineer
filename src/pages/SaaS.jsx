@@ -22,7 +22,7 @@ import {
   Loader, // Added Loader
   X       // Added X for Toast close button
 } from "lucide-react";
-
+import {useNavigate} from "react-router-dom";
 import { useTheme } from "../components/ThemeContext";
 import SEO from "../components/SEO";
 // --- DATA ---
@@ -85,6 +85,9 @@ export default function ProductsPage() {
   const [showToast, setShowToast] = useState(false); // Toast state
   const [statusMessage, setStatusMessage] = useState(""); // Used for error/success text
   const API_URL = import.meta.env.VITE_API_URL;
+
+  const navigate = useNavigate();
+
   const handleJoinWaitlist = async (e) => {
     e.preventDefault(); 
 
@@ -169,146 +172,101 @@ export default function ProductsPage() {
         </div>
 
         {/* --- PRODUCT 1: MEDIQ (MYSTERY/COMING SOON) --- */}
-        <section
+                <section
           className="mb-32 relative rounded-3xl overflow-hidden border shadow-2xl"
-          style={{
-            backgroundColor: colors.surface,
-            borderColor: colors.border,
-          }}
+          style={{ backgroundColor: colors.surface, borderColor: colors.border }}
         >
-          {/* Background decorative elements */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+          <div className="absolute top-0 right-0 w-64 md:w-96 h-64 md:h-96 bg-sky-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
 
-          <div className="grid lg:grid-cols-2 gap-12 p-8 lg:p-16 relative z-10">
-            <div className="flex flex-col justify-center">
-              <div className="inline-flex items-center gap-2 mb-6">
-                <span className="px-3 py-1 rounded text-xs font-bold uppercase tracking-wider bg-amber-500/10 text-amber-500 flex items-center gap-1">
+          <div className="grid lg:grid-cols-2 gap-12 p-6 md:p-12 lg:p-16 relative z-10">
+            <div className="flex flex-col justify-center order-2 lg:order-1">
+              <div className="inline-flex flex-wrap items-center gap-2 mb-6">
+                <span className="px-3 py-1 rounded text-[10px] md:text-xs font-bold uppercase tracking-wider bg-amber-500/10 text-amber-500 flex items-center gap-1">
                   <Clock size={12} /> Coming Soon
                 </span>
-                <span
-                  className="px-3 py-1 rounded text-xs font-bold uppercase tracking-wider bg-sky-500/10"
-                  style={{ color: colors.primary }}
-                >
+                <span className="px-3 py-1 rounded text-[10px] md:text-xs font-bold uppercase tracking-wider bg-sky-500/10" style={{ color: colors.primary }}>
                   Healthcare
                 </span>
               </div>
 
-              <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">
-                MediQ
-              </h2>
+              <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6">MediQ</h2>
 
               <div className="space-y-6 mb-8">
                 <div>
                   <h3 className="font-bold text-lg mb-2 flex items-center gap-2 text-rose-500">
                     <Zap size={20} /> The Problem
                   </h3>
-                  <p className="text-lg leading-relaxed opacity-80">
-                    For many people, getting medical care isn’t easy. It means
-                    waiting in packed clinics, searching endlessly for the right
-                    specialist, and juggling repeated phone calls just to
-                    confirm an appointment. What should be simple often turns
-                    stressful and exhausting.
+                  <p className="text-base md:text-lg leading-relaxed opacity-80">
+                    For many people, getting medical care isn’t easy. It means waiting in packed clinics, searching endlessly for the right specialist, and juggling calls just to confirm an appointment.
                   </p>
                 </div>
 
-                <div
-                  className="p-6 rounded-xl border-l-4"
-                  style={{
-                    backgroundColor: colors.background,
-                    borderColor: colors.primary,
-                  }}
-                >
-                  <p
-                    className="italic font-medium"
-                    style={{ color: colors.textSecondary }}
-                  >
+                <div className="p-4 md:p-6 rounded-xl border-l-4" style={{ backgroundColor: colors.background, borderColor: colors.primary }}>
+                  <p className="italic font-medium text-sm md:text-base" style={{ color: colors.textSecondary }}>
                     "Healthcare isn’t broken — it’s disconnected."
                   </p>
                 </div>
               </div>
 
-              {/* Waitlist Form */}
+              {/* Waitlist Form - Stacked on Mobile */}
               <div className="mt-4">
-                <p className="font-bold mb-3">
-                  Join the waitlist for early access
-                </p>
-
-                <form
-                  onSubmit={handleJoinWaitlist}
-                  className="flex gap-2 max-w-md"
-                >
+                <p className="font-bold mb-3 text-sm md:text-base">Join the waitlist for early access</p>
+                <form onSubmit={handleJoinWaitlist} className="flex flex-col sm:flex-row gap-3 max-w-md">
                   <input
                     type="tel"
-                    placeholder="Enter your phone number"
+                    placeholder="Enter phone number"
                     required
                     value={number}
                     onChange={(e) => setNumber(e.target.value)}
                     disabled={isLoading}
                     pattern="[0-9]{10}"
                     maxLength="10"
-                    className="flex-1 px-4 py-3 rounded-lg border focus:ring-2 focus:ring-sky-500 focus:outline-none bg-transparent disabled:opacity-50"
+                    className="flex-1 px-4 py-3 rounded-xl border focus:ring-2 focus:ring-sky-500 focus:outline-none bg-transparent disabled:opacity-50"
                     style={{ borderColor: colors.border }}
                   />
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="px-6 py-3 rounded-lg font-bold text-white transition-transform hover:scale-105 disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed flex items-center justify-center min-w-[140px]"
-                    style={{
-                      background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
-                    }}
+                    className="px-6 py-3 rounded-xl font-bold text-white transition-all hover:scale-105 active:scale-95 disabled:opacity-70 flex items-center justify-center min-w-[140px]"
+                    style={{ background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})` }}
                   >
-                    {isLoading ? (
-                         <><Loader className="animate-spin mr-2" size={20} /> Joining...</>
-                    ) : "Notify Me"}
+                    {isLoading ? <><Loader className="animate-spin mr-2" size={18} /> Joining...</> : "Notify Me"}
                   </button>
                 </form>
-
-                {/* Error Message Display (Inline) */}
-                {statusMessage && !showToast && (
-                  <p className="mt-3 text-sm text-red-500">
-                    {statusMessage}
-                  </p>
-                )}
+                {statusMessage && !showToast && <p className="mt-3 text-xs text-red-500">{statusMessage}</p>}
               </div>
             </div>
 
-            {/* Mystery UI Visual */}
-            <div className="relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-700 flex items-center justify-center h-[500px]">
-              {/* Blurred Content */}
-              <div className="absolute inset-0 opacity-30 filter blur-sm">
-                {/* Mock UI Elements */}
+            {/* Mystery UI Visual - Responsive Height */}
+            <div className="relative order-1 lg:order-2 rounded-2xl overflow-hidden bg-slate-900 border border-slate-700 flex items-center justify-center h-[350px] md:h-[500px]">
+              <div className="absolute inset-0 opacity-20 filter blur-sm">
                 <div className="p-6 grid gap-4">
-                  <div className="h-12 w-full bg-slate-700 rounded-lg"></div>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="h-32 bg-slate-700 rounded-lg"></div>
-                    <div className="h-32 bg-slate-700 rounded-lg"></div>
-                    <div className="h-32 bg-slate-700 rounded-lg"></div>
+                  <div className="h-10 w-full bg-slate-700 rounded-lg"></div>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="h-24 bg-slate-700 rounded-lg"></div>
+                    <div className="h-24 bg-slate-700 rounded-lg"></div>
+                    <div className="h-24 bg-slate-700 rounded-lg"></div>
                   </div>
-                  <div className="h-64 bg-slate-700 rounded-lg"></div>
+                  <div className="h-48 bg-slate-700 rounded-lg"></div>
                 </div>
               </div>
 
-              {/* Overlay Content */}
-              <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center p-8">
-                <Lock size={48} className="text-slate-400 mb-4" />
-                <h3 className="text-2xl font-bold text-white mb-2">
-                  Top Secret Features
-                </h3>
-                <p className="text-slate-400 max-w-xs mb-8">
-                  Pricing and advanced algorithms will be revealed at launch.
+              <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-md z-10 flex flex-col items-center justify-center text-center p-6">
+                <div className="bg-slate-800/50 p-4 rounded-full mb-6 border border-slate-700 shadow-xl">
+                    <Lock size={32} className="text-sky-400" />
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Top Secret Features</h3>
+                <p className="text-slate-400 text-sm max-w-[240px] mb-8">
+                  Proprietary algorithms and healthcare modules will be revealed at launch.
                 </p>
-                <div className="flex gap-8 text-white">
+                <div className="flex gap-6 md:gap-8 text-white">
                   <div className="text-center">
-                    <div className="text-3xl font-bold font-mono">04</div>
-                    <div className="text-xs uppercase tracking-widest text-slate-500">
-                      Months
-                    </div>
+                    <div className="text-2xl md:text-3xl font-bold font-mono">04</div>
+                    <div className="text-[10px] uppercase tracking-widest text-slate-500">Months</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold font-mono">12</div>
-                    <div className="text-xs uppercase tracking-widest text-slate-500">
-                      Days
-                    </div>
+                    <div className="text-2xl md:text-3xl font-bold font-mono">12</div>
+                    <div className="text-[10px] uppercase tracking-widest text-slate-500">Days</div>
                   </div>
                 </div>
               </div>
@@ -459,6 +417,7 @@ export default function ProductsPage() {
                   ))}
                 </div>
                 <button
+                onClick={()=> navigate(`/buyplan?plan=EduTech-${tier.title}&price=${tier.price}`)}
                   className={`w-full py-3 rounded-lg font-bold transition-all ${tier.rec ? "text-white shadow-lg" : "border-2"}`}
                   style={
                     tier.rec
