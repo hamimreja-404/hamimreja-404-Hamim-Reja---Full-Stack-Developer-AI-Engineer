@@ -15,15 +15,7 @@ import {
   Package,
 } from "lucide-react";
 import { useTheme } from "../components/ThemeContext";
-// --- MOCK COMPONENTS FOR STANDALONE RUNTIME ---
-// In the standalone preview environment, we define these internally to prevent resolution errors.
-
-const SEO = ({ title }) => {
-  useEffect(() => {
-    document.title = title ? `${title} | Plan Selection` : "Plan Selection";
-  }, [title]);
-  return null;
-};
+import SEO from "../components/SEO";
 
 // --- POSTMAN ANIMATION COMPONENT ---
 const PostmanAnimation = ({ isVisible, colors }) => {
@@ -112,11 +104,11 @@ export default function BuyPlans() {
       });
 
       const data = await response.json();
-      
+
       if (data.success) {
         // FIX 2: Delay the success screen slightly so the animation can be seen
         // or simply set isSent to true immediately.
-        
+
         setIsSent(true);
       } else {
         // Handle server-side errors here (e.g., show a to
@@ -147,7 +139,11 @@ export default function BuyPlans() {
           color: colors.textPrimary,
         }}
       >
-        <SEO title="Thank You" />
+        <SEO
+          title="Plans & Pricing | Book a Service"
+          description="Choose the right plan for your project. Book Hamim Reja for web development, technical consultation, and custom software solutions."
+          url="/plans"
+        />
         <div
           className="max-w-md w-full text-center p-8 rounded-3xl border shadow-2xl animate-fade-in"
           style={{
@@ -174,8 +170,8 @@ export default function BuyPlans() {
               {formData.planName}
             </span>
             . I'll contact you via{" "}
-            <span className="font-bold">{formData.mobileNumber}</span> as soon as
-            possible.
+            <span className="font-bold">{formData.mobileNumber}</span> as soon
+            as possible.
           </p>
 
           <div className="space-y-4 mb-8">
@@ -362,7 +358,10 @@ export default function BuyPlans() {
                       placeholder="10-digit mobile number"
                       value={formData.mobileNumber}
                       onChange={(e) =>
-                        setFormData({ ...formData, mobileNumber: e.target.value })
+                        setFormData({
+                          ...formData,
+                          mobileNumber: e.target.value,
+                        })
                       }
                       className="w-full pl-12 pr-4 py-4 rounded-2xl border focus:ring-2 focus:outline-none transition-all bg-transparent"
                       style={{ borderColor: colors.border }}

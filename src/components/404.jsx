@@ -1,37 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { 
-  Home, 
-  ArrowLeft, 
-  Search, 
-  Ghost, 
-  Zap, 
+import {
+  Home,
+  ArrowLeft,
+  Search,
+  Ghost,
+  Zap,
   AlertCircle,
   FileQuestion,
-  Compass
+  Compass,
 } from "lucide-react";
-
-// --- MOCK SEO COMPONENT ---
-const SEO = ({ title }) => {
-  useEffect(() => {
-    document.title = title ? `${title} | 404 Not Found` : "404 Not Found";
-  }, [title]);
-  return null;
-};
+import { useTheme } from "../components/ThemeContext";
+import SEO from "./SEO";
 
 export default function NotFoundPage() {
-  const [isDark, setIsDark] = useState(true);
+  const { isDark, themeColors: colors, toggleTheme } = useTheme();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   // Theme configuration consistent with your Services page
-  const themeColors = {
-    primary: "#0ea5e9", // sky-500
-    secondary: "#6366f1", // indigo-500
-    background: isDark ? "#0f172a" : "#ffffff",
-    surface: isDark ? "#1e293b" : "#f8fafc",
-    textPrimary: isDark ? "#f1f5f9" : "#0f172a",
-    textSecondary: isDark ? "#94a3b8" : "#475569",
-    border: isDark ? "#334155" : "#e2e8f0",
-  };
 
   // Parallax effect on mouse move
   useEffect(() => {
@@ -54,58 +39,68 @@ export default function NotFoundPage() {
         fontFamily: "'Inter', sans-serif",
       }}
     >
-      <SEO title="Page Not Found" />
+      <SEO
+        title="Page Not Found | Hamim Reja"
+        description="The page you're looking for doesn't exist or has been moved. Explore Hamim Reja's portfolio, services, and latest projects."
+        url="/404"
+      />
 
       {/* --- ANIMATED BACKGROUND ELEMENTS --- */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Animated Blobs */}
-        <div 
+        <div
           className="absolute -top-24 -left-24 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"
           style={{ backgroundColor: themeColors.primary }}
         ></div>
-        <div 
+        <div
           className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"
           style={{ backgroundColor: themeColors.secondary }}
         ></div>
-        
+
         {/* Floating Icons Parallax */}
-        <div 
+        <div
           className="absolute top-1/4 left-1/4 transition-transform duration-75"
-          style={{ transform: `translate(${mousePos.x * -1.5}px, ${mousePos.y * -1.5}px)` }}
+          style={{
+            transform: `translate(${mousePos.x * -1.5}px, ${mousePos.y * -1.5}px)`,
+          }}
         >
           <FileQuestion size={48} className="opacity-10" />
         </div>
-        <div 
+        <div
           className="absolute bottom-1/4 right-1/4 transition-transform duration-75"
-          style={{ transform: `translate(${mousePos.x * 2}px, ${mousePos.y * 2}px)` }}
+          style={{
+            transform: `translate(${mousePos.x * 2}px, ${mousePos.y * 2}px)`,
+          }}
         >
           <Compass size={64} className="opacity-10 animate-spin-slow" />
         </div>
       </div>
 
       {/* --- MAIN CONTENT CARD --- */}
-      <div 
+      <div
         className="relative z-10 max-w-2xl w-full text-center p-12 rounded-[2.5rem] border backdrop-blur-xl shadow-2xl transition-all duration-500"
-        style={{ 
-          backgroundColor: isDark ? "rgba(30, 41, 59, 0.7)" : "rgba(255, 255, 255, 0.7)",
-          borderColor: themeColors.border 
+        style={{
+          backgroundColor: isDark
+            ? "rgba(30, 41, 59, 0.7)"
+            : "rgba(255, 255, 255, 0.7)",
+          borderColor: themeColors.border,
         }}
       >
         {/* 404 Text with Glitch/Glow Effect */}
         <div className="relative mb-8">
-          <h1 
+          <h1
             className="text-[8rem] md:text-[12rem] font-black leading-none tracking-tighter select-none animate-pulse-gentle"
-            style={{ 
+            style={{
               background: `linear-gradient(to bottom, ${themeColors.primary}, ${themeColors.secondary})`,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              filter: "drop-shadow(0 0 20px rgba(14, 165, 233, 0.3))"
+              filter: "drop-shadow(0 0 20px rgba(14, 165, 233, 0.3))",
             }}
           >
             404
           </h1>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
-             <Ghost size={80} className="text-white/20 animate-bounce-slow" />
+            <Ghost size={80} className="text-white/20 animate-bounce-slow" />
           </div>
         </div>
 
@@ -115,7 +110,10 @@ export default function NotFoundPage() {
             style={{ backgroundColor: `${themeColors.primary}20` }}
           >
             <AlertCircle size={18} style={{ color: themeColors.primary }} />
-            <span className="text-sm font-bold uppercase tracking-widest" style={{ color: themeColors.primary }}>
+            <span
+              className="text-sm font-bold uppercase tracking-widest"
+              style={{ color: themeColors.primary }}
+            >
               Page Not Found
             </span>
           </div>
@@ -123,9 +121,13 @@ export default function NotFoundPage() {
           <h2 className="text-3xl md:text-4xl font-bold font-heading">
             You've ventured into the void.
           </h2>
-          
-          <p className="text-lg max-w-md mx-auto" style={{ color: themeColors.textSecondary }}>
-            The page you're looking for has been moved, deleted, or never existed in this dimension.
+
+          <p
+            className="text-lg max-w-md mx-auto"
+            style={{ color: themeColors.textSecondary }}
+          >
+            The page you're looking for has been moved, deleted, or never
+            existed in this dimension.
           </p>
 
           {/* --- ACTIONS --- */}
@@ -133,16 +135,24 @@ export default function NotFoundPage() {
             <button
               onClick={() => window.history.back()}
               className="group flex items-center gap-2 px-8 py-4 rounded-2xl font-bold border-2 transition-all hover:scale-105 active:scale-95"
-              style={{ borderColor: themeColors.border, color: themeColors.textPrimary }}
+              style={{
+                borderColor: themeColors.border,
+                color: themeColors.textPrimary,
+              }}
             >
-              <ArrowLeft size={20} className="transition-transform group-hover:-translate-x-1" />
+              <ArrowLeft
+                size={20}
+                className="transition-transform group-hover:-translate-x-1"
+              />
               Go Back
             </button>
 
             <button
-              onClick={() => window.location.href = "/"}
+              onClick={() => (window.location.href = "/")}
               className="flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-white shadow-lg shadow-sky-500/20 transition-all hover:scale-105 hover:shadow-sky-500/40 active:scale-95"
-              style={{ background: `linear-gradient(135deg, ${themeColors.primary}, ${themeColors.secondary})` }}
+              style={{
+                background: `linear-gradient(135deg, ${themeColors.primary}, ${themeColors.secondary})`,
+              }}
             >
               <Home size={20} />
               Return Home
@@ -155,7 +165,7 @@ export default function NotFoundPage() {
           onClick={() => setIsDark(!isDark)}
           className="mt-12 text-xs font-medium opacity-40 hover:opacity-100 transition-opacity"
         >
-          Switch to {isDark ? 'Light' : 'Dark'} Mode Preview
+          Switch to {isDark ? "Light" : "Dark"} Mode Preview
         </button>
       </div>
 
