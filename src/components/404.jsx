@@ -13,7 +13,7 @@ import { useTheme } from "../components/ThemeContext";
 import SEO from "./SEO";
 
 export default function NotFoundPage() {
-  const { isDark, themeColors: colors, toggleTheme } = useTheme();
+  const { isDark, themeColors, toggleTheme } = useTheme();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   // Theme configuration consistent with your Services page
