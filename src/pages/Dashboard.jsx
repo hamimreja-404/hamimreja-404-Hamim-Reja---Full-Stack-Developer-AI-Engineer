@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import {
   Users,
@@ -18,20 +17,17 @@ import {
   TrendingUp,
   Inbox,
   Clock,
-  DollarSign,
+  IndianRupee,
   UserPlus,
   Lock,
+  Send,
   ArrowLeft,
   ShieldCheck,
 } from "lucide-react";
 
 // Configuration
 const API_BASE_URL = import.meta.env.VITE_API_URL;
-// Security Configuration
-// MAKE SURE TO SET 'REACT_APP_ADMIN_PASSWORD' IN YOUR .env FILE
-// Example .env content: REACT_APP_ADMIN_PASSWORD=mySuperSecretPassword
-const REQUIRED_PASSWORD =
-  import.meta.env.VITE_ADMIN_PASSWORD;
+const REQUIRED_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD;
 
 const Dashboard = () => {
   // Authentication State
@@ -41,7 +37,7 @@ const Dashboard = () => {
 
   // Dashboard State
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [timeRange, setTimeRange] = useState("7d"); // 7d or 30d 
+  const [timeRange, setTimeRange] = useState("7d"); // 7d or 30d
   const [stats, setStats] = useState({
     uniqueVisitors: 0,
     totalVisits: 0,
@@ -51,6 +47,7 @@ const Dashboard = () => {
   const [services, setServices] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [subscribersList, setSubscribersList] = useState([]);
+  const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isServerUp, setIsServerUp] = useState(false);
@@ -77,7 +74,9 @@ const Dashboard = () => {
       const contactsRes = await fetch(`${API_BASE_URL}/inquiries/contacts`);
       const contactsData = await contactsRes.json();
       setContacts(contactsData);
-
+      const plansRes = await fetch(`${API_BASE_URL}/get-plans`);
+      const plansData = await plansRes.json();
+      setPlans(plansData);
       const subRes = await fetch(`${API_BASE_URL}/inquiries/early-access`);
       if (subRes.ok) {
         const subData = await subRes.json();
@@ -366,6 +365,19 @@ const Dashboard = () => {
               </span>
             )}
           </button>
+          <button
+            onClick={() => setActiveTab("plans")}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === "plans" ? "bg-indigo-600 text-white shadow-md shadow-indigo-100 font-medium" : "text-slate-500 hover:bg-slate-50"}`}
+          >
+            <Send className="w-5 h-5" /> Plans Message
+            {plans.length > 0 && (
+              <span
+                className={`ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full ${activeTab === "plans" ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"}`}
+              >
+                {plans.length}
+              </span>
+            )}
+          </button>
         </nav>
 
         <div className="mt-auto p-4 bg-slate-50 rounded-2xl border border-slate-100">
@@ -396,7 +408,10 @@ const Dashboard = () => {
                   ? "Service Management"
                   : activeTab === "subscribers"
                     ? "Early Access Leads"
-                    : "Message Inbox"}
+                    : "Message Inbox"
+                    ? activeTab === "plans"
+                    : "showPlans"
+                    }
             </h1>
             <p className="text-slate-500 mt-1">
               Reviewing metrics and communication logs for your business.
@@ -716,7 +731,7 @@ const Dashboard = () => {
                     <p className="text-sm text-slate-400 mb-4">{item.email}</p>
                     <div className="flex items-center gap-4 pt-4 border-t border-slate-50 text-xs font-bold">
                       <div className="flex items-center gap-1.5 text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
-                        <DollarSign className="w-3 h-3" /> {item.budgetRange}
+                        <IndianRupee className="w-3 h-3" /> {item.budgetRange}
                       </div>
                       <div className="flex items-center gap-1.5 text-slate-400">
                         <Calendar className="w-3 h-3" />{" "}
@@ -771,6 +786,8 @@ const Dashboard = () => {
                         </p>
                       </div>
                     </div>
+                    {selectedInquiry.message && (
+
                     <div>
                       <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-4">
                         Proposed Project Description
@@ -779,6 +796,125 @@ const Dashboard = () => {
                         {selectedInquiry.message}
                       </div>
                     </div>
+                    )}
+                    <div className="mt-10 flex items-center justify-between pt-8 border-t border-slate-100">
+                      <div className="flex items-center gap-2 text-slate-400 text-xs font-bold">
+                        <Clock className="w-4 h-4" /> Received on{" "}
+                        {formatDate(selectedInquiry.createdAt)}
+                      </div>
+                      <button className="bg-indigo-600 text-white px-8 py-3 rounded-2xl font-bold shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all active:scale-95">
+                        Send Proposal
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Plans Tab*/}
+        {activeTab === "plans" && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 animate-in fade-in slide-in-from-bottom-4">
+            <div
+              className={`space-y-4 ${selectedInquiry ? "lg:col-span-5" : "lg:col-span-12"}`}
+            >
+              <div className="bg-white p-4 rounded-2xl border border-slate-100 mb-6 flex items-center gap-4">
+                <Search className="w-5 h-5 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Filter requests..."
+                  className="bg-transparent border-none outline-none text-sm w-full"
+                />
+              </div>
+              <div
+                className={`grid gap-4 ${!selectedInquiry ? "sm:grid-cols-2 xl:grid-cols-3" : "grid-cols-1"}`}
+              >
+                {plans.map((item) => (
+                  <div
+                    key={item._id}
+                    onClick={() => setSelectedInquiry(item)}
+                    className={`p-6 rounded-3xl border transition-all cursor-pointer group bg-white ${selectedInquiry?._id === item._id ? "border-indigo-600 ring-4 ring-indigo-50 shadow-lg" : "border-slate-100 hover:border-indigo-200 hover:shadow-md"}`}
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center font-bold text-indigo-600">
+                        {item.name.charAt(0)}
+                      </div>
+                      <span className="text-[10px] font-black uppercase text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-full">
+                        {item.planName}
+                      </span>
+                    </div>
+                    <h4 className="font-bold text-slate-800 text-lg group-hover:text-indigo-600 transition-colors">
+                      {item.name}
+                    </h4>
+                    <p className="text-sm text-slate-400 mb-4"><p>{item.mobileNumber || item.email}</p></p>
+                    <div className="flex items-center gap-4 pt-4 border-t border-slate-50 text-xs font-bold">
+                      <div className="flex items-center gap-1.5 text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
+                        <IndianRupee /> {item.price}
+                      </div>
+                      <div className="flex items-center gap-1.5 text-slate-400">
+                        <Calendar className="w-3 h-3" />{" "}
+                        {new Date(item.createdAt).toLocaleDateString()}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {selectedInquiry && (
+              <div className="lg:col-span-7 sticky top-8 animate-in slide-in-from-right-4">
+                <div className="bg-white rounded-3xl border border-slate-100 shadow-xl overflow-hidden">
+                  <div className="h-3 bg-indigo-600 w-full"></div>
+                  <div className="p-8 lg:p-10">
+                    <div className="flex justify-between items-start mb-10">
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 rounded-3xl bg-indigo-50 flex items-center justify-center text-2xl font-black text-indigo-600">
+                          {selectedInquiry.name.charAt(0)}
+                        </div>
+                        <div>
+                          <h2 className="text-2xl font-black text-slate-900">
+                            {selectedInquiry.name}
+                          </h2>
+                          <p className="text-indigo-600 font-bold">
+                            {selectedInquiry.mobileNumber}| {selectedInquiry.email}
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setSelectedInquiry(null)}
+                        className="p-2 hover:bg-slate-100 rounded-xl text-slate-400 transition-colors"
+                      >
+                        <Inbox className="w-6 h-6" />
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-6 mb-10">
+                      <div className="bg-slate-50 p-5 rounded-3xl border border-slate-100">
+                        <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">
+                          Service Type
+                        </p>
+                        <p className="text-lg font-bold text-slate-800">
+                          {selectedInquiry.planName}
+                        </p>
+                      </div>
+                      <div className="bg-slate-50 p-5 rounded-3xl border border-slate-100">
+                        <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">
+                          Budget
+                        </p>
+                        <p className="text-lg font-bold text-emerald-600">
+                          {selectedInquiry.price}
+                        </p>
+                      </div>
+                    </div>
+                    {selectedInquiry.message && (
+                    <div>
+                      <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-4">
+                        Proposed Project Description
+                      </p>
+                      <div className="bg-slate-900 text-slate-300 p-8 rounded-[2.5rem] text-base leading-relaxed font-medium shadow-inner min-h-[150px]">
+                        {selectedInquiry.message}
+                      </div>
+                    </div>
+                    )}
                     <div className="mt-10 flex items-center justify-between pt-8 border-t border-slate-100">
                       <div className="flex items-center gap-2 text-slate-400 text-xs font-bold">
                         <Clock className="w-4 h-4" /> Received on{" "}
