@@ -91,7 +91,7 @@ export default function BuyPlans() {
     console.log(API_URL)
     try {
       // FIX 1: Added curly braces for variable interpolation
-      const response = await fetch(`${API_URL}/api/plans`, { 
+      const response = await fetch(`${API_URL}/plans`, { 
         method: "POST",
         headers: {
           "Content-Type": "application/json",

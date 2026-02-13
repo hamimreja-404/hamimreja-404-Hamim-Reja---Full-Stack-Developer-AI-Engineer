@@ -91,7 +91,7 @@ export default function Navbar({ isDark, themeColors, toggleTheme }) {
           onClick={() => handleNavigation("")}
         >
           <img
-            src={isDark ?  "../../public/Logo_Dark.png" :  "../../public/Logo.png"}
+            src={isDark ?  "https://res.cloudinary.com/dm01lhkax/image/upload/v1771008169/Logo_Dark_kk5hem.png" :  "https://res.cloudinary.com/dm01lhkax/image/upload/v1771008168/Logo_klhk3m.png"}
             alt="Logo"
             className="w-10 h-10 shadow-lg object-cover"
           />
