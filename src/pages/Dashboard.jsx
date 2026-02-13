@@ -31,7 +31,7 @@ const API_BASE_URL = import.meta.env.VITE_API_URL;
 // MAKE SURE TO SET 'REACT_APP_ADMIN_PASSWORD' IN YOUR .env FILE
 // Example .env content: REACT_APP_ADMIN_PASSWORD=mySuperSecretPassword
 const REQUIRED_PASSWORD =
-  import.meta.env.REACT_APP_ADMIN_PASSWORD;
+  import.meta.env.VITE_ADMIN_PASSWORD;
 
 const Dashboard = () => {
   // Authentication State
@@ -41,7 +41,7 @@ const Dashboard = () => {
 
   // Dashboard State
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [timeRange, setTimeRange] = useState("7d"); // 7d or 30d
+  const [timeRange, setTimeRange] = useState("7d"); // 7d or 30d 
   const [stats, setStats] = useState({
     uniqueVisitors: 0,
     totalVisits: 0,
