@@ -15,6 +15,7 @@ import ProductsPage from "./pages/SaaS";
 import { ThemeContext } from "./components/ThemeContext";
 import Dashboard from "./pages/Dashboard";
 import BuyPlans from "./pages/buyPlan";
+import NotFoundPage from "./components/404";
 function App() {
   const API_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
@@ -83,6 +84,7 @@ return (
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/buyplan" element={<BuyPlans />} />
                 <Route path="/ZGFzaGJvYXJk" element={<Dashboard />} />
+                <Route path="*" element={<NotFoundPage />} />
               </Routes>
           </AnimatePresence>
         </main>
