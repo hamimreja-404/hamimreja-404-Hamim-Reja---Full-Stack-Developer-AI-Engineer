@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 export default function SEO({ title, description, url }) {
-  const siteUrl = "https://hamimreja.in"; 
+  const siteUrl = "https://www.hamimreja.in/"; 
   const defaultTitle = "Hamim Reja | Full-Stack Developer & ECE Engineer";
   const defaultDesc = "Portfolio of Hamim Reja, a Full-Stack Developer (MERN) and ECE Engineer from Aliah University.";
   const defaultImage = "https://res.cloudinary.com/dm01lhkax/image/upload/v1770918643/HamimReja_vmphrh.jpg";
