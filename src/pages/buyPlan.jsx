@@ -184,10 +184,10 @@ export default function BuyPlans() {
             >
               <div className="flex items-center gap-3">
                 <Smartphone size={18} style={{ color: colors.primary }} />
-                <span className="text-sm font-medium">+91 98765 43210</span>
+                <span className="text-sm font-medium">+91 91 9434405501</span>
               </div>
               <button
-                onClick={() => (window.location.href = "tel:+919876543210")}
+                onClick={() => (window.location.href = "tel:+919434405501")}
                 className="text-xs font-bold uppercase tracking-wider hover:underline"
                 style={{ color: colors.primary }}
               >

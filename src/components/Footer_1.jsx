@@ -120,7 +120,7 @@ export default function Footer({ isDark, themeColors }) {
               </li>
               <li className="flex items-center gap-3 text-slate-400 text-sm">
                 <Smartphone size={16} className="text-sky-400" />
-                <span>+91 9382426273</span>
+                <span>+91 9434405501</span>
               </li>
             </ul>
           </div>
