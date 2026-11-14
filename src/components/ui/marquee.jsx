@@ -8,7 +8,7 @@ function Marquee({
   delay = 0,
   gap = 1,
   pauseOnHover = false,
-  repeat = 4,
+  repeat = 2,
   reverse = false,
   vertical = false,
   ...rest
