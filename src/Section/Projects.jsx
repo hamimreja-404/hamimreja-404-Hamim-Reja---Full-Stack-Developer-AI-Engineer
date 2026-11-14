@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   Briefcase,
@@ -20,276 +21,12 @@ import {
   AlertCircle,
   Wrench,
   Maximize2,
-  FolderOpenDot
+  FolderOpenDot,
+  ArrowRight,
 } from 'lucide-react';
+import { PROJECT_CATEGORIES, PROJECTS_DATA } from '@/data/projectsData';
 
 const AUTO_CYCLE_MS = 4500;
-
-const PROJECT_CATEGORIES = [
-  { id: 'all', label: 'All Projects', icon: Layers },
-  { id: 'startup', label: 'Startup', icon: Users },
-  { id: 'internship', label: 'During Internship', icon: Briefcase },
-  { id: 'support', label: 'At Office(Maintainance)', icon: FolderGit2 },
-  { id: 'final-year', label: 'Final Year Project', icon: GraduationCap },
-];
-
-// Add extra screenshots to any project's `gallery` array as `{ type: 'image', src: '...', caption: '...' }`
-// Replace every 'REPLACE_...' value with your real image / link / number before publishing.
-
-const PROJECTS_DATA = [
-  // ───────────── 01 · STARTUP / FLAGSHIP ─────────────
-  {
-    id: 'wedding-invites-startup',
-    category: 'startup',
-    categoryLabel: 'Startup',
-    shortTitle: 'Wedding Invites',
-    badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    dotClass: 'bg-emerald-500',
-    accentBorder: 'border-emerald-300',
-    title: 'Digital Nimantran', 
-    subtitle: 'A SaaS product I own with: 4k+ organic views, 15+ paying clients, 4.9 ratings and 500% ROI with zero paid advertising.',
-    impactMetric: '4k+ Views · 15+ Clients · 0 Ads · 500% ROI',
-    year: '2026 — Present', // adjust
-    coverImage: '/Projects/DigitalNimantran/1.webp',
-    tech: ['Next.js', 'Node.js', 'MongoDB', 'Tailwind CSS', 'Technical SEO', 'Vercel'],
-    challenge:
-      'Bengali wedding rituals and language were missing from existing digital invitation websites, so families had no online option that felt like their own ceremony.',
-    solution:
-      'Built and launched an invitation platform with Bengali-first templates that carry the rituals, with RSVP collection and image and video support, all tuned for speed and organic search.',
-    highlights: [
-      'Grew to 4,000+ views in 3–4 months with no paid ads, purely through SEO',
-      '15+ real clients onboarded, with RSVP tracking for guests',
-      '6+ templates with images and videos, optimised for fast loading',
-      'Owned the product end to end: problem discovery, build, launch, growth and client support',
-    ],
-    gallery: [
-      {
-        type: 'image',
-        src: '/Projects/DigitalNimantran/1.webp',
-        caption: 'Bengali wedding invitation template with ritual sections',
-      },
-      {
-        type: 'image',
-        src: '/Projects/DigitalNimantran/2.webp',
-        caption: 'Bengali wedding invitation template with ritual sections',
-      },
-      {
-        type: 'image',
-        src: '/Projects/DigitalNimantran/3.webp',
-        caption: 'Bengali wedding invitation template with ritual sections',
-      },
-      {
-        type: 'image',
-        src: '/Projects/DigitalNimantran/4.webp',
-        caption: 'Bengali wedding invitation template with ritual sections',
-      },
-      // {
-      //   type: 'architecture',
-      //   title: 'Product Growth Loop',
-      //   caption: 'From a real community gap to organic growth',
-      //   flow: ['Underserved Bengali Niche', 'Ritual-Rich Templates + RSVP', 'SEO-Optimised Pages', 'Organic Views → Real Clients'],
-      //   metrics: [
-      //     { label: 'Organic Views', value: '4k+' },
-      //     { label: 'Real Clients', value: '15+' },
-      //     { label: 'Ad Spend', value: '₹0' },
-      //   ],
-      // },
-    ],
-    links: {
-      demo: 'https://digitalnimantran.in/',
-    },
-  },
-
-  // ───────────── 02 · FINAL YEAR / SOCIAL IMPACT ─────────────
-  {
-    id: 'drishti-fyp',
-    category: 'final-year',
-    categoryLabel: 'Final Year Project',
-    shortTitle: 'Drishti AI Glasses',
-    badgeClass: 'bg-violet-50 text-violet-700 border-violet-200',
-    dotClass: 'bg-violet-500',
-    accentBorder: 'border-violet-300',
-    title: 'Drishti — Smart Class for Visually Impaired Students',
-    subtitle: 'A low-cost wearable that tells blind users what and who is around them, using object and face recognition.',
-    impactMetric: 'Edge Hardware + On-Phone AI',
-    year: '2025 — 2026',
-    coverImage: 'https://res.cloudinary.com/dm01lhkax/image/upload/v1770918280/Drishti_gdfyxu.jpg',
-    tech: ['Python', 'YOLOv10', 'OpenCV', 'TensorFlow', 'Raspberry Pi Zero W', 'UDP Streaming', 'TTS'],
-    challenge:
-      'Visually impaired students need real-time awareness of objects and people around them, but existing assistive devices are costly, bulky or rely on slow cloud round trips.',
-    solution:
-      'A Raspberry Pi camera on the glasses streams video over UDP to a phone. The phone does the heavy computation (YOLOv10 object detection, face recognition with OpenCV and TensorFlow) and speaks the result to the user.',
-    highlights: [
-      'Real-time object recognition and familiar-face recognition announced through audio',
-      'Split architecture: lightweight Pi camera on the glasses, heavy AI inference on the phone',
-      'Low-latency UDP video streaming from the Raspberry Pi to the phone',
-      'Built for affordability, using commodity hardware instead of costly assistive devices',
-    ],
-    gallery: [
-      {
-        type: 'image',
-        src: 'https://res.cloudinary.com/dm01lhkax/image/upload/v1770918280/Drishti_gdfyxu.jpg',
-        caption: 'Drishti AI Glasses: hardware prototype and camera rig',
-      },
-      {
-        type: 'architecture',
-        title: 'Edge-to-Phone AI Pipeline',
-        caption: 'Camera on the glasses, intelligence on the phone',
-        flow: ['Pi Zero W Camera', 'UDP Video Stream', 'Phone: YOLOv10 + Face Recognition', 'Audio Cue to User'],
-        metrics: [
-          { label: 'Hardware', value: 'Pi Zero W' },
-          { label: 'Transport', value: 'UDP' },
-          { label: 'Models', value: 'YOLOv10 + Face ID' },
-        ],
-      },
-    ],
-    links: {
-      code: 'https://github.com/hamimreja-404/Final-Year-Project',
-    },
-  },
-
-  // ───────────── 03 · INTERNSHIP · END-TO-END ─────────────
-  {
-    id: 'doctor-platform-internship',
-    category: 'internship',
-    categoryLabel: 'Internship',
-    shortTitle: 'Doctor Platform',
-    badgeClass: 'bg-cyan-50 text-cyan-700 border-cyan-200',
-    dotClass: 'bg-cyan-500',
-    accentBorder: 'border-cyan-300',
-    title: 'Doctor Consultation Platform',
-    subtitle: 'Live with a real doctor: book in 3 steps, consult online or in clinic, with chat, video calls and prescriptions.',
-    impactMetric: 'Live · Real Doctor · 3-Step Booking',
-    year: 'REPLACE_YEAR', // internship year
-    coverImage: 'REPLACE_WITH_IMAGE_URL',
-    tech: ['Next.js', 'Node.js', 'MongoDB', 'WebSockets', 'WebRTC', 'TURN Server', 'Razorpay', 'Figma'],
-    challenge:
-      "A practising doctor was managing appointments, payments and follow-ups by hand, and patients had no easy way to book a slot or consult remotely.",
-    solution:
-      'Designed the whole system myself: ER diagram, data flow diagram, state machine and Figma UI. The result is a mobile-first booking flow, online and in-clinic consultations, payments and digital prescriptions.',
-    highlights: [
-      'Owned architecture end to end: ER diagram, data flow, state machine and UI design',
-      'Mobile-first booking in just 3 steps, with doctor-defined slot durations (15/20/30 min)',
-      'WebSocket chat plus WebRTC audio and video calls, with a TURN server so calls work across different networks',
-      'Razorpay payments, digital prescriptions, patient medical history, monthly revenue view and booking controls',
-    ],
-    gallery: [
-      {
-        type: 'image',
-        src: 'REPLACE_WITH_IMAGE_URL',
-        caption: 'Mobile booking flow and doctor dashboard',
-      },
-      {
-        type: 'architecture',
-        title: 'Consultation System Design',
-        caption: 'From booking to prescription, online or in clinic',
-        flow: ['Patient Books Slot (3 Steps)', 'Razorpay Payment', 'Online: Chat + WebRTC Call  |  In-Clinic Visit', 'Prescription & Medical History'],
-        metrics: [
-          { label: 'Real-time', value: 'WebSocket + WebRTC' },
-          { label: 'Payments', value: 'Razorpay' },
-          { label: 'Status', value: 'Live in Production' },
-        ],
-      },
-    ],
-    links: {
-      note: 'Built during my internship for a real client. Architecture walkthrough available during interviews.',
-    },
-  },
-  {
-    id: 'attendsync-internship',
-    category: 'internship',
-    categoryLabel: 'Internship',
-    shortTitle: 'AttendSync',
-    badgeClass: 'bg-cyan-50 text-cyan-700 border-cyan-200',
-    dotClass: 'bg-cyan-500',
-    accentBorder: 'border-cyan-300',
-    title: 'AttendSync — Attendance Management Platform',
-    subtitle: 'Admin and employee dashboards with geo-verified punch in/out, flexible shifts and Excel reports.',
-    impactMetric: 'Role-Based · Geo-Verified · Excel Reports',
-    year: 'REPLACE_YEAR',
-    coverImage: 'REPLACE_WITH_IMAGE_URL',
-    tech: ['Next.js', 'Node.js', 'MongoDB', 'RBAC', 'Geolocation', 'Brevo', 'Excel Export'],
-    challenge:
-      'Organisations with multiple offices, shifts and holiday rules needed a trustworthy way to record attendance and working hours without manual registers.',
-    solution:
-      'Built a role-based web platform where admins configure locations, shifts, breaks, grace periods and holidays, and employees punch in and out from their live location, verified against the assigned office.',
-    highlights: [
-      'Admins create employees and office locations, and define shifts, break hours, grace in/out and holidays, assignable by department or location',
-      'Employees log in with a Brevo-emailed temporary password and punch in/out only when verified at the office location',
-      'Daily working hours, break hours and full attendance history for every employee',
-      'Admin view of all employee records with Excel export',
-    ],
-    gallery: [
-      {
-        type: 'image',
-        src: 'REPLACE_WITH_IMAGE_URL',
-        caption: 'AttendSync admin dashboard and employee punch screen',
-      },
-      {
-        type: 'architecture',
-        title: 'Attendance Flow',
-        caption: 'Rules set by the admin, enforced at every punch',
-        flow: ['Admin Sets Locations, Shifts, Holidays', 'Employee Login (Temp Password via Brevo)', 'Live-Location Verified Punch', 'Hours Tracking + Excel Export'],
-        metrics: [
-          { label: 'Roles', value: 'Admin / Employee' },
-          { label: 'Verification', value: 'Live Location' },
-          { label: 'Reports', value: 'Excel' },
-        ],
-      },
-    ],
-    links: {
-      note: 'Built during my internship. Architecture walkthrough available during interviews.',
-    },
-  },
-
-  // ───────────── 04 · PRODUCTION SUPPORT (ONE COMBINED CARD) ─────────────
-  {
-    id: 'martian-production-support',
-    category: 'support',
-    categoryLabel: 'Production Support',
-    shortTitle: 'Martian Corp',
-    badgeClass: 'bg-indigo-50 text-indigo-700 border-indigo-200',
-    dotClass: 'bg-indigo-500',
-    accentBorder: 'border-indigo-300',
-    title: 'Production Maintenance: 5+ Live Products',
-    subtitle: 'Keeping client products live 24x7 and shipping new features for thousands of daily users.',
-    impactMetric: '5+ Products · 1000s Daily Users',
-    year: 'Jul 2026 — Present',
-    coverImage: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&auto=format&fit=crop&q=80',
-    tech: ['Next.js', 'React.js', 'Node.js', 'MongoDB', 'Razorpay', 'Brevo', 'Google Analytics', 'Meta Pixel'],
-    challenge:
-      'Live client products with thousands of daily users, many handling real payments, need to stay up around the clock while still adding features quickly.',
-    solution:
-      'As SDE Trainee at Martian Corporation, I maintain these products, ship features from client requirements, fix production bugs and report progress to clients every week.',
-    highlights: [
-      'Maintain 5+ production products serving thousands of daily users, kept live 24x7',
-      'Shipped features such as forgot-password emails, surveys, new pages, dashboard sections and content updates',
-      'Fixed production bugs, including login issues, with minimal downtime',
-      'Maintained Razorpay payment flows, Brevo email, Google Analytics and Meta Pixel across projects',
-      'Run client calls to turn requirements into features, with weekly progress reports',
-    ],
-    gallery: [
-      {
-        type: 'architecture',
-        title: 'Production Support Workflow',
-        caption: 'From client request to monitored release',
-        flow: ['Client Requirement', 'Feature or Bug Fix', 'Production Release', '24x7 Monitoring + Weekly Report'],
-        metrics: [
-          { label: 'Live Products', value: '5+' },
-          { label: 'Uptime Goal', value: '24x7' },
-          { label: 'Role', value: 'SDE Trainee' },
-        ],
-      },
-    ],
-    links: {
-      note: 'Proprietary client work. Details shared during interviews, subject to company policy.',
-    },
-  },
-];
-
-// Tab labels for your filter bar:
-// all → 'All Projects' · startup → 'Startup' · internship → 'Internship'
-// support → 'Production Support' · final-year → 'Final Year Project'
 
 const SlideCanvas = ({ slide, projectTitle }) => {
   if (!slide) return null;
@@ -642,8 +379,8 @@ const Projects = () => {
                     setActiveIndex(idx);
                   }
                 }}
-                style={{ flexGrow: isActive ? 4.2 : 0.75 }}
-                className={`relative h-full min-w-[68px] cursor-pointer overflow-hidden rounded-3xl border transition-[flex-grow,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                style={{ flexGrow: isActive ? 3.8 : 0.6 }}
+                className={`relative h-full min-w-[46px] lg:min-w-[56px] cursor-pointer overflow-hidden rounded-3xl border transition-[flex-grow,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                   isActive
                     ? `${project.accentBorder} shadow-xl`
                     : 'border-slate-200/90 shadow-sm hover:border-slate-300'
@@ -715,16 +452,14 @@ const Projects = () => {
                       <p className="mt-1 text-sm text-slate-200 line-clamp-1">{project.subtitle}</p>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setLightboxProject(project);
-                      }}
+                    <Link
+                      to={`/${project.slug || project.id}`}
+                      onClick={(e) => e.stopPropagation()}
                       className="shrink-0 inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-2 text-xs font-semibold text-slate-900 shadow-md transition-transform hover:scale-105"
                     >
-                      <Maximize2 className="size-3.5 text-cyan-600" /> Expand
-                    </button>
+                      <span>Case Study</span>
+                      <ArrowRight className="size-3.5 text-cyan-600" />
+                    </Link>
                   </div>
                 </div>
 
@@ -852,7 +587,7 @@ const Projects = () => {
                 </div>
               </div>
 
-              {/* Right Stage: Structured Case-Study Breakdown */}
+              {/* Right Stage: Summary with Few Points & Direct Case Study Redirect */}
               <div className="lg:col-span-6 space-y-5">
                 <div className="space-y-2">
                   <div className="flex flex-wrap items-center justify-between gap-2">
@@ -868,22 +603,34 @@ const Projects = () => {
                   <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
                     {activeProject.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">{activeProject.solution}</p>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300 line-clamp-2">
+                    {activeProject.subtitle}
+                  </p>
                 </div>
 
-                {/* Highlights */}
-                <ul className="space-y-2 border-y border-slate-100 dark:border-slate-800 py-4">
-                  {activeProject.highlights.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-sm text-slate-700 dark:text-slate-300">
-                      <CheckCircle2 className="size-4 shrink-0 text-cyan-600 dark:text-cyan-400 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                {/* Only few high-impact points on Home page */}
+                <div className="rounded-2xl border border-slate-100 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-800/60">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                      Key Highlights
+                    </span>
+                    <span className="font-mono text-[10px] text-cyan-600 dark:text-cyan-400">
+                      Top 3 Overview
+                    </span>
+                  </div>
+                  <ul className="mt-2.5 space-y-2">
+                    {activeProject.highlights.slice(0, 3).map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                        <CheckCircle2 className="size-4 shrink-0 text-cyan-600 dark:text-cyan-400 mt-0.5" />
+                        <span className="line-clamp-2">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-1.5">
-                  {activeProject.tech.map((t) => (
+                {/* Tech Stack (Top 5) */}
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {activeProject.tech.slice(0, 5).map((t) => (
                     <span
                       key={t}
                       className="rounded-lg border border-slate-200/90 bg-slate-50 px-2.5 py-1 text-xs font-mono font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-200"
@@ -891,50 +638,55 @@ const Projects = () => {
                       {t}
                     </span>
                   ))}
+                  {activeProject.tech.length > 5 && (
+                    <span className="px-2 py-1 text-xs font-mono text-slate-400">
+                      +{activeProject.tech.length - 5} more
+                    </span>
+                  )}
                 </div>
 
-                {/* Actions */}
-                <div className="flex flex-wrap items-center gap-3 pt-1">
+                {/* Actions: Direct Case Study Navigation + Live Links */}
+                <div className="flex flex-wrap items-center gap-3 pt-2">
+                  <Link
+                    to={`/${activeProject.slug || activeProject.id}`}
+                    className="group inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition-all hover:-translate-y-0.5 hover:bg-cyan-700 dark:bg-cyan-500 dark:text-slate-950 dark:hover:bg-cyan-400"
+                  >
+                    <span>View Case Study</span>
+                    <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
+
                   {activeProject.links?.demo && (
                     <a
                       href={activeProject.links.demo}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white shadow-xs transition-colors hover:bg-cyan-600 dark:bg-cyan-500 dark:text-slate-950 dark:hover:bg-cyan-400"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-2xs transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
                     >
-                      Live Demo <ExternalLink className="size-4" />
+                      <span>Live Demo</span>
+                      <ExternalLink className="size-3.5" />
                     </a>
                   )}
+
                   {activeProject.links?.code && (
                     <a
                       href={activeProject.links.code}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-800 shadow-2xs transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-2xs transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
                     >
-                      Source Code <Github className="size-4" />
+                      <Github className="size-3.5" />
+                      <span>Code</span>
                     </a>
                   )}
-                  {activeProject.links?.download && (
-                    <a
-                      href={activeProject.links.download}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-5 py-2.5 text-sm font-medium text-cyan-800 transition-colors hover:bg-cyan-100 dark:border-cyan-800 dark:bg-cyan-950/70 dark:text-cyan-300 dark:hover:bg-cyan-900/70"
-                    >
-                      {activeProject.links.downloadLabel || 'Download'} <Download className="size-4" />
-                    </a>
-                  )}
+
                   <button
                     type="button"
                     onClick={() => setLightboxProject(activeProject)}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
                   >
-                    Problem &amp; Gallery <Maximize2 className="size-3.5" />
+                    <Maximize2 className="size-3.5" />
+                    <span>Quick Preview</span>
                   </button>
-                  {activeProject.links?.note && (
-                    <p className="w-full text-xs italic text-slate-500 dark:text-slate-400">{activeProject.links.note}</p>
-                  )}
                 </div>
               </div>
             </motion.div>
