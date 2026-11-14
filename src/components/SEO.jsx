@@ -2,10 +2,10 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 export default function SEO({ title, description, url }) {
-  const siteUrl = "https://www.hamimreja.in/"; 
-  const defaultTitle = "Hamim Reja | Full-Stack Developer & ECE Engineer";
-  const defaultDesc = "Portfolio of Hamim Reja, a Full-Stack Developer (MERN) and ECE Engineer from Aliah University.";
-  const defaultImage = "https://res.cloudinary.com/dm01lhkax/image/upload/v1770918643/HamimReja_vmphrh.jpg";
+  const siteUrl = "https://hamimreja.in/";
+  const defaultTitle = "Hamim Reja | Full-Stack Software Engineer & Systems Architect";
+  const defaultDesc = "Portfolio of Hamim Reja — Full-Stack Software Engineer (SDE), Backend Systems Architect, and Startup Builder specializing in React, Next.js, Node.js, TypeScript, Distributed Systems, WebRTC, and Scalable Cloud Architectures.";
+  const defaultImage = "https://hamimreja.in/HeroSection.webp";
 
   return (
     <Helmet>
@@ -14,8 +14,8 @@ export default function SEO({ title, description, url }) {
       <meta name="description" content={description || defaultDesc} />
       <link rel="canonical" href={url ? `${siteUrl}${url}` : siteUrl} />
 
-      {/* Open Graph / Facebook */}
-      <meta property="og:type" content="website" />
+      {/* Open Graph / Facebook / LinkedIn */}
+      <meta property="og:type" content="profile" />
       <meta property="og:title" content={title || defaultTitle} />
       <meta property="og:description" content={description || defaultDesc} />
       <meta property="og:image" content={defaultImage} />

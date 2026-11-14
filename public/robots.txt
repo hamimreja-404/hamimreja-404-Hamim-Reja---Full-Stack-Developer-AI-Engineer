@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.hamimreja.in/sitemap.xml
+
+Sitemap: https://hamimreja.in/sitemap.xml
