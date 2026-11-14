@@ -20,7 +20,7 @@ const EXPERIENCES = [
     accentBar: 'bg-cyan-500',
     accentBadge: 'bg-cyan-50 text-cyan-700 border-cyan-200',
     accentIcon: 'text-cyan-600',
-    activeBorder: 'border-cyan-300/90 shadow-md',
+    activeBorder: 'border-slate-400 dark:border-slate-600 ring-1 ring-slate-300 dark:ring-slate-700',
     tags: ['Next.js',
       'React.js',
       'Node.js',
@@ -55,7 +55,7 @@ const EXPERIENCES = [
     accentBar: 'bg-sky-500',
     accentBadge: 'bg-sky-50 text-sky-700 border-sky-200',
     accentIcon: 'text-sky-600',
-    activeBorder: 'border-sky-300/90 shadow-md',
+    activeBorder: 'border-slate-400 dark:border-slate-600 ring-1 ring-slate-300 dark:ring-slate-700',
     tags: [
       'React.js',
       'Node.js',
@@ -98,7 +98,7 @@ const EXPERIENCES = [
     accentBar: 'bg-indigo-500',
     accentBadge: 'bg-indigo-50 text-indigo-700 border-indigo-200',
     accentIcon: 'text-indigo-600',
-    activeBorder: 'border-indigo-300/90 shadow-md',
+    activeBorder: 'border-slate-400 dark:border-slate-600 ring-1 ring-slate-300 dark:ring-slate-700',
     tags: ['React.js',
       'Tailwind CSS',
       'Figma to Code',
@@ -128,7 +128,7 @@ const EXPERIENCES = [
     accentBar: 'bg-emerald-500',
     accentBadge: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     accentIcon: 'text-emerald-600',
-    activeBorder: 'border-emerald-300/90 shadow-md',
+    activeBorder: 'border-slate-400 dark:border-slate-600 ring-1 ring-slate-300 dark:ring-slate-700',
     tags: ['Railway Signalling',
   'Telecommunication',
   'Indian Railways',
@@ -203,15 +203,20 @@ const Experience = () => {
   return (
     <section
       id="experience"
+      aria-label="Software Engineering Work Experience and Career History"
+      itemScope
+      itemType="https://schema.org/ItemList"
       className="relative bg-slate-50 py-20 sm:py-24 lg:py-28 border-t border-slate-200/80 text-slate-900 dark:bg-slate-950 dark:border-slate-800/80 dark:text-slate-100"
     >
+      <meta itemProp="name" content="Software Engineering Career History and Work Experience" />
+      <meta itemProp="description" content="Proven track record as a Full-Stack Software Engineer building production SaaS products, scaling microservices, and leading system architecture." />
       <div className="absolute inset-0 bg-tech-grid opacity-30 pointer-events-none" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           {/* Left Hand Side: Header + Total Experience + Animated Year */}
           <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-5">
-            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/90 bg-white/95 px-3.5 py-1.5 text-xs font-medium tracking-wide text-cyan-700 shadow-xs dark:border-slate-800 dark:bg-slate-900 dark:text-cyan-300">
+            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/90 bg-white/95 px-3.5 py-1.5 text-xs font-medium tracking-wide text-cyan-700 dark:border-slate-800 dark:bg-slate-900 dark:text-cyan-300">
               <Briefcase className="size-3.5 text-cyan-600 dark:text-cyan-400" />
               Career Timeline
             </div>
@@ -251,7 +256,7 @@ const Experience = () => {
             <div className="pt-3 space-y-3 select-none">
               <div className="flex items-center gap-3">
                 <span className={`h-0.5 w-8 rounded-full transition-colors duration-300 ${activeExp.accentBar}`} />
-                <span className="text-[11px] font-mono font-semibold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">
+                <span className="text-[11px] font-mono font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
                   Milestone Year
                 </span>
               </div>
@@ -310,15 +315,15 @@ const Experience = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.35, delay: Math.min(idx * 0.06, 0.2), ease: [0.22, 1, 0.36, 1] }}
-                  className={`relative rounded-3xl border bg-white/95 p-6 sm:p-7 transition-all duration-300 dark:bg-slate-900/85 ${isActive
+                  className={`relative rounded-3xl border bg-white/95 p-6 sm:p-7 transition-all duration-200 dark:bg-slate-900/85 ${isActive
                       ? exp.activeBorder
-                      : 'border-slate-200/90 shadow-sm hover:border-slate-300 hover:shadow-md dark:border-slate-800 dark:hover:border-slate-700'
+                      : 'border-slate-200/90 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700'
                     }`}
                 >
                   {/* Timeline Milestone Node */}
                   <div className="absolute -left-[29px] sm:-left-[35px] top-7">
                     <span
-                      className={`block size-4.5 w-[18px] h-[18px] rounded-full border-[3px] border-white dark:border-slate-950 shadow-sm transition-transform duration-300 ${isActive ? `scale-110 ring-4 ${exp.accentDot}` : 'bg-slate-300 dark:bg-slate-700'
+                      className={`block size-4.5 w-[18px] h-[18px] rounded-full border-[3px] border-white dark:border-slate-950 transition-transform duration-300 ${isActive ? `scale-110 ring-4 ${exp.accentDot}` : 'bg-slate-300 dark:bg-slate-700'
                         }`}
                     />
                   </div>

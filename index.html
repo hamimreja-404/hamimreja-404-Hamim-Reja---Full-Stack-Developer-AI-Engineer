@@ -3,55 +3,152 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="https://res.cloudinary.com/dm01lhkax/image/upload/v1771013647/Logo_wqyn0n.svg" />
+  
+  <!-- Website Favicon -->
+  <link rel="icon" type="image/x-icon" href="/Logo.ico" />
+  <link rel="shortcut icon" href="/Logo.ico" />
+  <link rel="apple-touch-icon" href="/Logo.ico" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hamim Reja | Full-Stack Developer & ECE Engineer</title>
-  <meta name="title" content="Hamim Reja | Full-Stack Developer & ECE Engineer" />
-  
+
+  <!-- DNS prefetching & preconnects for critical CDNs -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preconnect" href="https://cdn.simpleicons.org" crossorigin />
+
+  <!-- Optimized font loading with font-display: swap -->
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+  />
+
+  <!-- Primary SEO Metadata — Targeted for Software Engineering & SDE Roles -->
+  <title>Hamim Reja | Full-Stack Software Engineer &amp; Systems Architect</title>
+  <meta name="title" content="Hamim Reja | Full-Stack Software Engineer &amp; Systems Architect" />
   <meta name="description"
-    content="Portfolio of Hamim Reja, a Full-Stack Developer (MERN) and ECE Engineer based in Malda & Kolkata. Specializing in Web Development, AI, Computer Vision, and Embedded Systems." />
-  
+    content="Portfolio of Hamim Reja — Full-Stack Software Engineer (SDE), Backend Systems Architect, and Startup Builder specializing in React, Next.js, Node.js, TypeScript, Distributed Systems, WebRTC, and Scalable Cloud Architectures. Available for Software Engineering roles." />
   <meta name="keywords"
-    content="Hamim Reja, Full-Stack Developer, MERN Stack, React Developer, Node.js, Python, Computer Vision, Embedded Systems, Raspberry Pi, Aliah University, Web Developer Kolkata, Web Developer Malda, Portfolio" />
-  
+    content="Hamim Reja, Software Engineer, Full-Stack Developer, Full-Stack SDE, Backend Engineer, Frontend Engineer, React Developer, Next.js Developer, TypeScript, Node.js, Distributed Systems, WebRTC, Microservices, Python, MongoDB, PostgreSQL, Redis, AWS, Docker, Linux, System Architecture, Software Developer Kolkata, Remote Software Engineer, Software Engineering Portfolio, SDE Portfolio" />
   <meta name="author" content="Hamim Reja" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="theme-color" content="#0891b2" />
+  <link rel="canonical" href="https://hamimreja.in/" />
 
-  <meta property="og:type" content="website" />
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:type" content="profile" />
   <meta property="og:url" content="https://hamimreja.in/" />
-  <meta property="og:title" content="Hamim Reja | Full-Stack Developer & ECE Engineer" />
+  <meta property="og:title" content="Hamim Reja | Full-Stack Software Engineer &amp; Systems Architect" />
   <meta property="og:description"
-    content="Explore the projects of Hamim Reja - specialized in MERN Stack, AI, and IoT solutions. Based in Malda & Kolkata." />
-  <meta property="og:image"
-    content="https://res.cloudinary.com/dm01lhkax/image/upload/v1770918643/HamimReja_vmphrh.jpg" />
+    content="Full-Stack Software Engineer &amp; Startup Builder architecting resilient distributed backends, real-time WebRTC systems, and high-performance Next.js applications that scale from 0 to thousands of users." />
+  <meta property="og:image" content="https://hamimreja.in/HeroSection.webp" />
+  <meta property="og:image:secure_url" content="https://hamimreja.in/HeroSection.webp" />
+  <meta property="og:image:type" content="image/webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Hamim Reja - Full-Stack Software Engineer Portfolio" />
+  <meta property="profile:first_name" content="Hamim" />
+  <meta property="profile:last_name" content="Reja" />
+  <meta property="profile:username" content="hamimreja-404" />
 
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://hamimreja.in/" />
-  <meta property="twitter:title" content="Hamim Reja | Full-Stack Developer & ECE Engineer" />
-  <meta property="twitter:description"
-    content="Portfolio of Hamim Reja. Full-Stack Dev & ECE student at Aliah University. Expert in React, Node.js, and Embedded Systems." />
-  <meta property="twitter:image"
-    content="https://res.cloudinary.com/dm01lhkax/image/upload/v1770918643/HamimReja_vmphrh.jpg" />
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://hamimreja.in/" />
+  <meta name="twitter:title" content="Hamim Reja | Full-Stack Software Engineer &amp; Systems Architect" />
+  <meta name="twitter:description"
+    content="Full-Stack Software Engineer &amp; Startup Builder architecting resilient distributed backends, real-time WebRTC systems, and high-performance Next.js applications." />
+  <meta name="twitter:image" content="https://hamimreja.in/HeroSection.webp" />
+  <meta name="twitter:image:alt" content="Hamim Reja - Full-Stack Software Engineer Portfolio" />
 
+  <!-- Structured Data (JSON-LD) for Software Jobs, Person, and Production Systems -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Hamim Reja",
-      "url": "https://hamimreja.in",
-      "jobTitle": "Full-Stack Developer",
-      "alumniOf": "Aliah University",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Kolkata",
-        "addressRegion": "West Bengal",
-        "addressCountry": "India"
-      },
-      "knowsAbout": ["Web Development", "MERN Stack", "Computer Vision", "Embedded Systems", "React", "Node.js", "Python"],
-      "sameAs": [
-        "https://linkedin.com/in/hamim-reja-a2ba42279",
-        "https://github.com/hamimreja-404",
-        "https://www.instagram.com/hamim__reja/"
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://hamimreja.in/#person",
+          "name": "Hamim Reja",
+          "url": "https://hamimreja.in",
+          "image": "https://hamimreja.in/HeroSection.webp",
+          "jobTitle": "Full-Stack Software Engineer",
+          "description": "Full-Stack Software Engineer & Startup Builder architecting resilient distributed backends, real-time WebRTC systems, and high-performance Next.js applications.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kolkata",
+            "addressRegion": "West Bengal",
+            "addressCountry": "India"
+          },
+          "alumniOf": {
+            "@type": "EducationalOrganization",
+            "name": "Aliah University",
+            "department": "Department of Electronics and Communication Engineering"
+          },
+          "hasOccupation": {
+            "@type": "Occupation",
+            "name": "Full-Stack Software Engineer",
+            "occupationalCategory": "15-1252.00",
+            "skills": [
+              "Full-Stack Software Engineering",
+              "Distributed Systems Architecture",
+              "React",
+              "Next.js",
+              "TypeScript",
+              "Node.js",
+              "Express.js",
+              "Python",
+              "WebRTC Real-Time Systems",
+              "MongoDB",
+              "PostgreSQL",
+              "Redis Caching & Pub/Sub",
+              "Docker Containerization",
+              "Amazon Web Services (AWS)",
+              "Microservices",
+              "REST APIs & GraphQL"
+            ]
+          },
+          "knowsAbout": [
+            "Software Engineering",
+            "Full-Stack Web Development",
+            "Next.js & React Ecosystem",
+            "Distributed Systems",
+            "Real-Time WebRTC Communication",
+            "Edge AI & Computer Vision",
+            "Embedded Systems & IoT",
+            "Algorithmic Problem Solving"
+          ],
+          "sameAs": [
+            "https://linkedin.com/in/hamim-reja-a2ba42279",
+            "https://github.com/hamimreja-404",
+            "https://www.instagram.com/hamim__reja/"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://hamimreja.in/#website",
+          "url": "https://hamimreja.in/",
+          "name": "Hamim Reja | Full-Stack Software Engineer",
+          "publisher": {
+            "@id": "https://hamimreja.in/#person"
+          },
+          "inLanguage": "en-US"
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://hamimreja.in/#webpage",
+          "url": "https://hamimreja.in/",
+          "name": "Hamim Reja - Full-Stack Software Engineering Portfolio",
+          "isPartOf": {
+            "@id": "https://hamimreja.in/#website"
+          },
+          "about": {
+            "@id": "https://hamimreja.in/#person"
+          },
+          "mainEntity": {
+            "@id": "https://hamimreja.in/#person"
+          }
+        }
       ]
     }
   </script>

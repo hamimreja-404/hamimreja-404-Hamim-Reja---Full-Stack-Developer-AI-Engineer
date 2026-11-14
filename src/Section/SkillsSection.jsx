@@ -23,7 +23,7 @@ const SKILL_CATEGORIES = [
     icon: Layout,
     dot: 'bg-sky-500',
     accent: 'text-sky-600 bg-sky-50 border-sky-200',
-    tileHover: 'hover:border-sky-300/90 hover:shadow-sky-100/60',
+    tileHover: 'hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700',
     skills: [
       { name: 'Next.js', logo: `${DEV}/nextjs/nextjs-original.svg` },
       { name: 'React.js', logo: `${DEV}/react/react-original.svg` },
@@ -45,7 +45,7 @@ const SKILL_CATEGORIES = [
     icon: Server,
     dot: 'bg-emerald-500',
     accent: 'text-emerald-600 bg-emerald-50 border-emerald-200',
-    tileHover: 'hover:border-emerald-300/90 hover:shadow-emerald-100/60',
+    tileHover: 'hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700',
     skills: [
       { name: 'Node.js', logo: `${DEV}/nodejs/nodejs-original.svg` },
       { name: 'Express.js', logo: `${DEV}/express/express-original.svg` },
@@ -69,7 +69,7 @@ const SKILL_CATEGORIES = [
     icon: BrainCircuit,
     dot: 'bg-cyan-500',
     accent: 'text-cyan-600 bg-cyan-50 border-cyan-200',
-    tileHover: 'hover:border-cyan-300/90 hover:shadow-cyan-100/60',
+    tileHover: 'hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700',
     skills: [
       { name: 'YOLOv10', logo: 'https://cdn.simpleicons.org/yolo' },
       { name: 'OpenCV', logo: `${DEV}/opencv/opencv-original.svg` },
@@ -87,7 +87,7 @@ const SKILL_CATEGORIES = [
     icon: CloudCog,
     dot: 'bg-indigo-500',
     accent: 'text-indigo-600 bg-indigo-50 border-indigo-200',
-    tileHover: 'hover:border-indigo-300/90 hover:shadow-indigo-100/60',
+    tileHover: 'hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700',
     skills: [
       // { name: 'Docker', logo: `${DEV}/docker/docker-original.svg` },
       // {
@@ -111,7 +111,7 @@ const SKILL_CATEGORIES = [
     icon: Cpu,
     dot: 'bg-violet-500',
     accent: 'text-violet-600 bg-violet-50 border-violet-200',
-    tileHover: 'hover:border-violet-300/90 hover:shadow-violet-100/60',
+    tileHover: 'hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700',
     skills: [
       { name: 'Raspberry Pi', logo: `${DEV}/raspberrypi/raspberrypi-original.svg` },
       { name: 'Arduino', logo: `${DEV}/arduino/arduino-original.svg` },
@@ -132,7 +132,7 @@ const SKILL_CATEGORIES = [
     icon: Briefcase,
     dot: 'bg-amber-500',
     accent: 'text-amber-600 bg-amber-50 border-amber-200',
-    tileHover: 'hover:border-amber-300/90 hover:shadow-amber-100/60',
+    tileHover: 'hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700',
     skills: [
       { name: 'Writing Blogs', icon: PenTool, iconColor: 'text-amber-600' },
       // { name: 'Editing Blog Images', icon: ImagePlus, iconColor: 'text-amber-600' },
@@ -153,14 +153,17 @@ const SkillTile = ({ skill, tileHover }) => {
 
   return (
     <div
-      className={`group flex items-center gap-3 rounded-xl border border-slate-200/85 bg-slate-50/75 px-3 py-2.5 transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-sm dark:border-slate-800 dark:bg-slate-900/70 dark:hover:bg-slate-800/90 ${tileHover}`}
+      className={`group flex items-center gap-3 rounded-xl border border-slate-200/85 bg-slate-50/75 px-3 py-2.5 transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700 dark:border-slate-800 dark:bg-slate-900/70 dark:hover:bg-slate-800/90 ${tileHover}`}
     >
-      <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-slate-200/90 bg-white shadow-2xs transition-transform duration-200 group-hover:scale-105 dark:border-slate-700 dark:bg-white/95">
+      <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-slate-200/90 bg-white transition-transform duration-200 group-hover:scale-105 dark:border-slate-700 dark:bg-white/95">
         {skill.logo && !imgFailed ? (
           <img
             src={skill.logo}
             alt={skill.name}
+            width="20"
+            height="20"
             loading="lazy"
+            decoding="async"
             onError={() => setImgFailed(true)}
             className="size-5 object-contain"
           />
@@ -203,16 +206,20 @@ const SkillsSection = () => {
     <section
       id="skills"
       ref={sectionRef}
+      aria-label="Software Engineering Technical Skills and Core Competencies"
+      itemScope
+      itemType="https://schema.org/ItemList"
       className="relative bg-slate-50 py-20 sm:py-24 lg:py-28 border-t border-slate-200/80 text-slate-900 dark:bg-slate-950 dark:border-slate-800/80 dark:text-slate-100"
     >
+      <meta itemProp="name" content="Software Engineering Technical Skills and Tech Stack" />
+      <meta itemProp="description" content="Technical proficiencies in Next.js, React, Node.js, TypeScript, Distributed Backends, WebRTC, Databases, and Cloud Architecture." />
       <div className="absolute inset-0 bg-tech-grid opacity-30 pointer-events-none" />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           {/* Left Hand Side: My Skills & Interactive Category Index */}
           <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/90 bg-white/95 px-3.5 py-1.5 text-xs font-medium tracking-wide text-cyan-700 shadow-xs dark:border-slate-800 dark:bg-slate-900 dark:text-cyan-300">
-              {/* <Sparkles className="size-3.5 text-cyan-600" /> */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/90 bg-white/95 px-3.5 py-1.5 text-xs font-medium tracking-wide text-cyan-700 dark:border-slate-800 dark:bg-slate-900 dark:text-cyan-300">
               Tech Stack &amp; Capabilities
             </div>
 
@@ -227,23 +234,23 @@ const SkillsSection = () => {
 
             {/* Quick metrics bar */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-slate-200/90 bg-white/95 px-4 py-3 shadow-xs dark:border-slate-800 dark:bg-slate-900/90">
+              <div className="rounded-2xl border border-slate-200/90 bg-white/95 px-4 py-3 dark:border-slate-800 dark:bg-slate-900/90">
                 <p className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">{SKILL_CATEGORIES.length}</p>
                 <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Skill Categories</p>
               </div>
-              <div className="rounded-2xl border border-slate-200/90 bg-white/95 px-4 py-3 shadow-xs dark:border-slate-800 dark:bg-slate-900/90">
+              <div className="rounded-2xl border border-slate-200/90 bg-white/95 px-4 py-3 dark:border-slate-800 dark:bg-slate-900/90">
                 <p className="text-2xl font-bold tracking-tight text-cyan-600 dark:text-cyan-400">{TOTAL_SKILLS}+</p>
                 <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Tools &amp; Strengths</p>
               </div>
             </div>
 
             {/* Interactive Category Selector */}
-            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-2.5 shadow-xs space-y-1 dark:border-slate-800 dark:bg-slate-900/90">
+            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-2.5 space-y-1 dark:border-slate-800 dark:bg-slate-900/90">
               <button
                 type="button"
                 onClick={() => handleCategorySelect('all')}
                 className={`w-full flex items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-sm font-medium transition-all ${activeCategory === 'all'
-                    ? 'bg-slate-900 text-white shadow-xs dark:bg-cyan-500 dark:text-slate-950'
+                    ? 'bg-slate-900 text-white dark:bg-cyan-500 dark:text-slate-950'
                     : 'text-slate-700 hover:bg-slate-100/80 dark:text-slate-300 dark:hover:bg-slate-800'
                   }`}
               >
@@ -257,7 +264,7 @@ const SkillsSection = () => {
                 <span
                   className={`rounded-full px-2 py-0.5 text-xs font-mono ${activeCategory === 'all'
                       ? 'bg-white/15 text-white dark:bg-slate-950/20 dark:text-slate-950'
-                      : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'
+                      : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
                     }`}
                 >
                   {TOTAL_SKILLS}
@@ -273,7 +280,7 @@ const SkillsSection = () => {
                     type="button"
                     onClick={() => handleCategorySelect(category.id)}
                     className={`w-full flex items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-sm font-medium transition-all ${isSelected
-                        ? 'bg-cyan-50 text-cyan-950 border border-cyan-200/90 shadow-2xs dark:bg-cyan-950/60 dark:text-cyan-200 dark:border-cyan-800'
+                        ? 'bg-cyan-50 text-cyan-950 border border-cyan-200/90 dark:bg-cyan-950/60 dark:text-cyan-200 dark:border-cyan-800'
                         : 'text-slate-700 border border-transparent hover:bg-slate-100/80 dark:text-slate-300 dark:hover:bg-slate-800/80'
                       }`}
                   >
@@ -284,7 +291,7 @@ const SkillsSection = () => {
                     <span
                       className={`ml-2 shrink-0 rounded-full px-2 py-0.5 text-xs font-mono ${isSelected
                           ? 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/70 dark:text-cyan-200'
-                          : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
+                          : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
                         }`}
                     >
                       {String(category.skills.length).padStart(2, '0')}
@@ -309,7 +316,7 @@ const SkillsSection = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                    className="rounded-3xl border border-slate-200/90 bg-white/95 p-5 sm:p-6 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900/85"
+                    className="rounded-3xl border border-slate-200/90 bg-white/95 p-5 sm:p-6 transition-all duration-200 hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700 dark:border-slate-800 dark:bg-slate-900/85"
                   >
                     <div className="flex items-start justify-between gap-4 pb-4 mb-4 border-b border-slate-100 dark:border-slate-800">
                       <div className="flex items-start gap-3.5">
@@ -320,7 +327,7 @@ const SkillsSection = () => {
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="text-[18px] mt-1 font-mono font-semibold uppercase tracking-wider text-slate-400">
+                            <span className="text-[18px] mt-1 font-mono font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                               {category.num}
                             </span>
                             <h3 className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 dark:text-white">

@@ -403,7 +403,7 @@ export default function ProjectCaseStudy() {
           {/* Left Column: Problem & Engineering Solution (7 cols) */}
           <div className="space-y-8 lg:col-span-7">
             {/* The Challenge */}
-            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 dark:border-slate-800 dark:bg-slate-900">
               <span className="font-mono text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
                 01 // The Problem &amp; Challenge
               </span>
@@ -416,7 +416,7 @@ export default function ProjectCaseStudy() {
             </div>
 
             {/* The Architectural Solution */}
-            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 dark:border-slate-800 dark:bg-slate-900">
               <span className="font-mono text-xs font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">
                 02 // The Engineering Solution
               </span>
@@ -429,7 +429,7 @@ export default function ProjectCaseStudy() {
             </div>
 
             {/* Complete Highlights List */}
-            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 dark:border-slate-800 dark:bg-slate-900">
               <span className="font-mono text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
                 03 // Technical Highlights &amp; Outcomes
               </span>
@@ -454,7 +454,7 @@ export default function ProjectCaseStudy() {
           {/* Right Column: Tech Stack & Action Sidebar (5 cols) */}
           <div className="space-y-6 lg:col-span-5 lg:sticky lg:top-24">
             {/* Tech Stack Card */}
-            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
               <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">
                 04 // Technologies &amp; Tools
               </span>
@@ -464,7 +464,7 @@ export default function ProjectCaseStudy() {
                 {project.tech.map((t) => (
                   <span
                     key={t}
-                    className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 font-mono text-xs font-semibold text-slate-700 shadow-2xs dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                    className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 font-mono text-xs font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
                   >
                     {t}
                   </span>
@@ -473,7 +473,7 @@ export default function ProjectCaseStudy() {
             </div>
 
             {/* Launch & Source Actions Card */}
-            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs dark:border-slate-800 dark:bg-slate-900 space-y-3">
+            <div className="rounded-3xl border border-slate-200/90 bg-white p-6 dark:border-slate-800 dark:bg-slate-900 space-y-3">
               <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">
                 05 // Project Links &amp; Deliverables
               </span>
@@ -556,7 +556,7 @@ export default function ProjectCaseStudy() {
             {prevProject ? (
               <Link
                 to={`/${prevProject.slug || prevProject.id}`}
-                className="group flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 shadow-2xs transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:shadow-xs dark:border-slate-800 dark:bg-slate-900"
+                className="group flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 transition-all duration-200 hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700 dark:border-slate-800 dark:bg-slate-900"
               >
                 <div>
                   <span className="flex items-center gap-1.5 font-mono text-xs text-slate-400">
@@ -578,7 +578,7 @@ export default function ProjectCaseStudy() {
             {nextProject ? (
               <Link
                 to={`/${nextProject.slug || nextProject.id}`}
-                className="group flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 text-right shadow-2xs transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:shadow-xs dark:border-slate-800 dark:bg-slate-900"
+                className="group flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 text-right transition-all duration-200 hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700 dark:border-slate-800 dark:bg-slate-900"
               >
                 <div>
                   <span className="flex items-center justify-end gap-1.5 font-mono text-xs text-slate-400">

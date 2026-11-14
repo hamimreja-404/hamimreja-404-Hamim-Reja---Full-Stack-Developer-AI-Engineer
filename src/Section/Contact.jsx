@@ -1,164 +1,204 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
+  AlertCircle,
   ArrowUp,
   ArrowUpRight,
   Briefcase,
   Check,
+  Clock,
   Code2,
   Copy,
   Github,
   Linkedin,
+  Loader2,
   Mail,
   MapPin,
   MessageSquare,
-  PenTool,
   Send,
+  Server,
   Sparkles,
 } from 'lucide-react';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || 'https://hamim-reja-full-stack-developer-ai.onrender.com/api';
 const EMAIL_ADDRESS = 'hamim.reja.mail@gmail.com';
 const GITHUB_URL = 'https://github.com/hamimreja-404';
 const LINKEDIN_URL = 'https://www.linkedin.com/in/hamim-reja-a2ba42279/';
 
 const INQUIRY_INTENTS = [
-  { id: 'sde', label: 'Full-Time SDE', icon: Code2, subjectTag: 'SDE Opportunity' },
-  { id: 'freelance', label: 'Client Project', icon: Briefcase, subjectTag: 'Project Inquiry' },
-  { id: 'writing', label: 'Blogs / Writing', icon: PenTool, subjectTag: 'Technical Writing' },
-  { id: 'chat', label: 'Quick Chat', icon: MessageSquare, subjectTag: 'Quick Connect' },
+  { id: 'sde', label: 'Full-Time SDE', icon: Code2, subject: 'Full-Time SDE Opportunity' },
+  { id: 'backend', label: 'Backend / Systems', icon: Server, subject: 'Backend & Systems Architecture' },
+  { id: 'startup', label: 'Startup / SaaS', icon: Briefcase, subject: 'Startup / SaaS Collaboration' },
+  { id: 'chat', label: 'General Connect', icon: MessageSquare, subject: 'Engineering Connect' },
 ];
 
-const SECTION_LINKS = [
+const NAV_LINKS = [
   { label: 'Skills', href: '#skills' },
   { label: 'Experience', href: '#experience' },
   { label: 'Projects', href: '#projects' },
-  { label: 'About & Blogs', href: '#about-writing' },
+  { label: 'Contact', href: '#contact' },
 ];
 
-const Contact = () => {
-  const [visitorCount, setVisitorCount] = useState(null);
+export default function Contact() {
   const [copied, setCopied] = useState(false);
   const [selectedIntent, setSelectedIntent] = useState(INQUIRY_INTENTS[0]);
-  const [senderName, setSenderName] = useState('');
-  const [senderOrg, setSenderOrg] = useState('');
-  const [briefNote, setBriefNote] = useState('');
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        if (!API_URL) return;
-        const response = await fetch(`${API_URL}/stats`);
-        if (response.ok) {
-          const data = await response.json();
-          setVisitorCount(data.totalVisits);
-        }
-      } catch (error) {
-        console.error('Error fetching visitor stats:', error);
-        setVisitorCount(273);
-      }
-    };
-
-    fetchStats();
-  }, []);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    message: '',
+  });
+  const [status, setStatus] = useState({ loading: false, success: false, error: null });
 
   const handleCopyEmail = async () => {
     try {
       await navigator.clipboard.writeText(EMAIL_ADDRESS);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => setCopied(false), 2200);
     } catch {
       window.location.href = `mailto:${EMAIL_ADDRESS}`;
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (status.error) setStatus((prev) => ({ ...prev, error: null }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setStatus({ loading: false, success: false, error: 'Please fill in your name, email, and message.' });
+      return;
+    }
+
+    setStatus({ loading: true, success: false, error: null });
+
+    try {
+      const response = await fetch(`${API_URL.replace(/\/$/, '')}/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.company ? `[${formData.company.trim()}] ${formData.message.trim()}` : formData.message.trim(),
+          subject: `[${selectedIntent.subject}] From ${formData.name.trim()}`,
+          isService: false,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setStatus({ loading: false, success: true, error: null });
+        setFormData({ name: '', email: '', company: '', message: '' });
+      } else {
+        throw new Error(data.error || 'Server responded with an error.');
+      }
+    } catch (err) {
+      console.warn('Backend submission failed, falling back to direct options:', err);
+      setStatus({
+        loading: false,
+        success: false,
+        error: 'Unable to reach the message server right now. You can launch Gmail or your mail app directly below.',
+      });
+    }
+  };
+
+  const buildPrefilledMail = () => {
+    const subject = `[${selectedIntent.subject}] ${formData.name ? `From ${formData.name}` : 'Connecting via Portfolio'}`;
+    const lines = [
+      'Hi Hamim,',
+      '',
+      `Topic: ${selectedIntent.label}`,
+      formData.name ? `Name: ${formData.name}` : null,
+      formData.company ? `Company / Role: ${formData.company}` : null,
+      formData.email ? `Email: ${formData.email}` : null,
+      '',
+      formData.message.trim()
+        ? formData.message.trim()
+        : `I explored your portfolio and would like to discuss a ${selectedIntent.label.toLowerCase()} opportunity.`,
+      '',
+      'Best regards,',
+      formData.name || '',
+    ].filter(Boolean);
+
+    const encSubject = encodeURIComponent(subject);
+    const encBody = encodeURIComponent(lines.join('\n'));
+
+    return {
+      gmailUrl: `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL_ADDRESS}&su=${encSubject}&body=${encBody}`,
+      mailtoUrl: `mailto:${EMAIL_ADDRESS}?subject=${encSubject}&body=${encBody}`,
+    };
+  };
+
+  const { gmailUrl, mailtoUrl } = buildPrefilledMail();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const buildEmailPayload = () => {
-    const subject = `[${selectedIntent.subjectTag}] ${senderName ? `From ${senderName}` : 'Connecting via Portfolio'}`;
-    const bodyLines = [
-      `Hi Hamim,`,
-      '',
-      `Inquiry Type: ${selectedIntent.label}`,
-      senderName ? `Name: ${senderName}` : null,
-      senderOrg ? `Company / Role: ${senderOrg}` : null,
-      '',
-      briefNote.trim()
-        ? briefNote.trim()
-        : `I came across your portfolio and would love to discuss a ${selectedIntent.label.toLowerCase()} opportunity.`,
-      '',
-      'Best regards,',
-      senderName || '',
-    ].filter((line) => line !== null);
-
-    return {
-      subject: encodeURIComponent(subject),
-      body: encodeURIComponent(bodyLines.join('\n')),
-    };
-  };
-
-  const { subject, body } = buildEmailPayload();
-  const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL_ADDRESS}&su=${subject}&body=${body}`;
-  const mailtoUrl = `mailto:${EMAIL_ADDRESS}?subject=${subject}&body=${body}`;
-
   return (
     <section
       id="contact"
-      className="relative z-20 overflow-hidden border-t border-slate-200 bg-slate-50 px-4 pt-24 pb-10 sm:px-6 lg:px-8 lg:pt-28 dark:border-slate-800 dark:bg-slate-950"
+      aria-label="Software Engineering Hiring and Direct Contact"
+      itemScope
+      itemType="https://schema.org/ContactPoint"
+      className="relative z-20 overflow-hidden border-t border-slate-200/90 bg-[#f8fafc] px-4 pt-20 pb-12 sm:px-6 lg:px-8 lg:pt-24 dark:border-slate-800/80 dark:bg-slate-950"
     >
-      {/* Ambient architectural background glow */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at 12% 20%, rgba(6,182,212,0.09), transparent 42%), radial-gradient(circle at 88% 30%, rgba(99,102,241,0.08), transparent 45%)',
-        }}
-      />
+      <meta itemProp="contactType" content="Software Engineering Recruiting and Inquiries" />
+      <meta itemProp="email" content={EMAIL_ADDRESS} />
+      <meta itemProp="availableLanguage" content="English, Hindi, Bengali" />
 
-      <div className="relative z-10 mx-auto max-w-7xl">
+      <div className="relative z-10 mx-auto max-w-6xl">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start">
-          {/* ==================== LEFT: CTA & DIRECT CHANNELS ==================== */}
-          <div className="lg:col-span-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50/90 px-3.5 py-1.5 shadow-2xs dark:border-emerald-800 dark:bg-emerald-950/60">
+          {/* ==================== LEFT: VALUE PROPOSITION & DIRECT CHANNELS ==================== */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300/80 bg-emerald-50/90 px-3.5 py-1.5 dark:border-emerald-800 dark:bg-emerald-950/70">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
-              <span className="font-mono text-xs font-medium text-emerald-800 dark:text-emerald-300">
-                06 // Open for SDE Roles &amp; Select Client Work
+              <span className="font-mono text-xs font-semibold text-emerald-800 dark:text-emerald-300">
+                Open to Full-Time SDE &amp; Systems Roles
               </span>
             </div>
 
-            <h2 className="mt-6 text-4xl font-bold leading-[1.08] tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
-              Let&apos;s Build Something{' '}
-              <span className="bg-gradient-to-r from-cyan-600 via-sky-600 to-indigo-600 bg-clip-text text-transparent dark:from-cyan-400 dark:via-sky-400 dark:to-indigo-400">
-                Unignorable.
-              </span>
-            </h2>
+            <div className="space-y-3">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
+                Let&apos;s Build Something{' '}
+                <span className="bg-gradient-to-r from-cyan-600 via-sky-600 to-indigo-600 bg-clip-text text-transparent dark:from-cyan-400 dark:via-sky-400 dark:to-indigo-400">
+                  High-Impact.
+                </span>
+              </h2>
 
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
-              Looking for an engineer who can architect production MERN/Next.js apps, debug edge cases fast, and talk
-              directly with users? Send a note—I usually reply within a few hours.
-            </p>
+              <p className="text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-300">
+                Looking for an engineer who can architect distributed backends, ship production Next.js apps, and solve difficult edge cases under pressure? Drop a note here or reach out directly—I typically reply within a few hours.
+              </p>
+            </div>
 
-            {/* Direct Email Card + Copy Button */}
-            <div className="mt-8 rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs sm:p-5 dark:border-slate-800 dark:bg-slate-900">
-              <div className="flex flex-wrap items-center justify-between gap-3">
+            {/* Direct Email Card */}
+            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 transition-all duration-200 hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700 dark:border-slate-800 dark:bg-slate-900/90">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="font-mono text-[11px] uppercase tracking-wider text-slate-400">Direct Inbox</p>
-                  <p className="mt-0.5 truncate text-sm font-semibold text-slate-900 dark:text-white sm:text-base">{EMAIL_ADDRESS}</p>
+                  <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    Direct Email
+                  </p>
+                  <p className="mt-0.5 truncate text-sm sm:text-base font-bold text-slate-900 dark:text-white">
+                    {EMAIL_ADDRESS}
+                  </p>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   <button
                     type="button"
                     onClick={handleCopyEmail}
-                    className={`inline-flex items-center gap-1.5 rounded-xl border px-3.5 py-2 text-xs font-semibold transition-all ${
+                    className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-semibold transition-all ${
                       copied
                         ? 'border-emerald-300 bg-emerald-50 text-emerald-700 dark:border-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300'
-                        : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-cyan-300 hover:bg-cyan-50/60 hover:text-cyan-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-cyan-500'
+                        : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-cyan-300 hover:bg-cyan-50/70 hover:text-cyan-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-cyan-500'
                     }`}
                   >
                     {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
@@ -166,33 +206,33 @@ const Contact = () => {
                   </button>
 
                   <a
-                    href={gmailComposeUrl}
+                    href={gmailUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3.5 py-2 text-xs font-semibold text-white transition-colors hover:bg-cyan-700 dark:bg-cyan-500 dark:text-slate-950 dark:hover:bg-cyan-400"
                   >
                     <Mail className="size-3.5" />
-                    <span>Email</span>
+                    <span>Gmail</span>
                   </a>
                 </div>
               </div>
             </div>
 
-            {/* Social Cards + Location + Live Profile Views */}
-            <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {/* Social Channels Strip */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <a
                 href={LINKEDIN_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="group flex items-center justify-between rounded-2xl border border-slate-200/90 bg-white p-4 shadow-2xs transition-all hover:-translate-y-0.5 hover:border-[#0A66C2]/40 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900"
+                className="group flex items-center justify-between rounded-2xl border border-slate-200/90 bg-white/95 p-4 transition-all duration-200 hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700 dark:border-slate-800 dark:bg-slate-900/90"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0A66C2]/10 text-[#0A66C2] dark:bg-[#0A66C2]/20 dark:text-cyan-400">
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-[#0A66C2]/10 text-[#0A66C2] dark:bg-[#0A66C2]/20 dark:text-cyan-400">
                     <Linkedin className="size-5" />
                   </div>
                   <div>
                     <p className="text-sm font-bold text-slate-900 dark:text-white">LinkedIn</p>
-                    <p className="font-mono text-[11px] text-slate-500 dark:text-slate-400">Blogs &amp; Career Updates</p>
+                    <p className="font-mono text-[11px] text-slate-500 dark:text-slate-400">Verified Profile</p>
                   </div>
                 </div>
                 <ArrowUpRight className="size-4 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#0A66C2]" />
@@ -202,10 +242,10 @@ const Contact = () => {
                 href={GITHUB_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="group flex items-center justify-between rounded-2xl border border-slate-200/90 bg-white p-4 shadow-2xs transition-all hover:-translate-y-0.5 hover:border-slate-400 hover:shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-600"
+                className="group flex items-center justify-between rounded-2xl border border-slate-200/90 bg-white/95 p-4 transition-all duration-200 hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700 dark:border-slate-800 dark:bg-slate-900/90"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-white">
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-white">
                     <Github className="size-5" />
                   </div>
                   <div>
@@ -217,181 +257,230 @@ const Contact = () => {
               </a>
             </div>
 
-            <div className="mt-5 flex flex-wrap items-center gap-3">
-              <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs text-slate-600 shadow-2xs dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+            {/* Quick Metadata */}
+            <div className="flex flex-wrap items-center gap-3 pt-1 text-xs text-slate-500 dark:text-slate-400">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-white/90 px-3.5 py-1.5 dark:border-slate-800 dark:bg-slate-900/80">
                 <MapPin className="size-3.5 text-cyan-600 dark:text-cyan-400" />
-                <span>Kolkata, India · IST (UTC+5:30)</span>
-              </div>
+                Kolkata, India · IST (UTC+5:30)
+              </span>
 
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 py-2 shadow-2xs dark:border-slate-800 dark:bg-slate-900">
-                <span className="h-2 w-2 rounded-full bg-cyan-500" />
-                <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Profile Views
-                </span>
-                <span className="h-3 w-px bg-slate-200 dark:bg-slate-700" />
-                <span className="font-mono text-sm font-bold text-cyan-700 dark:text-cyan-400">
-                  {visitorCount !== null ? visitorCount + 500 : '2576'}
-                </span>
-              </div>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-white/90 px-3.5 py-1.5 dark:border-slate-800 dark:bg-slate-900/80">
+                <Clock className="size-3.5 text-cyan-600 dark:text-cyan-400" />
+                Response time: &lt; 4 hours
+              </span>
             </div>
           </div>
 
-          {/* ==================== RIGHT: INTERACTIVE QUICK BRIEF COMPOSER ==================== */}
-          <div className="lg:col-span-6">
-            <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-950 p-6 text-white shadow-xl sm:p-8">
-              <div className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-cyan-500/15 blur-3xl" />
-              <div className="pointer-events-none absolute -bottom-16 -left-16 h-52 w-52 rounded-full bg-indigo-500/15 blur-3xl" />
-
-              <div className="relative z-10">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-cyan-300">
-                    <Sparkles className="size-3.5" /> Quick Brief Composer
+          {/* ==================== RIGHT: INTERACTIVE DIRECT CONTACT FORM ==================== */}
+          <div className="lg:col-span-7">
+            <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-8 dark:border-slate-800 dark:bg-slate-900/95">
+              <div className="flex items-center justify-between gap-2 pb-4 border-b border-slate-100 dark:border-slate-800">
+                <div className="flex items-center gap-2">
+                  <span className="flex size-7 items-center justify-center rounded-lg bg-cyan-50 text-cyan-600 dark:bg-cyan-950/70 dark:text-cyan-300">
+                    <Sparkles className="size-4" />
                   </span>
-                  <span className="font-mono text-[11px] text-slate-400">Zero friction · Instant launch</span>
-                </div>
-
-                <h3 className="mt-2 text-xl font-bold tracking-tight text-white sm:text-2xl">
-                  Tell me what you&apos;re building or hiring for
-                </h3>
-
-                {/* Intent Selector */}
-                <div className="mt-5">
-                  <label className="mb-2 block font-mono text-[11px] uppercase tracking-wider text-slate-400">
-                    1. Select Topic
-                  </label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {INQUIRY_INTENTS.map((intent) => {
-                      const Icon = intent.icon;
-                      const isActive = selectedIntent.id === intent.id;
-
-                      return (
-                        <button
-                          key={intent.id}
-                          type="button"
-                          onClick={() => setSelectedIntent(intent)}
-                          className={`relative flex items-center gap-2 rounded-xl border px-3 py-2.5 text-left text-xs font-semibold transition-colors sm:text-sm ${
-                            isActive
-                              ? 'border-cyan-400/50 text-white'
-                              : 'border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.07] hover:text-white'
-                          }`}
-                        >
-                          {isActive && (
-                            <motion.span
-                              layoutId="contactIntentHighlight"
-                              transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                              className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-600/35 to-indigo-600/35"
-                            />
-                          )}
-                          <span className="relative z-10 flex items-center gap-2">
-                            <Icon className={`size-4 ${isActive ? 'text-cyan-300' : 'text-slate-400'}`} />
-                            <span>{intent.label}</span>
-                          </span>
-                        </button>
-                      );
-                    })}
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">Send a Message</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Directly into my inbox</p>
                   </div>
                 </div>
 
-                {/* Form Inputs */}
-                <div className="mt-5 space-y-3.5">
-                  <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-                    <div>
-                      <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-slate-400">
-                        Your Name
-                      </label>
-                      <input
-                        type="text"
-                        value={senderName}
-                        onChange={(e) => setSenderName(e.target.value)}
-                        placeholder="e.g. Ananya / Hiring Manager"
-                        className="w-full rounded-xl border border-white/15 bg-white/[0.05] px-3.5 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-slate-400">
-                        Company / Role
-                      </label>
-                      <input
-                        type="text"
-                        value={senderOrg}
-                        onChange={(e) => setSenderOrg(e.target.value)}
-                        placeholder="e.g. Acme Tech / Founder"
-                        className="w-full rounded-xl border border-white/15 bg-white/[0.05] px-3.5 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none"
-                      />
-                    </div>
+                <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-mono text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                  Quick Reply
+                </span>
+              </div>
+
+              {/* Inquiry Topic Pills */}
+              <div className="mt-5">
+                <label className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
+                  Inquiry Topic
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {INQUIRY_INTENTS.map((intent) => {
+                    const Icon = intent.icon;
+                    const isSelected = selectedIntent.id === intent.id;
+
+                    return (
+                      <button
+                        key={intent.id}
+                        type="button"
+                        onClick={() => setSelectedIntent(intent)}
+                        className={`flex flex-col items-start gap-1 rounded-xl border p-2.5 text-left transition-all ${
+                          isSelected
+                            ? 'border-cyan-500 bg-cyan-50/80 text-cyan-950 dark:border-cyan-400 dark:bg-cyan-950/60 dark:text-cyan-200'
+                            : 'border-slate-200 bg-slate-50/60 text-slate-700 hover:border-slate-300 hover:bg-slate-100/70 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-300'
+                        }`}
+                      >
+                        <Icon className={`size-4 ${isSelected ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-400'}`} />
+                        <span className="text-xs font-semibold leading-tight">{intent.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Form Body */}
+              <form onSubmit={handleSubmit} className="mt-5 space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="contact-name" className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+                      Your Name <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      id="contact-name"
+                      type="text"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="e.g. Ananya Sharma"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50/80 px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:outline-none dark:border-slate-700 dark:bg-slate-800/80 dark:text-white dark:focus:border-cyan-400"
+                    />
                   </div>
 
                   <div>
-                    <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wider text-slate-400">
-                      Quick Note
+                    <label htmlFor="contact-email" className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+                      Email Address <span className="text-rose-500">*</span>
                     </label>
-                    <textarea
-                      rows={4}
-                      value={briefNote}
-                      onChange={(e) => setBriefNote(e.target.value)}
-                      placeholder={`Share role details, timeline, or project idea for ${selectedIntent.label}...`}
-                      className="w-full resize-none rounded-xl border border-white/15 bg-white/[0.05] px-3.5 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none"
+                    <input
+                      id="contact-email"
+                      type="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="you@company.com"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50/80 px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:outline-none dark:border-slate-700 dark:bg-slate-800/80 dark:text-white dark:focus:border-cyan-400"
                     />
                   </div>
                 </div>
 
-                {/* Launch Buttons */}
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <a
-                    href={gmailComposeUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-sky-500 px-5 py-3 text-sm font-bold text-slate-950 shadow-md transition-all hover:-translate-y-0.5 hover:from-cyan-400 hover:to-sky-400"
-                  >
-                    <Send className="size-4" />
-                    <span>Launch in Gmail</span>
-                    <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </a>
-
-                  <a
-                    href={mailtoUrl}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-xs font-semibold text-slate-200 transition-colors hover:bg-white/10"
-                  >
-                    <Mail className="size-4 text-cyan-300" />
-                    <span>Default Mail App</span>
-                  </a>
+                <div>
+                  <label htmlFor="contact-company" className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
+                    Company / Organization <span className="text-slate-500 dark:text-slate-400 font-normal">(Optional)</span>
+                  </label>
+                  <input
+                    id="contact-company"
+                    type="text"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    placeholder="e.g. Acme Inc. / Hiring Team"
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50/80 px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:outline-none dark:border-slate-700 dark:bg-slate-800/80 dark:text-white dark:focus:border-cyan-400"
+                  />
                 </div>
-              </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label htmlFor="contact-message" className="block text-xs font-medium text-slate-700 dark:text-slate-300">
+                      Message <span className="text-rose-500">*</span>
+                    </label>
+                    <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
+                      {formData.message.length} chars
+                    </span>
+                  </div>
+                  <textarea
+                    id="contact-message"
+                    rows={4}
+                    name="message"
+                    required
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder={`Tell me about the ${selectedIntent.label.toLowerCase()} role, timeline, or product requirements...`}
+                    className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50/80 px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:outline-none dark:border-slate-700 dark:bg-slate-800/80 dark:text-white dark:focus:border-cyan-400"
+                  />
+                </div>
+
+                {/* Status Feedback Banners */}
+                <AnimatePresence>
+                  {status.success && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="rounded-xl border border-emerald-300 bg-emerald-50 p-3.5 text-xs text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-200 flex items-center gap-2.5"
+                    >
+                      <Check className="size-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+                      <span>Thank you! Your message has been recorded. I will get back to you shortly.</span>
+                    </motion.div>
+                  )}
+
+                  {status.error && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="rounded-xl border border-rose-300 bg-rose-50 p-3.5 text-xs text-rose-800 dark:border-rose-900 dark:bg-rose-950/70 dark:text-rose-200 space-y-2"
+                    >
+                      <div className="flex items-center gap-2">
+                        <AlertCircle className="size-4 shrink-0 text-rose-600 dark:text-rose-400" />
+                        <span>{status.error}</span>
+                      </div>
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        <a
+                          href={gmailUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 font-semibold text-rose-900 underline hover:no-underline dark:text-rose-100"
+                        >
+                          Send via Gmail instead <ArrowUpRight className="size-3" />
+                        </a>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Primary Action Button */}
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={status.loading}
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-cyan-700 disabled:opacity-60 dark:bg-cyan-500 dark:text-slate-950 dark:hover:bg-cyan-400 cursor-pointer"
+                  >
+                    {status.loading ? (
+                      <>
+                        <Loader2 className="size-4 animate-spin" />
+                        <span>Sending message...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="size-4" />
+                        <span>Send Message</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
 
-        {/* ==================== INTEGRATED ARCHITECTURAL FOOTER ==================== */}
-        <footer className="mt-20 flex flex-col items-center justify-between gap-6 border-t border-slate-200/90 pt-8 md:flex-row dark:border-slate-800">
-          <div className="flex flex-col items-center gap-1 text-center md:items-start md:text-left">
+        {/* ==================== COMPACT ARCHITECTURAL FOOTER ==================== */}
+        <footer className="mt-16 flex flex-col items-center justify-between gap-5 border-t border-slate-200/90 pt-8 sm:flex-row dark:border-slate-800">
+          <div className="flex flex-col items-center gap-1 text-center sm:items-start sm:text-left">
             <p className="text-sm font-bold tracking-tight text-slate-900 dark:text-white">
-              Hamim Reja <span className="font-mono text-xs font-normal text-slate-400">· Full Stack &amp; Edge AI</span>
+              Hamim Reja <span className="font-mono text-xs font-normal text-slate-500 dark:text-slate-400">· Full-Stack SDE &amp; Systems</span>
             </p>
             <p className="font-mono text-xs text-slate-500 dark:text-slate-400">
-              Engineered in Kolkata, India · © {new Date().getFullYear()}
+              Kolkata, India · © {new Date().getFullYear()} · All rights reserved.
             </p>
           </div>
 
           <nav className="flex flex-wrap items-center justify-center gap-5 text-xs font-medium text-slate-600 dark:text-slate-400">
-            {SECTION_LINKS.map((link) => (
-              <a key={link.href} href={link.href} className="transition-colors hover:text-cyan-700 dark:hover:text-cyan-400">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="transition-colors hover:text-cyan-600 dark:hover:text-cyan-400"
+              >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          <button
-            type="button"
-            onClick={scrollToTop}
-            className="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-800 shadow-2xs transition-all hover:-translate-y-0.5 hover:border-cyan-300 hover:bg-cyan-50/70 hover:text-cyan-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-cyan-500 dark:hover:bg-slate-800 dark:hover:text-cyan-300"
-          >
-            <span>Go to Top</span>
-            <ArrowUp className="size-3.5 transition-transform group-hover:-translate-y-0.5" />
-          </button>
+
         </footer>
       </div>
     </section>
   );
-};
-
-export default Contact;
+}

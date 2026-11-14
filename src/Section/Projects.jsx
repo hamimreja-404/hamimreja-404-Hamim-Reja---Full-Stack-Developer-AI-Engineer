@@ -1,710 +1,558 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Briefcase,
-  Users,
-  Eye,
-  FolderGit2,
-  GraduationCap,
-  Sparkles,
+  Cpu,
+  CheckCircle2,
   ExternalLink,
   Github,
-  Download,
+  Activity,
+  Terminal,
+  ShieldCheck,
   ChevronLeft,
   ChevronRight,
-  X,
-  ImagePlus,
   Layers,
-  CheckCircle2,
-  Cpu,
+  LayoutGrid,
+  SlidersHorizontal,
   AlertCircle,
   Wrench,
-  Maximize2,
-  FolderOpenDot,
-  ArrowRight,
 } from 'lucide-react';
 import { PROJECT_CATEGORIES, PROJECTS_DATA } from '@/data/projectsData';
 
-const AUTO_CYCLE_MS = 4500;
-
-const SlideCanvas = ({ slide, projectTitle }) => {
-  if (!slide) return null;
-
-  if (slide.type === 'image') {
-    return (
-      <motion.img
-        key={slide.src}
-        src={slide.src}
-        alt={slide.caption || projectTitle}
-        initial={{ opacity: 0.35, scale: 1.02 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0.25 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        className="h-full w-full object-cover"
-      />
-    );
-  }
-
-  return (
-    <motion.div
-      key={slide.title}
-      initial={{ opacity: 0.35 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0.25 }}
-      transition={{ duration: 0.28 }}
-      className="flex h-full w-full flex-col justify-between bg-gradient-to-br from-slate-50 via-white to-cyan-50/75 p-5 sm:p-7 dark:from-slate-900 dark:via-slate-900 dark:to-cyan-950/60"
-    >
-      <div>
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-[11px] font-mono font-semibold text-cyan-700 dark:border-cyan-800 dark:bg-cyan-950/70 dark:text-cyan-300">
-          <Cpu className="size-3.5" /> System Architecture
-        </span>
-        <h4 className="mt-2.5 text-lg sm:text-xl font-bold text-slate-900 dark:text-white">{slide.title}</h4>
-        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">{slide.caption}</p>
-      </div>
-
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 my-3">
-        {slide.flow?.map((step, sIdx) => (
-          <div
-            key={sIdx}
-            className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 shadow-2xs flex flex-col justify-between dark:border-slate-700 dark:bg-slate-800/90"
-          >
-            <span className="text-[10px] font-mono font-bold text-cyan-600 dark:text-cyan-400">0{sIdx + 1}</span>
-            <span className="mt-1 text-xs font-semibold text-slate-800 dark:text-slate-100 leading-snug">{step}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-3 gap-3 border-t border-slate-200/80 dark:border-slate-800 pt-3">
-        {slide.metrics?.map((metric) => (
-          <div key={metric.label}>
-            <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400">{metric.label}</p>
-            <p className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">{metric.value}</p>
-          </div>
-        ))}
-      </div>
-    </motion.div>
-  );
-};
-
-const LightboxModal = ({ project, initialSlideIdx, onClose }) => {
-  const [slideIdx, setSlideIdx] = useState(initialSlideIdx || 0);
-
-  useEffect(() => {
-    setSlideIdx(initialSlideIdx || 0);
-  }, [project?.id, initialSlideIdx]);
-
-  useEffect(() => {
-    if (!project) return undefined;
-
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowRight') setSlideIdx((prev) => (prev + 1) % project.gallery.length);
-      if (e.key === 'ArrowLeft') {
-        setSlideIdx((prev) => (prev - 1 + project.gallery.length) % project.gallery.length);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [project, onClose]);
-
-  if (!project) return null;
-  const slides = project.gallery || [];
-  const currentSlide = slides[slideIdx] || slides[0];
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 backdrop-blur-md p-4 sm:p-6 overflow-y-auto"
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 14 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.96, y: 10 }}
-        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-        onClick={(e) => e.stopPropagation()}
-        className="relative my-auto w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-slate-900"
-      >
-        <div className="sticky top-0 z-20 flex items-center justify-between gap-4 border-b border-slate-100 bg-white/95 backdrop-blur-md px-6 py-4 dark:border-slate-800 dark:bg-slate-900/95">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className={`rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${project.badgeClass}`}>
-              {project.categoryLabel}
-            </span>
-            <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">{project.title}</h3>
-          </div>
-
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close modal"
-            className="flex size-9 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-slate-600 transition-colors hover:bg-slate-900 hover:text-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-cyan-500 dark:hover:text-slate-950"
-          >
-            <X className="size-4" />
-          </button>
-        </div>
-
-        <div className="p-6 space-y-5">
-          <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 aspect-[16/9] dark:border-slate-800 dark:bg-slate-950">
-            <AnimatePresence mode="wait">
-              <SlideCanvas slide={currentSlide} projectTitle={project.title} />
-            </AnimatePresence>
-
-            {slides.length > 1 && (
-              <>
-                <button
-                  type="button"
-                  onClick={() => setSlideIdx((prev) => (prev - 1 + slides.length) % slides.length)}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 flex size-9 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-800 shadow-md backdrop-blur-sm hover:scale-105 transition-transform"
-                >
-                  <ChevronLeft className="size-5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSlideIdx((prev) => (prev + 1) % slides.length)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 flex size-9 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-800 shadow-md backdrop-blur-sm hover:scale-105 transition-transform"
-                >
-                  <ChevronRight className="size-5" />
-                </button>
-              </>
-            )}
-          </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <p className="text-xs sm:text-sm font-medium text-slate-500">{currentSlide?.caption}</p>
-            {slides.length > 1 && (
-              <div className="flex items-center gap-2 shrink-0">
-                {slides.map((s, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setSlideIdx(idx)}
-                    className={`h-11 w-16 overflow-hidden rounded-lg border-2 transition-all ${
-                      idx === slideIdx ? 'border-cyan-500 scale-105 shadow-xs' : 'border-slate-200 opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    {s.type === 'image' ? (
-                      <img src={s.src} alt="" className="h-full w-full object-cover" />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-slate-100 text-[10px] font-mono font-bold text-slate-700">
-                        FLOW
-                      </div>
-                    )}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="rounded-2xl border border-rose-200/70 bg-rose-50/40 p-4 sm:p-5 dark:border-rose-900/60 dark:bg-rose-950/30">
-              <h4 className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 mb-2">
-                <AlertCircle className="size-4" /> Problem &amp; Context
-              </h4>
-              <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">{project.challenge}</p>
-            </div>
-            <div className="rounded-2xl border border-emerald-200/70 bg-emerald-50/40 p-4 sm:p-5 dark:border-emerald-900/60 dark:bg-emerald-950/30">
-              <h4 className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-2">
-                <Wrench className="size-4" /> Engineered Solution
-              </h4>
-              <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">{project.solution}</p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-};
+const AUTO_CYCLE_MS = 6000;
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeIndex, setActiveIndex] = useState(0);
-  const [stageSlideIdx, setStageSlideIdx] = useState(0);
-  const [lightboxProject, setLightboxProject] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [viewMode, setViewMode] = useState('interactive'); // 'interactive' | 'grid'
 
-  const visibleProjects =
+  const filteredProjects =
     activeCategory === 'all'
       ? PROJECTS_DATA
-      : PROJECTS_DATA.filter((proj) => proj.category === activeCategory);
+      : PROJECTS_DATA.filter((p) => p.category === activeCategory);
 
-  const safeIndex = Math.min(activeIndex, Math.max(0, visibleProjects.length - 1));
-  const activeProject = visibleProjects[safeIndex] || visibleProjects[0];
-  const slides = activeProject?.gallery || [];
-  const currentStageSlide = slides[stageSlideIdx] || slides[0];
+  const safeIndex = Math.min(activeIndex, Math.max(0, filteredProjects.length - 1));
+  const activeProject = filteredProjects[safeIndex] || filteredProjects[0];
 
+  // Auto cycle active project when not hovering (in interactive mode)
   useEffect(() => {
-    setActiveIndex(0);
-    setStageSlideIdx(0);
-  }, [activeCategory]);
-
-  useEffect(() => {
-    setStageSlideIdx(0);
-  }, [activeProject?.id]);
-
-  // Smooth auto-motion cycling across projects (pauses on hover or modal open)
-  useEffect(() => {
-    if (isHovered || lightboxProject || visibleProjects.length <= 1) {
-      return undefined;
-    }
+    if (viewMode !== 'interactive' || isHovered || filteredProjects.length <= 1) return undefined;
 
     const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % visibleProjects.length);
+      setActiveIndex((prev) => (prev + 1) % filteredProjects.length);
     }, AUTO_CYCLE_MS);
 
     return () => clearInterval(timer);
-  }, [isHovered, lightboxProject, visibleProjects.length]);
+  }, [viewMode, isHovered, filteredProjects.length]);
 
-  const getCategoryCount = (catId) =>
-    catId === 'all' ? PROJECTS_DATA.length : PROJECTS_DATA.filter((p) => p.category === catId).length;
+  const handleCategoryChange = (catId) => {
+    setActiveCategory(catId);
+    setActiveIndex(0);
+  };
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev + 1) % filteredProjects.length);
+  };
+
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length);
+  };
 
   return (
-    <section
-      id="projects"
-      className="relative bg-slate-50 py-20 sm:py-24 lg:py-28 border-t border-slate-200/80 text-slate-900 dark:bg-slate-950 dark:border-slate-800/80 dark:text-slate-100"
+    <section 
+      id="projects" 
+      aria-label="Engineered Software Projects and Production Systems"
+      itemScope
+      itemType="https://schema.org/ItemList"
+      className="relative bg-slate-50/50 py-20 sm:py-24 lg:py-28 border-t border-slate-200/80 text-slate-900 dark:bg-slate-950 dark:border-slate-800/80 dark:text-slate-100"
     >
-      <div className="absolute inset-0 bg-tech-grid opacity-30 pointer-events-none" />
-
-      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-8">
-        {/* Top Header + Client Reach Stats */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/90 bg-white/95 px-3.5 py-1.5 text-xs font-medium tracking-wide text-cyan-700 shadow-xs dark:border-slate-800 dark:bg-slate-900 dark:text-cyan-300">
-              <FolderOpenDot className="size-3.5 text-cyan-600 dark:text-cyan-400" />
-              My Works
+      <meta itemProp="name" content="Production Software Engineering Projects" />
+      <meta itemProp="description" content="High-impact software engineering projects, distributed backend architectures, and real-time platforms engineered by Hamim Reja." />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Header (Unified with Hero and Skills styling) */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/90 bg-white/95 px-3.5 py-1.5 text-xs font-medium tracking-wide text-cyan-700 dark:border-slate-800 dark:bg-slate-900 dark:text-cyan-300">
+              <Terminal className="size-3.5 text-cyan-600 dark:text-cyan-400" />
+              <span>Production Systems &amp; Engineering</span>
             </div>
 
-            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-              Featured Projects
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+              Featured <span className="text-cyan-600 dark:text-cyan-400">Projects</span>
             </h2>
 
-            <p className="text-[15px] sm:text-base leading-relaxed text-slate-600 dark:text-slate-300">
-              Production-ready products I’ve architected and shipped, solving real problems for real people.
+            <p className="max-w-2xl text-[15px] sm:text-base leading-relaxed text-slate-600 dark:text-slate-300">
+              Internal client dashboards, production platforms, and edge systems. 
+              Real-world engineering challenges solved through scalable architecture and resilient feature delivery.
             </p>
           </div>
 
-          <div className="flex items-center gap-6 border-t md:border-t-0 md:border-l border-slate-200/90 dark:border-slate-800 pt-4 md:pt-0 md:pl-6 shrink-0">
-            <div className="flex items-center gap-2.5">
-              <span className="flex size-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border-emerald-800">
-                <Eye className="size-4" />
-              </span>
-              <div>
-                <p className="text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-none">5k+</p>
-                <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-1">Real Viewers</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2.5">
-              <span className="flex size-9 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600 border border-cyan-100 dark:bg-cyan-950/70 dark:text-cyan-300 dark:border-cyan-800">
-                <Users className="size-4" />
-              </span>
-              <div>
-                <p className="text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-none">15+</p>
-                <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-1">Live Clients</p>
-              </div>
+          {/* View Mode Toggle: Interactive Spec Console vs Uniform Grid */}
+          <div className="flex items-center gap-3">
+            <div className="inline-flex rounded-xl p-1 bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => setViewMode('interactive')}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  viewMode === 'interactive'
+                    ? 'bg-slate-900 text-white dark:bg-cyan-500 dark:text-slate-950'
+                    : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                }`}
+              >
+                <SlidersHorizontal className="size-3.5" />
+                <span>Interactive View</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode('grid')}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  viewMode === 'grid'
+                    ? 'bg-slate-900 text-white dark:bg-cyan-500 dark:text-slate-950'
+                    : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                }`}
+              >
+                <LayoutGrid className="size-3.5" />
+                <span>All Cards</span>
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Category Filter Tabs */}
-        <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200/90 bg-white/90 p-2 shadow-xs dark:border-slate-800 dark:bg-slate-900/90">
-          {PROJECT_CATEGORIES.map((category) => {
-            const Icon = category.icon;
-            const isSelected = activeCategory === category.id;
+        {/* Category Filter Pills */}
+        <div className="flex flex-wrap gap-2.5 pb-2 mb-8">
+          {PROJECT_CATEGORIES.map((cat) => {
+            const Icon = cat.icon;
+            const isActive = activeCategory === cat.id;
+            const count =
+              cat.id === 'all'
+                ? PROJECTS_DATA.length
+                : PROJECTS_DATA.filter((p) => p.category === cat.id).length;
 
             return (
               <button
-                key={category.id}
-                type="button"
-                onClick={() => setActiveCategory(category.id)}
-                className={`relative flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
-                  isSelected
-                    ? 'text-white dark:text-slate-950'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800'
+                key={cat.id}
+                onClick={() => handleCategoryChange(cat.id)}
+                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                  isActive
+                    ? 'bg-slate-900 text-white dark:bg-cyan-500 dark:text-slate-950 ring-2 ring-slate-900/10 dark:ring-cyan-400/30'
+                    : 'bg-white dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
-                {isSelected && (
-                  <motion.span
-                    layoutId="wowProjectFilter"
-                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                    className="absolute inset-0 rounded-xl bg-slate-900 shadow-xs dark:bg-cyan-400"
-                  />
-                )}
-
-                <span className="relative z-10 flex items-center gap-2">
-                  <Icon className={`size-4 ${isSelected ? 'text-cyan-400 dark:text-slate-950' : 'text-slate-400'}`} />
-                  <span>{category.label}</span>
-                  <span
-                    className={`rounded-full px-1.5 py-0.5 text-[11px] font-mono leading-none ${
-                      isSelected
-                        ? 'bg-white/15 text-white dark:bg-slate-950/15 dark:text-slate-950'
-                        : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
-                    }`}
-                  >
-                    {getCategoryCount(category.id)}
-                  </span>
+                <Icon className="size-4" />
+                <span>{cat.label}</span>
+                <span
+                  className={`text-[11px] font-mono px-1.5 py-0.5 rounded-full ${
+                    isActive
+                      ? 'bg-white/20 text-white dark:bg-slate-950/20 dark:text-slate-950'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                  }`}
+                >
+                  {count}
                 </span>
               </button>
             );
           })}
         </div>
 
-        <div
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          className="space-y-8"
-        >
-        {/* Desktop WOW Factor: Kinetic Flex-Expanding Accordion Strip */}
-        <div className="hidden md:flex gap-3 h-[340px]">
-          {visibleProjects.map((project, idx) => {
-            const isActive = idx === safeIndex;
+        {/* MODE 1: CYLINDRICAL EXPANDING ACCORDION + CONTEXT + 2-COLUMN FEATURES + BOTTOM TECH */}
+        {viewMode === 'interactive' && (
+          <div
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="space-y-6"
+          >
+            {/* Desktop Kinetic Cylindrical Slices (Collapsed: Category Only; Expanded: Name & Category) */}
+            <div className="hidden md:flex gap-3 h-[270px]">
+              {filteredProjects.map((project, idx) => {
+                const isActive = idx === safeIndex;
 
-            return (
-              <div
-                key={project.id}
-                onMouseEnter={() => setActiveIndex(idx)}
-                onClick={() => {
-                  if (isActive) {
-                    setLightboxProject(project);
-                  } else {
-                    setActiveIndex(idx);
-                  }
-                }}
-                style={{ flexGrow: isActive ? 3.8 : 0.6 }}
-                className={`relative h-full min-w-[46px] lg:min-w-[56px] cursor-pointer overflow-hidden rounded-3xl border transition-[flex-grow,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  isActive
-                    ? `${project.accentBorder} shadow-xl`
-                    : 'border-slate-200/90 shadow-sm hover:border-slate-300'
-                }`}
-              >
-                <img
-                  src={project.coverImage}
-                  alt={project.title}
-                  loading="lazy"
-                  className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 ${
-                    isActive ? 'scale-105' : 'scale-100 grayscale-[35%] opacity-90'
-                  }`}
-                />
-
-                {/* Smooth cinematic gradient overlay */}
-                <div
-                  className={`absolute inset-0 transition-opacity duration-500 ${
-                    isActive
-                      ? 'bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-slate-950/15'
-                      : 'bg-slate-950/55 hover:bg-slate-950/45'
-                  }`}
-                />
-
-                {/* Top bar on active slice */}
-                <div
-                  className={`absolute top-4 left-4 right-4 flex items-center justify-between gap-2 transition-opacity duration-300 ${
-                    isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                  }`}
-                >
-                  <span className={`rounded-full border px-3 py-1 text-xs font-semibold shadow-xs ${project.badgeClass}`}>
-                    {project.categoryLabel}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-900 shadow-xs backdrop-blur-sm">
-                    {project.impactMetric}
-                  </span>
-                </div>
-
-                {/* Collapsed vertical spine label */}
-                <div
-                  className={`absolute inset-0 flex flex-col items-center justify-between py-5 transition-opacity duration-300 ${
-                    isActive ? 'opacity-0 pointer-events-none' : 'opacity-100'
-                  }`}
-                >
-                  <span className="rounded-full bg-white/20 px-2 py-0.5 text-[11px] font-mono font-bold text-white backdrop-blur-xs">
-                    {String(idx + 1).padStart(2, '0')}
-                  </span>
-
-                  <span className="whitespace-nowrap -rotate-90 text-xs font-semibold tracking-wider uppercase text-white/95">
-                    {project.shortTitle}
-                  </span>
-
-                  <span className={`size-2.5 rounded-full ring-2 ring-white/50 ${project.dotClass}`} />
-                </div>
-
-                {/* Expanded bottom info on active slice */}
-                <div
-                  className={`absolute bottom-0 left-0 right-0 p-6 transition-all duration-300 ${
-                    isActive ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0 pointer-events-none'
-                  }`}
-                >
-                  <div className="flex items-end justify-between gap-4">
-                    <div>
-                      <span className="text-[11px] font-mono font-semibold text-cyan-300">
-                        {String(idx + 1).padStart(2, '0')} · {project.year}
+                return (
+                  <div
+                    key={project.id}
+                    onMouseEnter={() => setActiveIndex(idx)}
+                    onClick={() => setActiveIndex(idx)}
+                    style={{ flexGrow: isActive ? 3.6 : 0.6 }}
+                    className={`relative h-full min-w-[56px] lg:min-w-[64px] cursor-pointer overflow-hidden rounded-3xl border transition-[flex-grow,border-color,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                      isActive
+                        ? 'border-cyan-500 bg-white dark:bg-slate-900 ring-2 ring-cyan-500/20'
+                        : 'border-slate-200/90 dark:border-slate-800/90 bg-white/80 dark:bg-slate-900/60 hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700 hover:bg-white dark:hover:bg-slate-900'
+                    }`}
+                  >
+                    {/* COLLAPSED STATE: Only Category + Index + Dot */}
+                    <div
+                      className={`absolute inset-0 flex flex-col items-center justify-between py-6 transition-opacity duration-300 ${
+                        isActive ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                      }`}
+                    >
+                      <span className="rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[11px] font-mono font-bold text-slate-700 dark:text-slate-300">
+                        {String(idx + 1).padStart(2, '0')}
                       </span>
-                      <h3 className="mt-1 text-xl lg:text-2xl font-bold tracking-tight text-white line-clamp-1">
-                        {project.title}
-                      </h3>
-                      <p className="mt-1 text-sm text-slate-200 line-clamp-1">{project.subtitle}</p>
+
+                      {/* Rotated Vertical Category Label */}
+                      <span className="whitespace-nowrap -rotate-90 text-xs font-semibold tracking-wider uppercase text-slate-500 dark:text-slate-400 select-none">
+                        {project.categoryLabel}
+                      </span>
+
+                      <span className={`size-2.5 rounded-full ${project.dotClass}`} />
                     </div>
 
-                    <Link
-                      to={`/${project.slug || project.id}`}
-                      onClick={(e) => e.stopPropagation()}
-                      className="shrink-0 inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-2 text-xs font-semibold text-slate-900 shadow-md transition-transform hover:scale-105"
+                    {/* EXPANDED STATE: Shows Name & Category */}
+                    <div
+                      className={`absolute inset-0 p-6 flex flex-col justify-between transition-all duration-300 ${
+                        isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                      }`}
                     >
-                      <span>Case Study</span>
-                      <ArrowRight className="size-3.5 text-cyan-600" />
-                    </Link>
+                      {/* Top: Category Pill + Year */}
+                      <div className="flex items-center justify-between gap-2">
+                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold border ${project.badgeClass}`}>
+                          <span className={`size-1.5 rounded-full ${project.dotClass}`}></span>
+                          {project.categoryLabel}
+                        </span>
+                        <span className="text-xs font-mono font-medium text-slate-500 dark:text-slate-400">
+                          {project.year}
+                        </span>
+                      </div>
+
+                      {/* Center: Large Project Name & Metric */}
+                      <div className="space-y-2">
+                        {/* <span className="text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider block">
+                          Project 0{idx + 1}
+                        </span> */}
+                        <h3 className="text-2xl lg:text-3xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
+                          {project.shortTitle}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 line-clamp-1">
+                          {project.impactMetric}
+                        </p>
+                      </div>
+
+                      {/* Bottom Active Progress Line */}
+                      <div className="relative pt-2">
+                        <div className="h-1 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                          <motion.div
+                            key={`prog-${project.id}-${safeIndex}`}
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ duration: AUTO_CYCLE_MS / 1000, ease: 'linear' }}
+                            style={{ transformOrigin: 'left' }}
+                            className="h-full bg-cyan-500"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                );
+              })}
+            </div>
 
-                {/* Live auto-motion progress line along bottom edge of active slice */}
-                {isActive && !isHovered && !lightboxProject && visibleProjects.length > 1 && (
-                  <motion.div
-                    key={`progress-${project.id}-${safeIndex}`}
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: AUTO_CYCLE_MS / 1000, ease: 'linear' }}
-                    style={{ transformOrigin: 'left center' }}
-                    className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 via-sky-400 to-emerald-400"
-                  />
-                )}
-              </div>
-            );
-          })}
-        </div>
+            {/* Mobile Cylindrical Strip (< md): Horizontal scroll */}
+            <div className="flex md:hidden gap-2.5 overflow-x-auto pb-2">
+              {filteredProjects.map((project, idx) => {
+                const isActive = idx === safeIndex;
 
-        {/* Mobile Project Pill Strip (< md) */}
-        <div className="flex md:hidden gap-2 overflow-x-auto pb-1">
-          {visibleProjects.map((project, idx) => {
-            const isActive = idx === safeIndex;
-
-            return (
-              <button
-                key={`mob-${project.id}`}
-                type="button"
-                onClick={() => setActiveIndex(idx)}
-                className={`shrink-0 rounded-xl border px-3.5 py-2 text-xs font-semibold transition-all ${
-                  isActive
-                    ? 'border-slate-900 bg-slate-900 text-white shadow-xs dark:border-cyan-400 dark:bg-cyan-400 dark:text-slate-950'
-                    : 'border-slate-200 bg-white text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300'
-                }`}
-              >
-                {String(idx + 1).padStart(2, '0')} · {project.shortTitle}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Synchronized Live Inspector Stage (Multiple Images + Architecture + Deep Details) */}
-        {activeProject && (
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeProject.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="rounded-3xl border border-slate-200/90 bg-white/95 p-5 sm:p-8 shadow-md grid grid-cols-1 lg:grid-cols-12 gap-7 items-start dark:border-slate-800 dark:bg-slate-900/90"
-            >
-              {/* Left Stage: Synchronized Multi-Image & Architecture Carousel */}
-              <div className="lg:col-span-6 space-y-3">
-                <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 aspect-[16/10] group dark:border-slate-800 dark:bg-slate-950">
-                  <AnimatePresence mode="wait">
-                    <SlideCanvas slide={currentStageSlide} projectTitle={activeProject.title} />
-                  </AnimatePresence>
-
-                  {/* Fullscreen zoom trigger */}
+                return (
                   <button
+                    key={`mob-${project.id}`}
                     type="button"
-                    onClick={() => setLightboxProject(activeProject)}
-                    title="Open fullscreen gallery"
-                    className="absolute top-3 right-3 flex size-8 items-center justify-center rounded-full bg-slate-900/75 text-white backdrop-blur-sm transition-transform hover:scale-105"
+                    onClick={() => setActiveIndex(idx)}
+                    className={`shrink-0 rounded-2xl border px-4 py-3 text-left transition-all ${
+                      isActive
+                        ? 'border-cyan-500 bg-white dark:bg-slate-900 text-slate-900 dark:text-white ring-2 ring-cyan-500/20'
+                        : 'border-slate-200/90 dark:border-slate-800/90 bg-white/80 dark:bg-slate-900/60 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700'
+                    }`}
                   >
-                    <Maximize2 className="size-3.5" />
-                  </button>
-
-                  {slides.length > 1 && (
-                    <>
-                      <button
-                        type="button"
-                        onClick={() => setStageSlideIdx((prev) => (prev - 1 + slides.length) % slides.length)}
-                        aria-label="Previous project image"
-                        className="absolute left-3 top-1/2 -translate-y-1/2 flex size-8 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-800 shadow-sm backdrop-blur-sm hover:scale-105 transition-transform"
-                      >
-                        <ChevronLeft className="size-4" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setStageSlideIdx((prev) => (prev + 1) % slides.length)}
-                        aria-label="Next project image"
-                        className="absolute right-3 top-1/2 -translate-y-1/2 flex size-8 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-800 shadow-sm backdrop-blur-sm hover:scale-105 transition-transform"
-                      >
-                        <ChevronRight className="size-4" />
-                      </button>
-
-                      <span className="absolute right-3 bottom-3 inline-flex items-center gap-1 rounded-full bg-slate-900/75 px-2.5 py-1 text-[11px] font-mono text-white backdrop-blur-xs">
-                        <ImagePlus className="size-3 text-cyan-300" />
-                        {stageSlideIdx + 1} / {slides.length}
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[10px] font-mono font-bold text-cyan-700 dark:text-cyan-400">
+                        0{idx + 1}
                       </span>
-                    </>
-                  )}
-                </div>
+                      <span className={`size-1.5 rounded-full ${project.dotClass}`} />
+                      <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 uppercase">
+                        {project.categoryLabel}
+                      </span>
+                    </div>
+                    {isActive && (
+                      <p className="text-xs font-bold text-slate-900 dark:text-white truncate max-w-[200px]">
+                        {project.shortTitle}
+                      </p>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
 
-                {/* Clickable Multi-View Thumbnails */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-                  <p className="text-xs font-medium text-slate-500 dark:text-slate-400">{currentStageSlide?.caption}</p>
+            {/* THE CARD SECTION: CONTEXT HOOK + 2-COLUMN FEATURES + BOTTOM TECH STACK */}
+            {activeProject && (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeProject.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.22 }}
+                  className="rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-slate-900/95 p-6 sm:p-8 space-y-6"
+                >
+                  {/* Top Bar of the Card: Title, Impact Metric & Action Links */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80 dark:border-slate-800">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className={`size-2 rounded-full ${activeProject.dotClass}`} />
+                        <span className="text-xs font-mono font-bold text-cyan-700 dark:text-cyan-400 uppercase tracking-wider">
+                          {activeProject.categoryLabel}
+                        </span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+                        {activeProject.title}
+                      </h3>
+                    </div>
 
-                  {slides.length > 1 && (
-                    <div className="flex items-center gap-2 shrink-0">
-                      {slides.map((slide, sIdx) => (
-                        <button
-                          key={sIdx}
-                          type="button"
-                          onClick={() => setStageSlideIdx(sIdx)}
-                          className={`h-10 w-14 overflow-hidden rounded-lg border-2 transition-all ${
-                            sIdx === stageSlideIdx
-                              ? 'border-cyan-500 scale-105 shadow-2xs'
-                              : 'border-slate-200 dark:border-slate-700 opacity-70 hover:opacity-100'
-                          }`}
+                    {/* Action Links & Project Switcher Buttons */}
+                    <div className="flex items-center gap-3 shrink-0">
+                      {activeProject.links?.live || activeProject.links?.demo ? (
+                        <a
+                          href={activeProject.links.live || activeProject.links.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold bg-cyan-700 hover:bg-cyan-600 text-white transition-colors cursor-pointer"
                         >
-                          {slide.type === 'image' ? (
-                            <img src={slide.src} alt="" className="h-full w-full object-cover" />
-                          ) : (
-                            <div className="flex h-full w-full items-center justify-center bg-slate-100 dark:bg-slate-800 text-[9px] font-mono font-bold text-slate-700 dark:text-slate-200">
-                              FLOW
-                            </div>
-                          )}
+                          <span>Live Demo</span>
+                          <ExternalLink className="size-3.5" />
+                        </a>
+                      ) : activeProject.links?.code && (
+                        <a
+                          href={activeProject.links.code}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white dark:bg-cyan-500 dark:text-slate-950 dark:hover:bg-cyan-400 transition-colors cursor-pointer"
+                        >
+                          <span>GitHub Source</span>
+                          <Github className="size-3.5" />
+                        </a>
+                      )}
+
+                      <div className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={handlePrev}
+                          title="Previous Project"
+                          className="size-8 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+                        >
+                          <ChevronLeft className="size-4" />
                         </button>
+                        <button
+                          type="button"
+                          onClick={handleNext}
+                          title="Next Project"
+                          className="size-8 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+                        >
+                          <ChevronRight className="size-4" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Context & Client Problem Box (Gives instant meaning to the reviewer) */}
+                  <div className="rounded-2xl border border-slate-200/85 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800/40 p-4 sm:p-5">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                      <div className="md:col-span-8 space-y-1">
+                        <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                          <AlertCircle className="size-3.5 text-cyan-600 dark:text-cyan-400" />
+                          Problem
+                        </span>
+                        <p className="text-xs sm:text-[13.5px] leading-relaxed text-slate-700 dark:text-slate-300">
+                          {activeProject.challenge}
+                        </p>
+                      </div>
+
+                      <div className="md:col-span-4 md:border-l md:border-slate-200 dark:md:border-slate-700/80 md:pl-4 space-y-1">
+                        <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                          <Activity className="size-3.5 text-emerald-500" />
+                          Measurable Outcome
+                        </span>
+                        <p className="text-xs sm:text-[13px] font-semibold text-slate-900 dark:text-white leading-snug">
+                          {activeProject.impactMetric}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 2-COLUMN FEATURES SECTION (5-6 Features in 2 balanced columns) */}
+                  <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 p-5 sm:p-6 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="p-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-cyan-600 dark:text-cyan-400">
+                          <Cpu className="size-4" />
+                        </span>
+                        <h4 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
+                          Key Engineered Features
+                        </h4>
+                      </div>
+                      <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2.5 py-0.5 rounded-full font-semibold">
+                        {activeProject.features?.length || 6} System Features
+                      </span>
+                    </div>
+
+                    {/* 2 Columns of Features */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3.5 pt-1">
+                      {activeProject.features?.map((feat, fIdx) => (
+                        <div key={fIdx} className="flex items-start gap-3">
+                          <CheckCircle2 className="size-4 text-cyan-600 dark:text-cyan-400 shrink-0 mt-0.5" />
+                          <span className="text-xs sm:text-[13px] text-slate-700 dark:text-slate-300 leading-snug">
+                            {feat}
+                          </span>
+                        </div>
                       ))}
                     </div>
-                  )}
-                </div>
-              </div>
+                  </div>
 
-              {/* Right Stage: Summary with Few Points & Direct Case Study Redirect */}
-              <div className="lg:col-span-6 space-y-5">
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-0.5 text-xs font-semibold ${activeProject.badgeClass}`}>
-                      <span className={`size-1.5 rounded-full ${activeProject.dotClass}`} />
-                      {activeProject.categoryLabel}
-                    </span>
-                    <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-0.5 text-xs font-mono font-medium text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                      {activeProject.impactMetric}
+                  {/* BOTTOM: TECHNOLOGY STACK */}
+                  <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <div className="flex items-center gap-1.5 mr-2 text-xs font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                        <Layers className="size-3.5 text-cyan-600 dark:text-cyan-400" />
+                        <span>Technology Stack:</span>
+                      </div>
+                      {activeProject.tech?.map((t) => (
+                        <span
+                          key={t}
+                          className="rounded-xl border border-slate-200/90 bg-white px-3 py-1 text-xs font-mono font-medium text-slate-700 hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700 transition-colors dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <span className="text-xs font-mono text-slate-500 dark:text-slate-400 shrink-0">
+                      System 0{safeIndex + 1} of 0{filteredProjects.length}
                     </span>
                   </div>
 
-                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
-                    {activeProject.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300 line-clamp-2">
-                    {activeProject.subtitle}
-                  </p>
-                </div>
-
-                {/* Only few high-impact points on Home page */}
-                <div className="rounded-2xl border border-slate-100 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-800/60">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                      Key Highlights
-                    </span>
-                    <span className="font-mono text-[10px] text-cyan-600 dark:text-cyan-400">
-                      Top 3 Overview
-                    </span>
-                  </div>
-                  <ul className="mt-2.5 space-y-2">
-                    {activeProject.highlights.slice(0, 3).map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-                        <CheckCircle2 className="size-4 shrink-0 text-cyan-600 dark:text-cyan-400 mt-0.5" />
-                        <span className="line-clamp-2">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Tech Stack (Top 5) */}
-                <div className="flex flex-wrap items-center gap-1.5">
-                  {activeProject.tech.slice(0, 5).map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-lg border border-slate-200/90 bg-slate-50 px-2.5 py-1 text-xs font-mono font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-200"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                  {activeProject.tech.length > 5 && (
-                    <span className="px-2 py-1 text-xs font-mono text-slate-400">
-                      +{activeProject.tech.length - 5} more
-                    </span>
-                  )}
-                </div>
-
-                {/* Actions: Direct Case Study Navigation + Live Links */}
-                <div className="flex flex-wrap items-center gap-3 pt-2">
-                  <Link
-                    to={`/${activeProject.slug || activeProject.id}`}
-                    className="group inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition-all hover:-translate-y-0.5 hover:bg-cyan-700 dark:bg-cyan-500 dark:text-slate-950 dark:hover:bg-cyan-400"
-                  >
-                    <span>View Case Study</span>
-                    <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-                  </Link>
-
-                  {activeProject.links?.demo && (
-                    <a
-                      href={activeProject.links.demo}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-2xs transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
-                    >
-                      <span>Live Demo</span>
-                      <ExternalLink className="size-3.5" />
-                    </a>
-                  )}
-
-                  {activeProject.links?.code && (
-                    <a
-                      href={activeProject.links.code}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-2xs transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
-                    >
-                      <Github className="size-3.5" />
-                      <span>Code</span>
-                    </a>
-                  )}
-
-                  <button
-                    type="button"
-                    onClick={() => setLightboxProject(activeProject)}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
-                  >
-                    <Maximize2 className="size-3.5" />
-                    <span>Quick Preview</span>
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+                </motion.div>
+              </AnimatePresence>
+            )}
+          </div>
         )}
-        </div>
+
+        {/* MODE 2: UNIFORM FIXED-HEIGHT CARDS (CONTEXT + FEATURES + BOTTOM TECH) */}
+        {viewMode === 'grid' && (
+          <motion.div 
+            layout
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            <AnimatePresence>
+              {filteredProjects.map((project) => {
+                const liveLink = project.links?.live || project.links?.demo;
+                const codeLink = project.links?.code;
+
+                return (
+                  <motion.article
+                    key={project.id}
+                    layout
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{ duration: 0.25 }}
+                    className="group relative flex flex-col justify-between h-[510px] rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-slate-900/95 p-5 sm:p-6 hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700 transition-all duration-200 overflow-hidden"
+                  >
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                    {/* Top: Category & Name */}
+                    <div className="space-y-2.5">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold border ${project.badgeClass}`}>
+                          <span className={`size-1.5 rounded-full ${project.dotClass}`}></span>
+                          {project.categoryLabel}
+                        </span>
+                        <span className="text-[11px] font-mono font-medium text-slate-400 dark:text-slate-500">
+                          {project.year}
+                        </span>
+                      </div>
+
+                      <h3 className="text-lg font-bold text-slate-900 dark:text-white leading-snug tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors line-clamp-1" title={project.title}>
+                        {project.title}
+                      </h3>
+
+                      {/* Brief Problem Context */}
+                      <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                        {project.challenge}
+                      </p>
+                    </div>
+
+                    {/* Middle: Features (Top 4 in grid) */}
+                    <div className="my-2.5 rounded-xl bg-slate-50/90 dark:bg-slate-800/50 p-3.5 border border-slate-200/70 dark:border-slate-800/80">
+                      <div className="flex items-center gap-1.5 mb-2 text-[11px] font-mono uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400">
+                        <Cpu className="size-3.5 text-cyan-600 dark:text-cyan-400" />
+                        <span>Key Engineered Features</span>
+                      </div>
+                      <ul className="space-y-1.5">
+                        {project.features?.slice(0, 4).map((feature, fIdx) => (
+                          <li key={fIdx} className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300 leading-snug">
+                            <CheckCircle2 className="size-3.5 text-cyan-600 dark:text-cyan-400 shrink-0 mt-0.5" />
+                            <span className="line-clamp-1">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Bottom: Tech Stack & Action Link */}
+                    <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 space-y-3">
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        {project.tech?.slice(0, 5).map((t) => (
+                          <span
+                            key={t}
+                            className="px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-mono bg-slate-100 dark:bg-slate-800/90 text-slate-600 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700/60"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                        {project.tech?.length > 5 && (
+                          <span className="px-1.5 py-0.5 rounded-md text-[10px] font-mono text-slate-400 dark:text-slate-500">
+                            +{project.tech.length - 5}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex items-center justify-between gap-2 pt-0.5">
+                        {liveLink ? (
+                          <a
+                            href={liveLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-600 hover:bg-cyan-500 text-white transition-colors cursor-pointer"
+                          >
+                            <span>Live System</span>
+                            <ExternalLink className="size-3.5" />
+                          </a>
+                        ) : codeLink ? (
+                          <a
+                            href={codeLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white dark:bg-cyan-500 dark:text-slate-950 dark:hover:bg-cyan-400 transition-colors cursor-pointer"
+                          >
+                            <span>GitHub Source</span>
+                            <Github className="size-3.5" />
+                          </a>
+                        ) : (
+                          <div className="inline-flex items-center gap-1.5 text-[11px] font-mono text-slate-600 dark:text-slate-400 bg-slate-100/90 dark:bg-slate-800/60 px-2.5 py-1 rounded-md border border-slate-200/70 dark:border-slate-700/60 truncate">
+                            <ShieldCheck className="size-3.5 text-emerald-500 shrink-0" />
+                            <span className="truncate">Production Platform</span>
+                          </div>
+                        )}
+
+                        <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 shrink-0">
+                          SDE Verified
+                        </span>
+                      </div>
+                    </div>
+                  </motion.article>
+                );
+              })}
+            </AnimatePresence>
+          </motion.div>
+        )}
+
       </div>
-
-      {/* Fullscreen Lightbox Modal */}
-      <AnimatePresence>
-        {lightboxProject && (
-          <LightboxModal
-            project={lightboxProject}
-            initialSlideIdx={stageSlideIdx}
-            onClose={() => setLightboxProject(null)}
-          />
-        )}
-      </AnimatePresence>
     </section>
   );
 };
