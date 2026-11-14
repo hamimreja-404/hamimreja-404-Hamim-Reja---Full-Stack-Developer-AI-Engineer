@@ -2,13 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 
 const ROLES = [
-  'Full Stack Developer',
-  'Software Engineer',
-  'Backend Engineer',
-  'MERN Stack Developer',
-  'MENN Stack Developer',
-  'Problem Solver',
-  'IoT Engineer',
+  'Full-Stack SDE',
+  'Backend & Systems Engineer',
+  'Startup Founder & Builder',
+  'Algorithmic Problem Solver',
+  'Real-Time WebRTC Engineer',
+  'Edge AI & Systems Engineer',
 ]
 
 const FLIP_INTERVAL_MS = 2600

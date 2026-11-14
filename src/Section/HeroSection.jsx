@@ -110,9 +110,8 @@ const HeroSection = ({ brandLogos = defaultBrandLogos }) => {
 
             <SpiralNotebookRole />
 
-            <p className="max-w-[460px] text-[15px] sm:text-base font-normal leading-relaxed text-slate-600 dark:text-slate-300">
-              Full Stack &amp; Edge AI Engineer based in Kolkata, India. I build scalable MERN/MENN web applications,
-              intelligent Agentic AI systems, and embedded IoT solutions from the first sketch to production.
+            <p className="max-w-[480px] text-[15px] sm:text-base font-normal leading-relaxed text-slate-600 dark:text-slate-300">
+              Full-Stack Software Engineer &amp; Startup Builder with a strong problem-solving mindset. I architect resilient distributed backends, real-time WebRTC systems, and high-performance Next.js applications that scale from 0 to thousands of users.
             </p>
 
             <div className="flex items-center gap-3 pt-1">

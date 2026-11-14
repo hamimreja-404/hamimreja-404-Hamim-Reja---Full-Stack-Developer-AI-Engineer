@@ -35,7 +35,7 @@ const EXPERIENCES = [
       'Own end-to-end development and maintenance of 5+ production web apps serving 1,000s of daily users, keeping them live 24x7.',
       'Ship new features and fix production bugs from client requirements, with weekly progress reports and direct client communication.',
       'Integrated Razorpay payments, Brevo email services, Google Analytics and Meta Pixel across live projects.',
-      'Drive genuine client leads by writing technical blogs and managing LinkedIn, Google and Medium profiles.', ,
+      'Drive genuine client leads by writing technical blogs and managing LinkedIn, Google and Medium profiles.',
     ],
   },
   {
@@ -63,11 +63,11 @@ const EXPERIENCES = [
       'MongoDB',
       'WebSockets',
       'WebRTC',
-      'STRN / TURN Server',
+      'STUN / TURN Server',
       'Razorpay',
       'Brevo',
       'RBAC',
-      'EER / DTD',
+      'EER / DFD',
       'Geolocation',
       'Excel Export',
       'System Design',
@@ -77,7 +77,7 @@ const EXPERIENCES = [
       'Admins manage employees, locations, shifts, holidays and Excel reports. Employees punch in/out via live location.',
       'Architected and shipped a live doctor consultation platform, from EER diagram and Data Flow diagram to Figma UI, with a mobile-first 3-step booking flow.',
       'Added Razorpay payments, custom slot durations and doctor revenue and booking controls.',
-      'Implemented WebSocket chat and WebRTC audio/video calls with a STRN / TURN server, plus digital prescriptions and patient history.',
+      'Implemented WebSocket chat and WebRTC audio/video calls with a STUN / TURN server, plus digital prescriptions and patient history.',
     ],
   },
   {
@@ -161,7 +161,7 @@ const formatDuration = (totalMonths) => {
 };
 
 const Experience = () => {
-  const [activeIndex, setActiveIndex] = useState(0); ``
+  const [activeIndex, setActiveIndex] = useState(0);
   const cardRefs = useRef([]);
 
   const totalDurationLabel = useMemo(() => {
