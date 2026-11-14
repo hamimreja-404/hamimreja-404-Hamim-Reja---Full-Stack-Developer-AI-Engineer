@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Code2, Menu, Sparkles, X } from 'lucide-react';
 
-const LOGO_URL = 'Logo.webp';
+const LOGO_URL = '/Logo.webp';
 
 const EMAIL_ADDRESS = 'hamim.reja.mail@gmail.com';
 const EMAIL_SUBJECT = "Connecting with Hamim Reja — Software Engineering Opportunity";
@@ -58,17 +58,26 @@ export default function FloatingNavbar() {
     }
 
     const sections = ['skills', 'experience', 'projects', 'contact'];
-    const handleScrollSpy = () => {
-      const scrollPosition = window.scrollY + 200;
+    let ticking = false;
 
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el && el.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i]);
-          return;
-        }
+    const handleScrollSpy = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollPosition = window.scrollY + 200;
+
+          for (let i = sections.length - 1; i >= 0; i--) {
+            const el = document.getElementById(sections[i]);
+            if (el && el.offsetTop <= scrollPosition) {
+              setActiveSection(sections[i]);
+              ticking = false;
+              return;
+            }
+          }
+          setActiveSection('');
+          ticking = false;
+        });
+        ticking = true;
       }
-      setActiveSection('');
     };
 
     window.addEventListener('scroll', handleScrollSpy, { passive: true });
@@ -133,6 +142,11 @@ export default function FloatingNavbar() {
             <img
               src={LOGO_URL}
               alt="Hamim Reja Logo"
+              width="64"
+              height="64"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
               className="size-16 w-16 h-16 object-contain"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';

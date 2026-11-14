@@ -95,7 +95,7 @@ const SKILL_CATEGORIES = [
       //   logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/icons/amazonwebservices/amazonwebservices-original-wordmark.svg',
       // },
       { name: 'Vercel', logo: `${DEV}/vercel/vercel-original.svg` },
-      { name: 'Linux', logo: `${DEV}/linux/linux-original.svg` },
+      { name: 'Linux', logo: 'https://cdn.simpleicons.org/linux/FCC624' },
       { name: 'Git', logo: `${DEV}/git/git-original.svg` },
       { name: 'GitHub', logo: `${DEV}/github/github-original.svg` },
       // { name: 'CI/CD Pipelines', icon: Workflow, iconColor: 'text-indigo-600' },

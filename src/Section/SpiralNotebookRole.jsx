@@ -142,9 +142,11 @@ const SpiralNotebookRole = () => {
   const flipKeyRef = useRef(0)
   const reduceMotion = useReducedMotion()
 
-  /* Load the handwriting font once */
+  /* Handwriting font (Caveat) is preloaded in index.html; avoid duplicate requests */
   useEffect(() => {
-    if (!USE_HANDWRITING || document.querySelector(`link[href="${FONT_HREF}"]`)) return
+    if (!USE_HANDWRITING) return
+    if (document.fonts && document.fonts.check('16px Caveat')) return
+    if (document.querySelector('link[href*="Caveat"]')) return
     const link = document.createElement('link')
     link.rel = 'stylesheet'
     link.href = FONT_HREF

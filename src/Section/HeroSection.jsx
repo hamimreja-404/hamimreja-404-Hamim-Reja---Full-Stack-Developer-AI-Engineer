@@ -5,22 +5,40 @@ import GreetingWord from '@/components/shadcn-studio/blocks/hero-section-44/gree
 import SpiralNotebookRole from './SpiralNotebookRole'
 import { ArrowRightIcon } from 'lucide-react'
 
-// Only load Three.js + Rapier WASM on desktop viewports to maintain instant mobile speed
+// Defer Three.js + Rapier WASM (6.3MB) until after initial page load & main thread is idle
 const LazyIdCard = lazy(() => import('@/components/ui/id-card'))
 
 function IdCardDesktop(props) {
-  const [isDesktop, setIsDesktop] = useState(false)
+  const [shouldLoad, setShouldLoad] = useState(false)
 
   useEffect(() => {
-    const check = () => {
-      setIsDesktop(typeof window !== 'undefined' && window.innerWidth >= 1024)
+    // Only load on desktop viewports (>= 1024px)
+    if (typeof window === 'undefined' || window.innerWidth < 1024) return
+
+    let idleId
+    let timerId
+
+    const startLoading = () => {
+      if ('requestIdleCallback' in window) {
+        idleId = window.requestIdleCallback(() => setShouldLoad(true), { timeout: 1200 })
+      } else {
+        timerId = setTimeout(() => setShouldLoad(true), 600)
+      }
     }
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
+
+    if (document.readyState === 'complete') {
+      startLoading()
+    } else {
+      window.addEventListener('load', startLoading, { once: true })
+    }
+
+    return () => {
+      if (idleId && 'cancelIdleCallback' in window) window.cancelIdleCallback(idleId)
+      if (timerId) clearTimeout(timerId)
+    }
   }, [])
 
-  if (!isDesktop) return null
+  if (!shouldLoad) return null
 
   return (
     <Suspense fallback={null}>
@@ -31,8 +49,27 @@ function IdCardDesktop(props) {
 
 const PROFILE_IMAGE_URL = '/HeroSection.webp'
 
-// Replace '#' with your CV link or file path (e.g. '/Hamim_Reja_CV.pdf')
-const CV_URL = '#'
+// Resume PDF placed in Frontend/public
+const CV_URL = '/Hamim%20reja.pdf'
+
+const EMAIL_ADDRESS = 'hamim.reja.mail@gmail.com'
+const EMAIL_SUBJECT = 'Connecting with Hamim Reja — Software Engineering Opportunity'
+const EMAIL_BODY = `Hi Hamim,
+
+I came across your portfolio and would like to connect with you regarding a software engineering opportunity / project.
+
+Looking forward to hearing from you.
+
+Best regards,`
+
+const encodedSubject = encodeURIComponent(EMAIL_SUBJECT)
+const encodedBody = encodeURIComponent(EMAIL_BODY)
+
+// Direct Gmail Web Composer URL (works 100% on desktop browsers without requiring desktop Outlook/Mail app)
+const CONNECT_GMAIL_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL_ADDRESS}&su=${encodedSubject}&body=${encodedBody}`
+
+// Native mailto URL (for mobile devices and systems with configured default email client)
+const CONNECT_MAILTO_URL = `mailto:${EMAIL_ADDRESS}?subject=${encodedSubject}&body=${encodedBody}`
 
 const defaultBrandLogos = [
   {
@@ -92,7 +129,7 @@ const defaultBrandLogos = [
     name: 'Raspberry Pi',
   },
   {
-    image: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg',
+    image: 'https://cdn.simpleicons.org/linux/FCC624',
     name: 'Linux',
   },
   {
@@ -118,6 +155,16 @@ const defaultBrandLogos = [
 ]
 
 const HeroSection = ({ brandLogos = defaultBrandLogos }) => {
+  const handleConnectClick = (e) => {
+    // On mobile devices, mailto: natively opens the device's mail app (iOS Mail, Android Gmail)
+    if (typeof navigator !== 'undefined' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      e.preventDefault();
+      window.location.href = CONNECT_MAILTO_URL;
+    }
+    // On desktop, the anchor natively opens CONNECT_GMAIL_URL in a new tab via target="_blank",
+    // reliably launching the Gmail web composer with recipient, subject and message pre-filled.
+  };
+
   return (
     <section
       id="hero"
@@ -154,7 +201,7 @@ const HeroSection = ({ brandLogos = defaultBrandLogos }) => {
               <Button
                 variant="outline"
                 className="h-11 rounded-full px-5 text-sm sm:text-[15px] border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-medium hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
-                render={<a href={CV_URL} />}
+                render={<a href={CV_URL} download="Hamim reja.pdf" target="_blank" rel="noopener noreferrer" />}
                 nativeButton={false}
               >
                 Download CV
@@ -163,7 +210,15 @@ const HeroSection = ({ brandLogos = defaultBrandLogos }) => {
               <Button
                 variant="outline"
                 className="hover:bg-slate-50 bg-white border-slate-300 text-slate-800 font-medium group h-11 gap-2.5 rounded-full !pr-4 !pl-4 pr-4! pl-4! text-sm sm:text-[15px] transition-[padding,border-color] duration-300 hover:!pl-2 hover:pl-2! hover:border-slate-400 dark:hover:border-slate-600 hover:ring-1 hover:ring-slate-300 dark:hover:ring-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
-                render={<a href="#contact" />}
+                render={
+                  <a
+                    href={CONNECT_GMAIL_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={handleConnectClick}
+                    aria-label="Send Email to Hamim Reja"
+                  />
+                }
                 nativeButton={false}
               >
                 <span className="bg-cyan-500 relative flex size-2.5 w-2.5 h-2.5 items-center justify-center overflow-hidden rounded-full transition-all duration-300 group-hover:size-6.5 group-hover:w-6 group-hover:h-6">
@@ -185,7 +240,7 @@ const HeroSection = ({ brandLogos = defaultBrandLogos }) => {
         <div className="pointer-events-none absolute inset-y-0 left-0 z-[1] w-16 bg-gradient-to-r from-slate-50 dark:from-slate-950 to-transparent sm:w-[140px]" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-16 bg-gradient-to-l from-slate-50 dark:from-slate-950 to-transparent sm:w-[140px]" />
         <div className="mx-auto w-full max-w-5xl overflow-hidden">
-          <Marquee pauseOnHover duration={25} gap={2}>
+          <Marquee pauseOnHover duration={25} gap={2} repeat={2}>
             {brandLogos.map((logo, logoIndex) => (
               <div
                 key={`${logo.name}-${logoIndex}`}
